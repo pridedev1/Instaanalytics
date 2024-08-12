@@ -42,19 +42,19 @@ export default function Home() {
           </div>
           <div className="text-white text-xl text-center">
             {" "}
-            • Dive into the details and discover the insidhts in your latest
+            • Dive into the details and discover the insights in your latest
             report •{" "}
           </div>
         </div>
         <div className="flex justify-center items-center w-full pt-16">
-          <div className=" bg-white/50 p-3 pl-8 rounded-full flex items-center justify-center w-[50%] h-min min-w-[280px] backdrop-blur-lg">
+          <div className=" bg-white/50 p-3 pl-8 rounded-full flex items-center justify-center sm:w-[50%] h-min min-w-[280px] backdrop-blur-lg">
             <input
-              placeholder="Enter username"
+              placeholder="enter username"
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
-              className="focus:outline-none w-full bg-transparent placeholder-black text-xl font-medium"
+              className="focus:outline-none w-full bg-transparent placeholder-black/60 text-xl font-medium"
             />
             {loading ? (
               <Loader2 className="mr-2 w-10 h-10 animate-spin" />
