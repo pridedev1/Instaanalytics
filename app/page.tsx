@@ -38,7 +38,7 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center h-[80%]">
         <div className=" flex flex-col gap-4 items-center justify-center py-16">
           <div className="font-black text-4xl text-white text-center">
-            ANALYZE YOUR CURRENT INSTAGRAM REPORT
+            ANALYZE YOUR CURRENT INSTAGRAM
           </div>
           <div className="text-white text-xl text-center">
             {" "}
