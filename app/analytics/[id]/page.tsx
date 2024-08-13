@@ -116,16 +116,16 @@ const Analytics = () => {
 
         <div className="flex flex-row relative items-center justify-around mb-2 w-[calc(100%-16px)] h-28 mx-2">
         <img src={GradientImage.src} className="absolute top-0 bottom-0 -z-10"/>
-        <div>
-          <div className="text-2xl font-black">
+        <div className="flex flex-col items-center">
+          <div className="text-3xl font-black">
           {Number(enageRate.toFixed(1))}% 
           </div>
           <div className="text-sm font-medium">
             Engagement Rate
           </div>
         </div>
-        <div>
-          <div className="text-2xl font-black">
+        <div className="flex flex-col items-center">
+          <div className="text-3xl font-black">
           {"Low"}
           </div>
           <div className="text-sm font-medium">
