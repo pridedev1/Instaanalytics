@@ -70,26 +70,30 @@ export default function Home() {
         </div>
         <div className=" flex flex-col gap-4 items-center justify-center py-16">
           <div className="flex gap-2">
-            <div className="font-black text-4xl text-white text-center">
-              ANALYZE YOUR CURRENT INSTAGRAM
-            </div>
-            {/* <TypeAnimation
+            <div className="font-black text-3xl  sm:text-5xl text-white text-center">
+              ANALYZE YOUR CURRENT INSTAGRAM <TypeAnimation
               sequence={[
                 // Same substring at the start will only be typed out once, initially
-                "profile",
-                // "We produce food for Hamsters",
-                // 1000,
-                // "We produce food for Guinea Pigs",
-                // 1000,
-                // "We produce food for Chinchillas",
-                // 1000,
+          
+                "Comments",
+                1000,
+                "Likes",
+                1000,
+                "Followers",
+                1000,
+                "Reels",
+                1000,
+                "",
+                1000,
               ]}
               wrapper="span"
               speed={50}
               // style={{ fontSize: "2em", display: "inline-block" }}
-              className="font-black text-4xl text-white text-cente"
+              className="font-black text-3xl sm:text-5xl text-white text-cente"
               repeat={Infinity}
-            /> */}
+            /> 
+            </div>
+           
           </div>
           <div className="text-white text-xl text-center">
             {" "}
