@@ -8,6 +8,10 @@ import { useRouter } from "next/navigation";
 import { ClipLoader, FadeLoader, MoonLoader } from "react-spinners";
 import { Loader2 } from "lucide-react";
 import { profile } from "console";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "./utils/firebase";
+import { errorToast } from "./utils/toast";
+import { TypeAnimation } from "react-type-animation";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -16,29 +20,76 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const getProfileDetail = async () => {
     console.log("username :", username);
-    if (username === "") return;
-    setLoading(true);
-    let res = await client(`/get-profile-details?username=${username}`);
 
-    let data = res.data;
+    let docRef = doc(db, `/insta-ids/${username}`);
 
-    data['profile_pic'] = encodeURIComponent(data['profile_pic'] ?? "")
-    if (data.success) {
-      router.push(`/analytics/${username}?data=${JSON.stringify(data)}`);
+    let snap = await getDoc(docRef);
+    console.log("exist :", snap.exists());
+
+    let data;
+    if (!snap.exists()) {
+      if (username === "") return;
+      setLoading(true);
+      try {
+        let res = await client(`/get-profile-details?username=${username}`);
+
+        let data = res.data;
+
+        console.log("data :", res.data);
+
+        await setDoc(docRef, data, { merge: true });
+      } catch (error) {
+        console.log("unable to get data :", error);
+        errorToast("unable to generate report");
+        setLoading(false);
+        return;
+      }
     } else {
-      console.log("error in getting the analytics :", res);
+      data = snap.data();
     }
-    console.log("data :", res.data);
+
+    data!["profile_pic"] = encodeURIComponent(data!["profile_pic"] ?? "");
+    if (data!.success) {
+      router.push(`/analytics/${username}?data=${JSON.stringify(data)}`);
+    }
 
     setLoading(false);
   };
 
   return (
     <main className="bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover">
-      <div className="flex flex-col justify-center items-center h-[80%]">
+      <div className="flex flex-col justify-center items-center h-[80%] relative">
+        <div>
+          <Image
+            src={"/Logo 1.png"}
+            width={240}
+            height={60}
+            alt="Insta Analytice"
+            className="absolute top-4 left-4"
+          />
+        </div>
         <div className=" flex flex-col gap-4 items-center justify-center py-16">
-          <div className="font-black text-4xl text-white text-center">
-            ANALYZE YOUR CURRENT INSTAGRAM
+          <div className="flex gap-2">
+            <div className="font-black text-4xl text-white text-center">
+              ANALYZE YOUR CURRENT INSTAGRAM
+            </div>
+            {/* <TypeAnimation
+              sequence={[
+                // Same substring at the start will only be typed out once, initially
+                "profile",
+                // "We produce food for Hamsters",
+                // 1000,
+                // "We produce food for Guinea Pigs",
+                // 1000,
+                // "We produce food for Chinchillas",
+                // 1000,
+              ]}
+              wrapper="span"
+              speed={50}
+              // style={{ fontSize: "2em", display: "inline-block" }}
+              className="font-black text-4xl text-white text-cente"
+              repeat={Infinity}
+            /> */}
           </div>
           <div className="text-white text-xl text-center">
             {" "}
@@ -47,9 +98,16 @@ export default function Home() {
           </div>
         </div>
         <div className="flex justify-center items-center w-full pt-16">
-          <div className=" bg-white/50 p-3 pl-8 rounded-full flex items-center justify-center sm:w-[50%] h-min min-w-[280px] backdrop-blur-lg">
+          <div className=" bg-white/50 p-3  rounded-full flex items-center justify-center sm:w-[50%] h-min min-w-[280px] backdrop-blur-lg">
+            <Image
+              src={"/instagram-icon.png"}
+              width={40}
+              height={40}
+              alt="input icon"
+              className="mr-3"
+            />
             <input
-              placeholder="enter username"
+              placeholder="Enter username"
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
@@ -63,9 +121,9 @@ export default function Home() {
                 variant="outline"
                 onClick={getProfileDetail}
                 disabled={loading}
-                className="flex items-center gap-2 border border-black/80 text-black/70 px-2 py-1 rounded-full bg-transparent hover:bg-white/30"
+                className="flex items-center gap-2 border bg-blue-300 border-black/30 text-black/70 px-6 py-2 rounded-full  hover:bg-blue-300/60"
               >
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
                   height="24"
@@ -80,8 +138,8 @@ export default function Home() {
                 >
                   <path d="M6 8L2 12L6 16" />
                   <path d="M2 12H22" />
-                </svg>
-                <p className="font-bold text-lg">Search</p>
+                </svg> */}
+                <p className=" text-lg">Analyse Now</p>
               </Button>
             )}
           </div>
