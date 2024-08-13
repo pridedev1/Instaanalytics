@@ -33,7 +33,7 @@ export default function Home() {
       try {
         let res = await client(`/get-profile-details?username=${username}`);
 
-        let data = res.data;
+         data = res.data;
 
         console.log("data :", res.data);
 
