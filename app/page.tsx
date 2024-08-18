@@ -19,41 +19,43 @@ export default function Home() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const getProfileDetail = async () => {
-    console.log("username :", username);
+    if (username === "" || username === undefined) return;
 
-    let docRef = doc(db, `/insta-ids/${username}`);
+    router.push(`/analysis/${username}`);
 
-    let snap = await getDoc(docRef);
-    console.log("exist :", snap.exists());
+    // let docRef = doc(db, `/insta-ids/${username}`);
 
-    let data;
-    if (!snap.exists()) {
-      if (username === "") return;
-      setLoading(true);
-      try {
-        let res = await client(`/get-profile-details?username=${username}`);
+    // let snap = await getDoc(docRef);
+    // console.log("exist :", snap.exists());
 
-         data = res.data;
+    // let data;
+    // if (!snap.exists()) {
+    //   if (username === "") return;
+    //   setLoading(true);
+    //   try {
+    //     let res = await client(`/get-profile-details?username=${username}`);
 
-        console.log("data :", res.data);
+    //      data = res.data;
 
-        await setDoc(docRef, data, { merge: true });
-      } catch (error) {
-        console.log("unable to get data :", error);
-        errorToast("unable to generate report");
-        setLoading(false);
-        return;
-      }
-    } else {
-      data = snap.data();
-    }
+    //     console.log("data :", res.data);
 
-    data!["profile_pic"] = encodeURIComponent(data!["profile_pic"] ?? "");
-    if (data!.success) {
-      router.push(`/analytics/${username}?data=${JSON.stringify(data)}`);
-    }
+    //     await setDoc(docRef, data, { merge: true });
+    //   } catch (error) {
+    //     console.log("unable to get data :", error);
+    //     errorToast("unable to generate report");
+    //     setLoading(false);
+    //     return;
+    //   }
+    // } else {
+    //   data = snap.data();
+    // }
 
-    setLoading(false);
+    // data!["profile_pic"] = encodeURIComponent(data!["profile_pic"] ?? "");
+    // if (data!.success) {
+    //   router.push(`/analytics/${username}?data=${JSON.stringify(data)}`);
+    // }
+
+    // setLoading(false);
   };
 
   return (
@@ -71,29 +73,29 @@ export default function Home() {
         <div className=" flex flex-col gap-4 items-center justify-center py-16">
           <div className="flex gap-2">
             <div className="font-black text-3xl  sm:text-5xl text-white text-center">
-              ANALYZE YOUR CURRENT INSTAGRAM <TypeAnimation
-              sequence={[
-                // Same substring at the start will only be typed out once, initially
-          
-                "Comments",
-                1000,
-                "Likes",
-                1000,
-                "Followers",
-                1000,
-                "Reels",
-                1000,
-                "",
-                1000,
-              ]}
-              wrapper="span"
-              speed={50}
-              // style={{ fontSize: "2em", display: "inline-block" }}
-              className="font-black text-3xl sm:text-5xl text-white text-cente"
-              repeat={Infinity}
-            /> 
+              ANALYZE YOUR CURRENT INSTAGRAM{" "}
+              <TypeAnimation
+                sequence={[
+                  // Same substring at the start will only be typed out once, initially
+
+                  "Comments",
+                  1000,
+                  "Likes",
+                  1000,
+                  "Followers",
+                  1000,
+                  "Reels",
+                  1000,
+                  "",
+                  1000,
+                ]}
+                wrapper="span"
+                speed={50}
+                // style={{ fontSize: "2em", display: "inline-block" }}
+                className="font-black text-3xl sm:text-5xl text-white text-cente"
+                repeat={Infinity}
+              />
             </div>
-           
           </div>
           <div className="text-white text-xl text-center">
             {" "}
