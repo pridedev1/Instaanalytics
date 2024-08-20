@@ -103,7 +103,7 @@ const PostAnalysisTable = ({ data }: any) => {
     <div className="w-full mx-auto my-8 ">
       <h2 className="flex justify-center mb-4 ">
         <div className="text-2xl font-bold p-4 w-max relative">
-          • Detailed post EVALUATION •
+          • Detailed POST EVALUATION •
           <Image
             src={"/Patch-1.png"}
             fill
