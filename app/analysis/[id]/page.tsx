@@ -1,7 +1,7 @@
 "use client";
 
 import LineChart from "./components/line_chart";
-
+import Image from "next/image";
 import ProfileReport from "./components/profile_report";
 import BarChart from "./components/bar-chart";
 import { useEffect, useState } from "react";
@@ -55,8 +55,21 @@ const ProfileAnalysis = () => {
         <div>loading might take few seconds</div>
       </div>
     );
+
+  const lastPost = profileData.media.at(-1);
   return (
-    <div className="flex flex-col  items-center justify-center bg-[url('/bg_image/business-desktop.jpeg')]   bg-no-repeat bg-fixed bg-cover">
+    <div className="flex flex-col  items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
+      <div className="absolute w-full h-[600px] top-0 ">
+        <Image
+          src={lastPost.url.replace(
+            "https://cdn-image.notjustanalytics.com/",
+            ""
+          )}
+          alt="last post"
+          fill
+          className="object-cover rounded-lg m-4"
+        />
+      </div>
       <div className="h-screen">
         <div className="backdrop-blur-lg bg-white/60 shadow-lg text-xl sm:text-2xl font-bold rounded-b-xl p-6 pt-10 text-center">
           • INSTAGRAM REPORT •
