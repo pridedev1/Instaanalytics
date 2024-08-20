@@ -28,6 +28,10 @@ const ProfileReport = ({ profileData }: any) => {
             alt={`${profileData.username}`}
           />
           <div className="font-bold">@{profileData.username}</div>
+
+          <div className="bg-[#F5F6FA]/40 px-4 py-2 rounded-full font-medium my-4">
+            {profileData.category_name}
+          </div>
         </div>
         <div className="flex gap-4 justify-between my-4">
           <div className="flex flex-col items-center sm:w-24 w-16">
