@@ -92,7 +92,7 @@ const ProfileAnalysis = () => {
       </div>
       <div className="my-14" />
       <div className="">
-        <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-10 text-center">
+        <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-6 text-center">
           • Instagram Analytics •
         </div>
         <div className="sm:my-16 my-10" />
