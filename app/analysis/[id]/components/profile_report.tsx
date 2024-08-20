@@ -8,13 +8,14 @@ const ProfileReport = ({ profileData }: any) => {
   return (
     <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 ">
       <div className="flex flex-col items-center justify-center  py-4 px-8 mx-4">
-        <Image
+        {/* <Image
           src={"/Logo 1.png"}
           width={240}
           height={40}
           alt="Insta Analytics logo"
-        />
+        /> */}
 
+        <Image src={"/Logo Black.png"} width={150} height={50} alt="Logo" />
         <div className="flex flex-col gap-4 items-center justify-center">
           <Image
             src={profileData.profile_pic_url.replace(

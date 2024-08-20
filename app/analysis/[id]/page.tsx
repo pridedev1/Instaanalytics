@@ -56,7 +56,8 @@ const ProfileAnalysis = () => {
       </div>
     );
 
-  const lastPost = profileData.media.at(-1);
+  let lastPost =
+    profileData.media.lenght != 0 ? profileData.media.at(-1) : undefined;
   return (
     <div className="flex flex-col bg_gradient items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
       <div className="absolute top-4 left-4">
@@ -71,15 +72,17 @@ const ProfileAnalysis = () => {
         />
       </div>
       <div className="absolute h-[650px] sm:left-4 left-0  sm:right-10 right-8 top-32 ">
-        <Image
-          src={lastPost.url.replace(
-            "https://cdn-image.notjustanalytics.com/",
-            ""
-          )}
-          alt="last post"
-          fill
-          className="object-cover rounded-lg m-4 w-[90%]"
-        />
+        {lastPost !== undefined && lastPost !== "" && (
+          <Image
+            src={lastPost.url.replace(
+              "https://cdn-image.notjustanalytics.com/",
+              ""
+            )}
+            alt="last post"
+            fill
+            className="object-cover rounded-lg m-4 w-[90%]"
+          />
+        )}
       </div>
       <div className="my-14" />
       <div className="">
