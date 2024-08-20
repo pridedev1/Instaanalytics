@@ -128,7 +128,13 @@ const LineChart = ({ followingData }: { followingData: any }) => {
     };
   }, []);
 
-  return <div id="line-chart" style={{ width: "100%", height: "500px" }}></div>;
+  return (
+    <div
+      id="line-chart"
+      className="bg-white py-2 pb-10 rounded-lg"
+      style={{ width: "100%", height: "500px" }}
+    ></div>
+  );
 };
 
 export default LineChart;

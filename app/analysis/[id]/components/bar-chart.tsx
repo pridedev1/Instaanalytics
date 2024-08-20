@@ -218,7 +218,13 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
     };
   }, []);
 
-  return <div id="chartdiv" style={{ width: "100%", height: "500px" }}></div>;
+  return (
+    <div
+      id="chartdiv"
+      className="bg-white rounded-lg my-8"
+      style={{ width: "100%", height: "500px" }}
+    ></div>
+  );
 };
 
 export default BarChart;

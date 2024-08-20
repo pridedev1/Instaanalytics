@@ -58,8 +58,19 @@ const ProfileAnalysis = () => {
 
   const lastPost = profileData.media.at(-1);
   return (
-    <div className="flex flex-col  items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
-      <div className="absolute w-full h-[600px] top-0 ">
+    <div className="flex flex-col bg_gradient items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
+      <div className="absolute top-4 left-4">
+        <Image src={"/Logo Black.png"} width={150} height={50} alt="Logo" />
+      </div>
+      <div className="absolute left-0 right-0 top-8 flex justify-center">
+        <Image
+          src={"/insta-logo.png"}
+          width={40}
+          height={40}
+          alt="insta logo"
+        />
+      </div>
+      <div className="absolute h-[650px] sm:left-4 left-0  sm:right-10 right-8 top-32 ">
         <Image
           src={lastPost.url.replace(
             "https://cdn-image.notjustanalytics.com/",
@@ -67,14 +78,15 @@ const ProfileAnalysis = () => {
           )}
           alt="last post"
           fill
-          className="object-cover rounded-lg m-4"
+          className="object-cover rounded-lg m-4 w-[90%]"
         />
       </div>
-      <div className="h-screen">
-        <div className="backdrop-blur-lg bg-white/60 shadow-lg text-xl sm:text-2xl font-bold rounded-b-xl p-6 pt-10 text-center">
+      <div className="my-14" />
+      <div className="">
+        <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-10 text-center">
           • INSTAGRAM REPORT •
         </div>
-        <div className="sm:my-28 my-10" />
+        <div className="sm:my-16 my-10" />
         {profileData.profile_pic_url !== undefined ? (
           <ProfileReport profileData={profileData} />
         ) : (
@@ -86,7 +98,13 @@ const ProfileAnalysis = () => {
 
         <div className="my-auto" />
       </div>
-      <div className="bg-white w-full flex flex-col items-center justify-center p-2 sm:p-8">
+      {/* <Image
+        src={"/bg-gradient.jpeg"}
+        fill
+        alt="background gradient"
+        className="-z-50"
+      /> */}
+      <div className=" w-full flex flex-col items-center justify-center p-2 sm:p-8">
         {/* <div className="sm:w-[500px] w-full h-56  sm:h-[500px] border bg-white p-4 rounded-md">
           <div className=" text-xl font-semibold">
           Hastag as per interaction
@@ -97,10 +115,27 @@ const ProfileAnalysis = () => {
           <>
             <div className="my-4" />
             <div className="w-full">
-              <div className=" text-xl font-semibold py-4">
-                Total Followers growth
+              <div className="flex items-center justify-center">
+                <div
+                  className=" text-2xl font-semibold  p-4 relative"
+                  // style={{
+                  //   background:
+                  //     "linear-gradient(90deg, rgba(255,0,150,1) 0%, rgba(255,154,0,1) 100%)",
+                  //   borderRadius: "8px", // Optional: to match the rounded corners
+                  //   padding: "10px 20px", // Adjust padding as needed
+                  //   display: "inline-block", // Ensure the background fits the text
+                  // }}
+                >
+                  • OVERALL FOLLOWER EXPANSION •
+                  <Image
+                    src={"/Patch-1.png"}
+                    fill
+                    alt="text gradient"
+                    className="-z-10 rounded-lg "
+                  />
+                </div>
               </div>
-
+              <div className="my-8" />
               <LineChart followingData={followerData} />
             </div>
           </>
@@ -110,8 +145,18 @@ const ProfileAnalysis = () => {
           <>
             <div className="my-4" />
             <div className="w-full">
-              <div className=" text-xl font-semibold py-4">
-                Post Interactions
+              <div className="flex justify-center ">
+                <div className="text-2xl font-semibold p-4 relative">
+                  <div>
+                    • POST INTERACTION METRICS •{" "}
+                    <Image
+                      src={"/Patch-1.png"}
+                      fill
+                      alt="text gradient"
+                      className="-z-10 rounded-lg "
+                    />
+                  </div>
+                </div>
               </div>
               {/* <BarChartWithImages /> */}
               <BarChart mediaData={profileData.media} />

@@ -58,7 +58,16 @@
     --chart-5: 340 75% 55%;
   }
 }
-
+.bg_gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(173, 216, 230, 0.5),
+    rgba(255, 182, 193, 0.5)
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 @layer base {
   * {
     @apply border-border;

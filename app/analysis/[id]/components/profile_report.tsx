@@ -6,7 +6,7 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 
 const ProfileReport = ({ profileData }: any) => {
   return (
-    <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl ">
+    <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 ">
       <div className="flex flex-col items-center justify-center  py-4 px-8 mx-4">
         <Image
           src={"/Logo 1.png"}
@@ -95,8 +95,10 @@ const ProfileReport = ({ profileData }: any) => {
           ) : (
             <TrendingDown />
           )}
-          <b>{profileData.media_info.er_info.er_diff_avg} %</b> higher than the
-          average of similar profiles
+          <b className="whitespace-nowrap w-min h-min">
+            {profileData.media_info.er_info.er_diff_avg} %
+          </b>{" "}
+          higher than the average of similar profiles
         </div>
       </div>
     </div>
