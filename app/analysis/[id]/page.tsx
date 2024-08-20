@@ -60,16 +60,16 @@ const ProfileAnalysis = () => {
     profileData.media.lenght != 0 ? profileData.media.at(-1) : undefined;
   return (
     <div className="flex flex-col bg_gradient items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
-      <div className="absolute top-4 left-4">
-        <Image src={"/Logo Black.png"} width={150} height={50} alt="Logo" />
-      </div>
-      <div className="absolute left-0 right-0 top-8 flex justify-center">
+      <div className="absolute top-8 right-4">
         <Image
           src={"/insta-logo.png"}
           width={40}
           height={40}
           alt="insta logo"
         />
+      </div>
+      <div className="absolute left-0 right-0 top-4 flex justify-center">
+        <Image src={"/Logo Black.png"} width={150} height={50} alt="Logo" />
       </div>
       <div className="absolute h-[650px] sm:left-4 left-0  sm:right-10 right-8 top-32 ">
         {lastPost !== undefined && lastPost !== "" && (
@@ -87,7 +87,7 @@ const ProfileAnalysis = () => {
       <div className="my-14" />
       <div className="">
         <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-10 text-center">
-          • INSTAGRAM REPORT •
+          • INSTAGRAM ANALYTICS •
         </div>
         <div className="sm:my-16 my-10" />
         {profileData.profile_pic_url !== undefined ? (

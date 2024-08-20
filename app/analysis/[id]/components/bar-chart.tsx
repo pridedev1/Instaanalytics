@@ -142,7 +142,7 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
             isMobile ? "25px" : "80px"
           }; height: ${
             isMobile ? "25px" : "80px"
-          }; border: 4px solid #E9EAF0;border-radius: 10px;" />`;
+          }; border: 4px solid #E9EAF0;border-radius: 10px;object-fit: cover;" />`;
         }
       }
       return html;

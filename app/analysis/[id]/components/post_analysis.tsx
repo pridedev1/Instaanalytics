@@ -45,7 +45,7 @@ const PostAnalysisGrid = ({ data }: any) => {
                 objectFit="fill"
                 width={120}
                 height={120}
-                className="rounded-md aspect-square"
+                className="rounded-md aspect-square object-cover"
               />
               <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-lg  p-1 rounded-full">
                 {post["media_type"] === "GraphSidecar" && (
@@ -103,7 +103,7 @@ const PostAnalysisTable = ({ data }: any) => {
     <div className="w-full mx-auto my-8 ">
       <h2 className="flex justify-center mb-4 ">
         <div className="text-2xl font-bold p-4 w-max relative">
-          • Detailed post analysis •
+          • Detailed post EVALUATION •
           <Image
             src={"/Patch-1.png"}
             fill

@@ -63,8 +63,8 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center h-[80%] relative">
         <div>
           <Image
-            src={"/Logo 1.png"}
-            width={240}
+            src={"/Logo Black.png"}
+            width={150}
             height={60}
             alt="Insta Analytice"
             className="absolute top-4 left-4"
@@ -72,19 +72,19 @@ export default function Home() {
         </div>
         <div className=" flex flex-col gap-4 items-center justify-center py-16">
           <div className="flex gap-2">
-            <div className="font-black text-3xl  sm:text-5xl text-white text-center">
+            <div className="font-black text-3xl  sm:text-5xl text-black text-center">
               ANALYZE YOUR CURRENT INSTAGRAM{" "}
               <TypeAnimation
                 sequence={[
                   // Same substring at the start will only be typed out once, initially
 
-                  "Comments",
+                  "COMMENTS",
                   1000,
-                  "Likes",
+                  "LIKES",
                   1000,
-                  "Followers",
+                  "FOLLOWERS",
                   1000,
-                  "Reels",
+                  "REELS",
                   1000,
                   "",
                   1000,
@@ -92,12 +92,12 @@ export default function Home() {
                 wrapper="span"
                 speed={50}
                 // style={{ fontSize: "2em", display: "inline-block" }}
-                className="font-black text-3xl sm:text-5xl text-white text-cente"
+                className="font-black text-3xl sm:text-5xl text-black text-cente"
                 repeat={Infinity}
               />
             </div>
           </div>
-          <div className="text-white text-xl text-center">
+          <div className="text-black text-xl text-center">
             {" "}
             • Dive into the details and discover the insights in your latest
             report •{" "}
