@@ -5,7 +5,7 @@ import Image from "next/image";
 import ProfileReport from "./components/profile_report";
 import BarChart from "./components/bar-chart";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, MoveUp } from "lucide-react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import PostAnalysis from "./components/post_analysis";
@@ -44,6 +44,10 @@ const ProfileAnalysis = () => {
     fetchData(id as string);
     console.log("loafing data");
   }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // const profileData = sampleResponse.profileData;
   // const followerData = sampleResponse.followingData;
@@ -182,6 +186,14 @@ const ProfileAnalysis = () => {
             </div>
           </>
         )}
+      </div>
+      <div className="fixed bottom-4 right-4">
+        <button
+          onClick={scrollToTop}
+          className="p-2 bg-white text-white rounded-full shadow-lg hover:bg-white/70 transition-colors duration-300"
+        >
+          <MoveUp color="#000" />
+        </button>
       </div>
     </div>
   );
