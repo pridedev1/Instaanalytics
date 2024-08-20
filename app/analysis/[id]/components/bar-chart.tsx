@@ -234,7 +234,7 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
 
       <div
         id="chartdiv"
-        className="bg-white rounded-lg mt-16 "
+        className="bg-white rounded-lg mt-4 "
         style={{ width: "100%", height: "500px" }}
       ></div>
     </div>

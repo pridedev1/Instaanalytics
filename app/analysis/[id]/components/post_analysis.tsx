@@ -6,11 +6,12 @@ import Image from "next/image";
 import { format } from "light-date";
 import { Eye, Heart, MessageCircle, Image as ImageIcon } from "lucide-react";
 import { isMobile } from "react-device-detect";
+import { formatNumber } from "@/app/utils/helper";
 
 const PostAnalysisGrid = ({ data }: any) => {
   return (
     <div className="w-full mx-auto my-16">
-      <h2 className="flex justify-center mb-16 ">
+      <h2 className="flex justify-center mb-8 ">
         <div className="text-2xl p-4 w-max font-bold relative">
           • Recent 12 Post Activity •
           <Image
@@ -77,19 +78,27 @@ const PostAnalysisGrid = ({ data }: any) => {
                 )}
               </div>
             </div>
-            <div className="flex sm:flex-row flex-col items-end gap-2 justify-between mt-2">
+            <div className="flex sm:flex-row flex-col items-start gap-2 justify-between mt-2">
               <div className="flex items-center gap-1">
+                <Heart size={18} />
                 <span className=" pr-2">
-                  {post.total_likes.toLocaleString()}
+                  {post.total_likes.toLocaleString().replace(",", ".")}
                 </span>
-                <Heart color="#AEB2C2" size={18} />
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-[#AEB2C2] pr-2">
-                  {post.total_comments.toLocaleString()}
+                <MessageCircle size={18} />
+                <span className=" pr-2">
+                  {post.total_comments.toLocaleString().replace(",", ".")}
                 </span>
-                <MessageCircle color="#AEB2C2" size={18} />
               </div>
+              {post.is_reel_media && (
+                <div className="flex gap-2 items-center">
+                  <Eye size={20} />{" "}
+                  {formatNumber(
+                    post.total_video_views.toLocaleString()
+                  ).replace(",", ".")}
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -101,7 +110,7 @@ const PostAnalysisGrid = ({ data }: any) => {
 const PostAnalysisTable = ({ data }: any) => {
   return (
     <div className="w-full mx-auto my-16 ">
-      <h2 className="flex justify-center mb-16 ">
+      <h2 className="flex justify-center mb-8">
         <div className="text-2xl font-bold p-4 w-max relative">
           • Detailed Post Evaluation •
           <Image
@@ -190,17 +199,19 @@ const PostAnalysisTable = ({ data }: any) => {
                 </td>
                 <td className="border p-2">
                   <div className="flex gap-2 items-center">
-                    <Heart color="#AEB2C2" size={20} />{" "}
-                    {post.total_likes.toLocaleString()}
+                    <Heart size={20} />{" "}
+                    {post.total_likes.toLocaleString().replace(",", ".")}
                   </div>
                   <div className="flex gap-2 items-center">
-                    <MessageCircle color="#AEB2C2" size={20} />{" "}
-                    {post.total_comments.toLocaleString()}
+                    <MessageCircle size={20} />{" "}
+                    {post.total_comments.toLocaleString().replace(",", ".")}
                   </div>
                   {post.is_reel_media && (
                     <div className="flex gap-2 items-center">
-                      <Eye color="#AEB2C2" size={20} />{" "}
-                      {post.total_video_views.toLocaleString()}
+                      <Eye size={20} />{" "}
+                      {post.total_video_views
+                        .toLocaleString()
+                        .replace(",", ".")}
                     </div>
                   )}
                 </td>

@@ -59,7 +59,7 @@ const ProfileAnalysis = () => {
     );
 
   let lastPost =
-    profileData.media.lenght != 0 ? profileData.media.at(-1) : undefined;
+    profileData.media.lenght != 0 ? profileData.media[0] : undefined;
   return (
     <div className="flex flex-col bg_gradient items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
       {/* <div className="absolute top-8 right-4">
@@ -71,7 +71,7 @@ const ProfileAnalysis = () => {
         />
       </div> */}
       <div className="absolute left-0 right-0 top-4 flex justify-center">
-        <Image src={"/Logo Black.png"} width={150} height={50} alt="Logo" />
+        <Image src={"/Logo Black.png"} width={180} height={60} alt="Logo" />
       </div>
       <div className="absolute h-[650px] sm:left-4 left-0  sm:right-10 right-8 top-32 ">
         {lastPost !== undefined && lastPost !== "" && (
@@ -131,7 +131,7 @@ const ProfileAnalysis = () => {
                   //   display: "inline-block", // Ensure the background fits the text
                   // }}
                 >
-                  • OVERALL FOLLOWER EXPANSION •
+                  • Overall Follower Expansion •
                   <Image
                     src={"/Patch-1.png"}
                     fill
@@ -140,7 +140,7 @@ const ProfileAnalysis = () => {
                   />
                 </div>
               </div>
-              <div className="my-16" />
+              <div className="my-8" />
               <LineChart followingData={followerData} />
             </div>
           </>
@@ -150,7 +150,7 @@ const ProfileAnalysis = () => {
           <>
             <div className="my-8" />
             <div className="w-full">
-              <div className="flex justify-center mb-4 ">
+              <div className="flex justify-center">
                 <div className="text-xl  p-4 relative">
                   <div
                     className=" text-2xl font-semibold  p-4 relative"
