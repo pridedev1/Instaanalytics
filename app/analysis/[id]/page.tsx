@@ -52,7 +52,9 @@ const ProfileAnalysis = () => {
     return (
       <div className="w-screen h-screen flex flex-col gap-2 items-center justify-center">
         <Loader2 className="animate-spin w-10 h-10" />
-        <div>loading might take few seconds</div>
+        <div className="m-4 text-center">
+          InstaAnalyser is carefully analyzing your profile. Please be patient.
+        </div>
       </div>
     );
 
@@ -60,14 +62,14 @@ const ProfileAnalysis = () => {
     profileData.media.lenght != 0 ? profileData.media.at(-1) : undefined;
   return (
     <div className="flex flex-col bg_gradient items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
-      <div className="absolute top-8 right-4">
+      {/* <div className="absolute top-8 right-4">
         <Image
           src={"/insta-logo.png"}
           width={40}
           height={40}
           alt="insta logo"
         />
-      </div>
+      </div> */}
       <div className="absolute left-0 right-0 top-4 flex justify-center">
         <Image src={"/Logo Black.png"} width={150} height={50} alt="Logo" />
       </div>
@@ -87,7 +89,7 @@ const ProfileAnalysis = () => {
       <div className="my-14" />
       <div className="">
         <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-10 text-center">
-          • INSTAGRAM ANALYTICS •
+          • Instagram Analytics •
         </div>
         <div className="sm:my-16 my-10" />
         {profileData.profile_pic_url !== undefined ? (
@@ -116,7 +118,7 @@ const ProfileAnalysis = () => {
           </div> */}
         {followerData.history !== undefined && (
           <>
-            <div className="my-4" />
+            <div className="my-8" />
             <div className="w-full">
               <div className="flex items-center justify-center">
                 <div
@@ -138,7 +140,7 @@ const ProfileAnalysis = () => {
                   />
                 </div>
               </div>
-              <div className="my-8" />
+              <div className="my-16" />
               <LineChart followingData={followerData} />
             </div>
           </>
@@ -146,12 +148,21 @@ const ProfileAnalysis = () => {
 
         {profileData.media !== undefined && (
           <>
-            <div className="my-4" />
+            <div className="my-8" />
             <div className="w-full">
-              <div className="flex justify-center ">
-                <div className="text-2xl font-semibold p-4 relative">
-                  <div>
-                    • POST INTERACTION METRICS •{" "}
+              <div className="flex justify-center mb-4 ">
+                <div className="text-xl  p-4 relative">
+                  <div
+                    className=" text-2xl font-semibold  p-4 relative"
+                    // style={{
+                    //   background:
+                    //     "linear-gradient(90deg, rgba(255,0,150,1) 0%, rgba(255,154,0,1) 100%)",
+                    //   borderRadius: "8px", // Optional: to match the rounded corners
+                    //   padding: "10px 20px", // Adjust padding as needed
+                    //   display: "inline-block", // Ensure the background fits the text
+                    // }}
+                  >
+                    • Post Interactions Metrics •
                     <Image
                       src={"/Patch-1.png"}
                       fill
@@ -164,9 +175,10 @@ const ProfileAnalysis = () => {
               {/* <BarChartWithImages /> */}
               <BarChart mediaData={profileData.media} />
             </div>
+
             <div className="w-full">
               {/* <PostAnalysisTable data={profileData.media} />; */}
-              <PostAnalysis data={profileData.media} />;
+              <PostAnalysis data={profileData.media} />
             </div>
           </>
         )}

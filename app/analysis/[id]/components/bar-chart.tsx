@@ -7,6 +7,7 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { sampleResponse } from "@/app/utils/constants";
 import { formatNumber } from "@/app/utils/helper";
 import { isMobile } from "react-device-detect";
+import Image from "next/image";
 
 const BarChart = ({ mediaData }: { mediaData: any }) => {
   // const mediaData = sampleResponse.profileData.media;
@@ -26,7 +27,7 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
         panY: false,
         wheelX: "none",
         wheelY: "none",
-        paddingBottom: 50,
+        paddingBottom: isMobile ? 120 : 60,
         paddingTop: 40,
         paddingLeft: 0,
         paddingRight: 0,
@@ -219,11 +220,24 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
   }, []);
 
   return (
-    <div
-      id="chartdiv"
-      className="bg-white rounded-lg my-8"
-      style={{ width: "100%", height: "500px" }}
-    ></div>
+    <div className="relative">
+      <div className="absolute bottom-4 mx-2 sm:left-4 gradient-border-wrapper z-10 rounded-3xl">
+        <div className="gradient-border">
+          <div className=" flex flex-row gap-2 items-center">
+            <Image src="/gradient_idea.svg" width={30} height={40} alt="idea" />
+            <span>
+              Study the key elements of top posts to inspire your own content!
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="chartdiv"
+        className="bg-white rounded-lg mt-16 "
+        style={{ width: "100%", height: "500px" }}
+      ></div>
+    </div>
   );
 };
 

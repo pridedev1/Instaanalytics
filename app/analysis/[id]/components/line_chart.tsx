@@ -7,6 +7,8 @@ import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { sampleResponse } from "@/app/utils/constants";
 import getOneMonthAgoDate from "@/app/utils/getOnMonthAgoDate";
 import { formatNumber } from "@/app/utils/helper";
+import Image from "next/image";
+import { isMobile } from "react-device-detect";
 
 const LineChart = ({ followingData }: { followingData: any }) => {
   const color = am5.color(0xf5004f);
@@ -22,6 +24,7 @@ const LineChart = ({ followingData }: { followingData: any }) => {
       am5xy.XYChart.new(root, {
         panX: false,
         panY: false,
+        paddingBottom: isMobile ? 140 : 100,
         //   wheelX: false, // Disable zoom
         //   wheelY: false, // Disable zoom
         pinchZoomX: false, // Disable zoom
@@ -129,11 +132,24 @@ const LineChart = ({ followingData }: { followingData: any }) => {
   }, []);
 
   return (
-    <div
-      id="line-chart"
-      className="bg-white py-2 pb-10 rounded-lg"
-      style={{ width: "100%", height: "500px" }}
-    ></div>
+    <div className="relative">
+      <div className="absolute bottom-4 mx-2 sm:left-4 gradient-border-wrapper z-10 rounded-3xl">
+        <div className="gradient-border">
+          <div className=" flex flex-row gap-2 items-center">
+            <Image src="/gradient_idea.svg" width={30} height={40} alt="idea" />
+            <span>
+              Continuous growth in followers is essential for a robust and
+              flourishing Instagram presence.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        id="line-chart"
+        className="bg-white py-2 pb-10 rounded-lg"
+        style={{ width: "100%", height: "500px" }}
+      ></div>
+    </div>
   );
 };
 

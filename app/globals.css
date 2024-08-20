@@ -68,6 +68,25 @@
   background-attachment: fixed;
   background-size: cover;
 }
+.gradient-border-wrapper {
+  display: inline-block;
+  border-radius: 20px; /* Adjust border radius as needed */
+  overflow: hidden; /* Ensures the border radius is applied */
+  padding: 3px; /* Adjust padding as needed */
+  background: linear-gradient(
+    160deg,
+    #fd236c,
+    #52aefb,
+    #fff9ab
+  ); /* Gradient colors */
+}
+
+.gradient-border {
+  display: inline-block;
+  padding: 10px; /* Adjust padding as needed */
+  background: white; /* Background color of the inner content */
+  border-radius: 17px; /* Adjust border radius to match the wrapper */
+}
 @layer base {
   * {
     @apply border-border;

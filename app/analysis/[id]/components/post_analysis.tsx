@@ -9,10 +9,10 @@ import { isMobile } from "react-device-detect";
 
 const PostAnalysisGrid = ({ data }: any) => {
   return (
-    <div className="w-full mx-auto my-8">
-      <h2 className="flex justify-center mb-4 ">
+    <div className="w-full mx-auto my-16">
+      <h2 className="flex justify-center mb-16 ">
         <div className="text-2xl p-4 w-max font-bold relative">
-          • RECENT 12 POST ACTIVITY •
+          • Recent 12 Post Activity •
           <Image
             src={"/Patch-1.png"}
             fill
@@ -79,7 +79,7 @@ const PostAnalysisGrid = ({ data }: any) => {
             </div>
             <div className="flex sm:flex-row flex-col items-end gap-2 justify-between mt-2">
               <div className="flex items-center gap-1">
-                <span className="text-[#AEB2C2] pr-2">
+                <span className=" pr-2">
                   {post.total_likes.toLocaleString()}
                 </span>
                 <Heart color="#AEB2C2" size={18} />
@@ -100,10 +100,10 @@ const PostAnalysisGrid = ({ data }: any) => {
 
 const PostAnalysisTable = ({ data }: any) => {
   return (
-    <div className="w-full mx-auto my-8 ">
-      <h2 className="flex justify-center mb-4 ">
+    <div className="w-full mx-auto my-16 ">
+      <h2 className="flex justify-center mb-16 ">
         <div className="text-2xl font-bold p-4 w-max relative">
-          • Detailed POST EVALUATION •
+          • Detailed Post Evaluation •
           <Image
             src={"/Patch-1.png"}
             fill
