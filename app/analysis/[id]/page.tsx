@@ -1,26 +1,24 @@
 "use client";
 
-import { sampleResponse } from "@/app/utils/constants";
-
 import LineChart from "./components/line_chart";
 
 import ProfileReport from "./components/profile_report";
 import BarChart from "./components/bar-chart";
-import PostAnalysisTable from "./components/post_analysis";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import axios from "axios";
-import { errorToast } from "@/app/utils/toast";
+import PostAnalysis from "./components/post_analysis";
 
 const ProfileAnalysis = () => {
   const [profileData, setProfileData] = useState<any>();
   const [followerData, setFollowerData] = useState<any>();
-
+  const [loading, setLoading] = useState(false);
   let { id } = useParams();
 
   const fetchData = async (id: string) => {
     try {
+      setLoading(true);
       let res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`
       );
@@ -37,12 +35,15 @@ const ProfileAnalysis = () => {
       console.log("error in getting profile report :", error);
       setFollowerData({});
       setProfileData({});
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData(id as string);
-  }, [id]);
+    console.log("loafing data");
+  }, []);
 
   // const profileData = sampleResponse.profileData;
   // const followerData = sampleResponse.followingData;
@@ -72,7 +73,7 @@ const ProfileAnalysis = () => {
 
         <div className="my-auto" />
       </div>
-      <div className="bg-white w-full flex flex-col items-center justify-center p-8">
+      <div className="bg-white w-full flex flex-col items-center justify-center p-2 sm:p-8">
         {/* <div className="sm:w-[500px] w-full h-56  sm:h-[500px] border bg-white p-4 rounded-md">
           <div className=" text-xl font-semibold">
           Hastag as per interaction
@@ -103,7 +104,8 @@ const ProfileAnalysis = () => {
               <BarChart mediaData={profileData.media} />
             </div>
             <div className="w-full">
-              <PostAnalysisTable data={profileData.media} />;
+              {/* <PostAnalysisTable data={profileData.media} />; */}
+              <PostAnalysis data={profileData.media} />;
             </div>
           </>
         )}

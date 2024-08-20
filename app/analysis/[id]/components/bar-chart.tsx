@@ -6,6 +6,7 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { sampleResponse } from "@/app/utils/constants";
 import { formatNumber } from "@/app/utils/helper";
+import { isMobile } from "react-device-detect";
 
 const BarChart = ({ mediaData }: { mediaData: any }) => {
   // const mediaData = sampleResponse.profileData.media;
@@ -137,7 +138,11 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
 
         if (dataContext && dataContext.pictureSettings.src) {
           console.log("image :", dataContext.pictureSettings.src);
-          return `<img src="${dataContext.pictureSettings.src}" style="width: 80px; height: 80px; border: 4px solid #E9EAF0;border-radius: 10px;" />`;
+          return `<img src="${dataContext.pictureSettings.src}" style="width: ${
+            isMobile ? "25px" : "80px"
+          }; height: ${
+            isMobile ? "25px" : "80px"
+          }; border: 4px solid #E9EAF0;border-radius: 10px;" />`;
         }
       }
       return html;
