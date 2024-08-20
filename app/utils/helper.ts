@@ -25,3 +25,9 @@ export function formatNumber(str: string) {
     return num.toString();
   }
 }
+
+export function capitalizeFirstLetterOfEachWord(str: string) {
+  return str.replace(/\b\w/g, function (char) {
+    return char.toUpperCase();
+  });
+}

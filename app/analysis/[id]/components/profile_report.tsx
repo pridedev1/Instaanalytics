@@ -3,6 +3,7 @@ import formatNumber from "@/app/utils/formateNumber";
 import Image from "next/image";
 import GradientImage from "../../../../public/Patch-1.png";
 import { TrendingDown, TrendingUp } from "lucide-react";
+import { capitalizeFirstLetterOfEachWord } from "@/app/utils/helper";
 
 const ProfileReport = ({ profileData }: any) => {
   return (
@@ -85,7 +86,9 @@ const ProfileReport = ({ profileData }: any) => {
           </div>
           <div className="flex flex-col items-center">
             <div className="text-3xl font-black">
-              {profileData.media_info.er_info.er_type}
+              {capitalizeFirstLetterOfEachWord(
+                profileData.media_info.er_info.er_type
+              )}
             </div>
             <div className="text-sm font-medium">Status</div>
           </div>
