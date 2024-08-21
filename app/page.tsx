@@ -2,59 +2,86 @@
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
 import { isMobile } from "react-device-detect";
+import MyModal from "./components/my-dialog";
+import { MEMBERID, PASSWORD } from "./utils/constants";
+import { errorToast } from "./utils/toast";
 
 export default function Home() {
   const [username, setUsername] = useState("");
-
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const getProfileDetail = async () => {
+  let [isOpen, setIsOpen] = useState(false);
+
+  function open() {
+    setIsOpen(true);
+  }
+
+  function close() {
+    setIsOpen(false);
+  }
+
+  const handleLogin = (memberId: string, password: string) => {
+    // Assuming you have a login function
+    // loginUser();
+    if (memberId !== MEMBERID) {
+      errorToast("MemberId Don't match");
+      return;
+    }
+    if (password !== PASSWORD) {
+      errorToast("Password was incorrecy");
+      return;
+    }
+    // Set isLogin to true in sessionStorage
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("isLogin", "true");
+    }
     if (username === "" || username === undefined) return;
-
-    router.push(`/analysis/${username}`);
-
-    // let docRef = doc(db, `/insta-ids/${username}`);
-
-    // let snap = await getDoc(docRef);
-    // console.log("exist :", snap.exists());
-
-    // let data;
-    // if (!snap.exists()) {
-    //   if (username === "") return;
-    //   setLoading(true);
-    //   try {
-    //     let res = await client(`/get-profile-details?username=${username}`);
-
-    //      data = res.data;
-
-    //     console.log("data :", res.data);
-
-    //     await setDoc(docRef, data, { merge: true });
-    //   } catch (error) {
-    //     console.log("unable to get data :", error);
-    //     errorToast("unable to generate report");
-    //     setLoading(false);
-    //     return;
-    //   }
-    // } else {
-    //   data = snap.data();
-    // }
-
-    // data!["profile_pic"] = encodeURIComponent(data!["profile_pic"] ?? "");
-    // if (data!.success) {
-    //   router.push(`/analytics/${username}?data=${JSON.stringify(data)}`);
-    // }
-
-    // setLoading(false);
+    close();
+    window.open(`/analysis/${username}`, "_blank");
   };
 
+  const getProfileDetail = async () => {
+    if (username === "" || username === undefined) return;
+    if (typeof window !== "undefined") {
+      const isLogin = sessionStorage.getItem("isLogin");
+      if (isLogin) {
+        close();
+        // router.push(`/analysis/${username}`);
+        window.open(`/analysis/${username}`, "_blank");
+      } else open();
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isLogin = sessionStorage.getItem("isLogin");
+      console.log("isLogin :", isLogin);
+
+      // if (!isLogin) {
+      //   // Redirect to login page or prompt login
+      //   router.push("/login");
+      // }
+    }
+  }, []);
+
   return (
-    <main className="bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover">
+    <main
+      className={`bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover ${
+        isOpen ? "blur-background" : ""
+      }`}
+    >
+      <MyModal
+        isOpen={isOpen}
+        open={open}
+        close={close}
+        handleLogin={handleLogin}
+      />
       <div className="flex flex-col justify-center items-center h-[80%] relative">
         <div className="flex items-center justify-center absolute top-4 left-0 right-0">
           <Image
@@ -152,25 +179,9 @@ const AnalysisButton = ({
       disabled={loading}
       className={`flex ${
         isFullWith ? "sm:w-[60%] h-14 min-w-[320px]" : ""
-      } items-center gap-2 border bg-blue-300 border-black/30 text-black/70 px-6 py-2 rounded-full  hover:bg-blue-300/60`}
+      } items-center gap-2 border bg-gradient-to-r from-[#DC1699] font-medium  to-[#FD6D52] hover:text-white text-white px-6 py-2 rounded-full  hover:bg-gradient-to-r hover:from-[#DC1699]/80 hover:to-[#FD6D52]/80`}
     >
-      {/* <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  className=" "
-  // class="lucide lucide-move-left"
->
-  <path d="M6 8L2 12L6 16" />
-  <path d="M2 12H22" />
-</svg> */}
-      <p className=" text-lg">Analyse Now</p>
+      <p className={isFullWith ? `text-xl` : "text-lg"}>Analyse Now</p>
     </Button>
   );
 };

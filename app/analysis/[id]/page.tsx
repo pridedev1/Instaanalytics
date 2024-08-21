@@ -63,7 +63,9 @@ const ProfileAnalysis = () => {
     );
 
   let lastPost =
-    profileData.media.lenght != 0 ? profileData.media[0] : undefined;
+    profileData.media != undefined && profileData.media.length != 0
+      ? profileData.media[0]
+      : undefined;
   return (
     <div className="flex flex-col bg_gradient items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
       {/* <div className="absolute top-8 right-4">

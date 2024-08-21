@@ -95,3 +95,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.blur-background {
+  filter: blur(20px);
+}

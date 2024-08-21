@@ -1,3 +1,6 @@
+export const MEMBERID = "11";
+export const PASSWORD = "11";
+
 export const sampleResponse = {
   followingData: {
     history: [
