@@ -166,9 +166,12 @@ const PostAnalysisTable = ({ data }: any) => {
                     )}
                     {post["media_type"] === "GraphImage" && (
                       <div>
-                        <ImageIcon
-                          size={28}
-                          className="p-1.5 bg-[#7F69F0] rounded-full text-white"
+                        <Image
+                          src={"/gallary.svg"}
+                          width={30}
+                          height={30}
+                          alt="Photo"
+                          className="p-1.5 bg-[#55A2F5] rounded-full text-white"
                         />
                       </div>
                     )}

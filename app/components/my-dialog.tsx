@@ -25,11 +25,15 @@ export default function MyModal({ isOpen, open, close, handleLogin }: any) {
               >
                 Authentication Required
               </DialogTitle>
-              <p className="my-4 text-sm/6 text-black/50 text-center">
-                This website is exclusively accessible to{" "}
-                <b className="text-black">Instagram approved </b>
-                companies and their vendors.Please use your provided credentials
-                to enter.
+              <p className="mt-4 text-sm/6 text-black/50 text-center">
+                <b className="font-medium text-black">
+                  {" "}
+                  This website is exclusively accessible to Instagram approved
+                  companies and their vendors.
+                </b>
+              </p>
+              <p className="mb-4 mt-2 text-sm/6 text-black/50 text-center">
+                Please use your provided credentials to enter.
               </p>
               <MyInput
                 label={"Member ID"}
