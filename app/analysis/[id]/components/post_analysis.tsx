@@ -4,7 +4,7 @@
 import React from "react";
 import Image from "next/image";
 import { format } from "light-date";
-import { Eye, Heart, MessageCircle, Image as ImageIcon } from "lucide-react";
+import { Eye, Heart, MessageCircle } from "lucide-react";
 import { isMobile } from "react-device-detect";
 import { formatNumber } from "@/app/utils/helper";
 
@@ -62,7 +62,13 @@ const PostAnalysisGrid = ({ data }: any) => {
                 )}
                 {post["media_type"] === "GraphImage" && (
                   <div>
-                    <ImageIcon size={28} className="p-1.5 " />
+                    <Image
+                      src={"/gallary.svg"}
+                      width={30}
+                      height={30}
+                      alt="reel"
+                      className="p-1.5 "
+                    />
                   </div>
                 )}
                 {post.is_reel_media && (
