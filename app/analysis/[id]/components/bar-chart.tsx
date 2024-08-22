@@ -67,37 +67,6 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
       };
     });
     console.log("data2 :", data2);
-
-    // let data = [
-    //   {
-    //     year: "2021",
-    //     europe: 2.5,
-    //     namerica: 2.5,
-    //     asia: 2.1,
-    //     lamerica: 1,
-    //     meast: 0.8,
-    //     africa: 0.4,
-    //   },
-    //   {
-    //     year: "2022",
-    //     europe: 2.6,
-    //     namerica: 2.7,
-    //     asia: 2.2,
-    //     lamerica: 0.5,
-    //     meast: 0.4,
-    //     africa: 0.3,
-    //   },
-    //   {
-    //     year: "2023",
-    //     europe: 2.8,
-    //     namerica: 2.9,
-    //     asia: 2.4,
-    //     lamerica: 0.3,
-    //     meast: 0.9,
-    //     africa: 0.5,
-    //   },
-    // ];
-
     // Create axes
 
     let xRenderer = am5xy.AxisRendererX.new(root, {

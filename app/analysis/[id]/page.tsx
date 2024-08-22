@@ -9,6 +9,11 @@ import { Loader2, MoveUp } from "lucide-react";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import PostAnalysis from "./components/post_analysis";
+import ProfileDataHistory from "./components/porfile_data_history";
+import WordCloudChart from "./components/word_cloud_chart";
+import HashtagList from "./components/hash_tag_list";
+import FollowerGrowthGraph from "./components/follower_growth_graph";
+import FollowerGrowthOverview from "./components/follower_growth_overview";
 
 const ProfileAnalysis = () => {
   const [profileData, setProfileData] = useState<any>();
@@ -51,6 +56,7 @@ const ProfileAnalysis = () => {
 
   // const profileData = sampleResponse.profileData;
   // const followerData = sampleResponse.followingData;
+  // console.log("following data :", followerData);
 
   if (profileData === undefined || followerData === undefined)
     return (
@@ -116,12 +122,6 @@ const ProfileAnalysis = () => {
         className="-z-50"
       /> */}
       <div className=" w-full flex flex-col items-center justify-center p-2 sm:p-8">
-        {/* <div className="sm:w-[500px] w-full h-56  sm:h-[500px] border bg-white p-4 rounded-md">
-          <div className=" text-xl font-semibold">
-          Hastag as per interaction
-          </div>
-          <WordCloudChart />
-          </div> */}
         {followerData.history !== undefined && (
           <>
             <div className="my-8" />
@@ -151,7 +151,29 @@ const ProfileAnalysis = () => {
             </div>
           </>
         )}
+        <div className="w-full flex my-8 sm:h-[550px] gap-4">
+          <div className=" w-full  border bg-white p-4 rounded-md">
+            <div className=" text-xl font-semibold">
+              Hastag as per interaction
+            </div>
+            <WordCloudChart hashtags={profileData.hashtags} />
+          </div>
+          <div className="w-full ">
+            <HashtagList hashtags={profileData.hashtags} />
+          </div>
+        </div>
 
+        <div className="w-full grid grid-cols-6 gap-4 ">
+          <div className="col-span-4">
+            <FollowerGrowthGraph
+              followerHistory={followerData.history}
+              isFollowing={true}
+            />
+          </div>
+          <div className="col-span-2 ">
+            <FollowerGrowthOverview followerHistory={followerData.history} />
+          </div>
+        </div>
         {profileData.media !== undefined && (
           <>
             <div className="my-8" />
@@ -185,6 +207,15 @@ const ProfileAnalysis = () => {
             <div className="w-full">
               {/* <PostAnalysisTable data={profileData.media} />; */}
               <PostAnalysis data={profileData.media} />
+            </div>
+
+            {/* <div>
+              <WordCloudChart />
+            </div> */}
+            <div className="w-full">
+              <ProfileDataHistory
+                data={followerData.history.slice(-30).reverse()}
+              />
             </div>
           </>
         )}

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useLayoutEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
@@ -6,9 +6,9 @@ import * as am5wc from "@amcharts/amcharts5/wc";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { sampleResponse } from "@/app/utils/constants";
 
-const WordCloudChart = () => {
+const WordCloudChart = ({ hashtags }: any) => {
   const color1 = am5.color(0xf5004f);
-  const color2 = am5.color(0xEF5A6F);
+  const color2 = am5.color(0xef5a6f);
   useLayoutEffect(() => {
     let root = am5.Root.new("wordclouddiv");
 
@@ -20,13 +20,14 @@ const WordCloudChart = () => {
         valueField: "weight",
         maxFontSize: am5.percent(50),
         minFontSize: am5.percent(20),
-        angles:[0]
+        angles: [0],
       })
     );
-const data = sampleResponse.profileData.hashtags.map((d) => ({
-  tag:d.name,weight:d.count
-}))
-series.data.setAll(data)
+    const data = hashtags.map((d: any) => ({
+      tag: d.name,
+      weight: d.count,
+    }));
+    series.data.setAll(data);
     // series.data.setAll([
     //     { tag: "#chocolate", weight: 10 },
     //     { tag: "#ShapeYourWorld", weight: 15 },
@@ -44,17 +45,17 @@ series.data.setAll(data)
     //     { tag: "#peach", weight: 3 },
     //     { tag: "#furniture", weight: 2 },
     //   ]);
-  
-      series.set("heatRules", [
-        {
-          target: series.labels.template,
-          dataField: "value",
-          min: color1,
-          max: color2,
-          key: "fill",
-        },
-      ]);
-  
+
+    series.set("heatRules", [
+      {
+        target: series.labels.template,
+        dataField: "value",
+        min: color1,
+        max: color2,
+        key: "fill",
+      },
+    ]);
+
     // chart.series.push(
     //   am5wc.WordCloud.new(root, {
     //     categoryField: "tag",
@@ -67,7 +68,9 @@ series.data.setAll(data)
     };
   }, []);
 
-  return <div id="wordclouddiv" style={{ width: "100%", height: "100%" }} ></div>;
+  return (
+    <div id="wordclouddiv" style={{ width: "100%", height: "100%" }}></div>
+  );
 };
 
 export default WordCloudChart;
