@@ -1,53 +1,69 @@
 "use client";
 import { Button } from "@headlessui/react";
 import MyInput from "./my-input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const LoginPage = () => {
+const images = [
+  "/screenshot1.png",
+  "/screenshot2.png",
+  "/screenshot3.png",
+  "/screenshot4.png",
+  // Add more image paths as needed
+];
+
+const LoginPage = ({ handleLogin }: any) => {
   const [memberId, setMemberId] = useState("");
   const [password, setPassword] = useState("");
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div>
-      <div
-        // open={isOpen}
-        // as="div"
-        className="relative h-screen z-10 focus:outline-none flex gap-2 justify-center  items-center"
-        // onClose={() => {}}
-      >
-        <div className="h-[700px] w-[360px] border  flex items-center justify-center rounded-lg">
-          phone image
+      <div className="relative h-screen z-10 focus:outline-none flex gap-2 justify-center items-center">
+        <div className=" hidden md:flex items-center justify-center rounded-lg overflow-hidden">
+          <div className="relative h-[600px] w-[470px] bg-[url('/phone-mockup.png')] bg-no-repeat bg-[length:460px_625px]">
+            {/* <Image
+              src={"/phone-mockup.png"}
+              fill
+              // width={360}
+              // height={700}
+              alt="phone mock"
+            /> */}
+            {images.map((src, index) => (
+              <Image
+                key={index}
+                src={src}
+                alt={`carousel image ${index}`}
+                width={250}
+                height={500}
+                // layout="fill"
+                // objectFit="contain"
+                className={`absolute right-[68px] top-[24px] transition-opacity duration-1000 ${
+                  index === currentImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
+          </div>
         </div>
-        <div className=" inset-0 z-10 overflow-y-auto">
+        <div className="inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full w-96 items-center justify-center p-4">
-            <div
-              //   transition
-              className="w-full border max-w-lg rounded-xl bg-white/70 p-6  duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
-            >
+            <div className="w-full border max-w-lg rounded-xl bg-white/70 p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
               <div className="flex justify-center">
                 <Image
                   src={"/insta-login.png"}
                   width={200}
                   height={50}
-                  alt="instagram analyzier"
+                  alt="instagram analyzer"
                 />
               </div>
-              {/* <div
-                // as="h3"
-                className="text-lg/8 font-medium text-black text-center"
-              >
-                Authentication Required
-              </div> */}
-              {/* <p className="mt-4 text-sm/6 text-black/50 text-center">
-                <b className="font-medium text-black">
-                  {" "}
-                  This website is exclusively accessible to Instagram approved
-                  companies and their vendors.
-                </b>
-              </p>
-              <p className="mb-4 mt-2 text-sm/6 text-black/50 text-center">
-                Please use your provided credentials to enter.
-              </p> */}
               <MyInput
                 label={"Member ID"}
                 value={memberId}
@@ -64,17 +80,11 @@ const LoginPage = () => {
               />
               <div className="mt-8 flex gap-4 justify-center">
                 <Button
-                  className="inline-flex items-center  gap-2 rounded-2xl bg-[#f5004f]  py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                  //   onClick={() => handleLogin(memberId, password)}
+                  onClick={() => handleLogin(memberId, password)}
+                  className="flex justify-center mx-4 items-center gap-2 rounded-full w-full bg-[#0095F6] py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-[#0095F6]/70 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                 >
-                  Proceed
+                  login
                 </Button>
-                {/* <Button
-                  className="inline-flex items-center  gap-2 rounded-2xl bg-black/10 text-black/50 py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                  onClick={close}
-                >
-                  Cancel
-                </Button> */}
               </div>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { isMobile } from "react-device-detect";
 import MyModal from "./components/my-dialog";
 import { MEMBERID, PASSWORD } from "./utils/constants";
 import { errorToast } from "./utils/toast";
+import LoginPage from "./components/login_page";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -29,6 +30,8 @@ export default function Home() {
   const handleLogin = (memberId: string, password: string) => {
     // Assuming you have a login function
     // loginUser();
+    console.log("mer :", memberId);
+
     if (memberId !== MEMBERID) {
       errorToast("MemberId Don't match");
       return;
@@ -37,20 +40,21 @@ export default function Home() {
       errorToast("Password was incorrecy");
       return;
     }
-    // Set isLogin to true in sessionStorage
+    // Set isAuthenticate to true in sessionStorage
     if (typeof window !== "undefined") {
-      sessionStorage.setItem("isLogin", "true");
+      sessionStorage.setItem("isAuthenticate", "true");
     }
-    if (username === "" || username === undefined) return;
-    close();
-    window.open(`/analysis/${username}`, "_blank");
+    setIsAuthenticate(true);
+    // if (username === "" || username === undefined) return;
+    // close();
+    // window.open(`/analysis/${username}`, "_blank");
   };
 
   const getProfileDetail = async () => {
     if (username === "" || username === undefined) return;
     if (typeof window !== "undefined") {
-      const isLogin = sessionStorage.getItem("isLogin");
-      if (isLogin) {
+      const isAuthenticate = sessionStorage.getItem("isAuthenticate");
+      if (isAuthenticate) {
         close();
         // router.push(`/analysis/${username}`);
         window.open(`/analysis/${username}`, "_blank");
@@ -60,16 +64,25 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isLogin = sessionStorage.getItem("isLogin");
-      console.log("isLogin :", isLogin);
+      const isAuth = JSON.parse(
+        sessionStorage.getItem("isAuthenticate") ?? "false"
+      );
+      console.log("isAuthenticate :", isAuth);
+      setIsAuthenticate(isAuth);
 
-      // if (!isLogin) {
+      // if (!isAuthenticate) {
       //   // Redirect to login page or prompt login
       //   router.push("/login");
       // }
     }
   }, []);
 
+  if (!isAuthenticate)
+    return (
+      <div>
+        <LoginPage handleLogin={handleLogin} />
+      </div>
+    );
   return (
     <main
       className={`bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover ${

@@ -121,23 +121,64 @@ const ProfileAnalysis = () => {
         alt="background gradient"
         className="-z-50"
       /> */}
-      <div className=" w-full flex flex-col items-center justify-center p-2 sm:p-8">
-        {followerData.history !== undefined && (
-          <>
-            <div className="my-8" />
+      {profileData !== undefined && followerData.history !== undefined && (
+        <>
+          <div className=" w-full flex flex-col items-center justify-center p-2 sm:p-8">
+            {/* word cloud hastag  */}
             <div className="w-full">
-              <div className="flex items-center justify-center">
-                <div
-                  className=" text-2xl font-semibold  p-4 relative"
-                  // style={{
-                  //   background:
-                  //     "linear-gradient(90deg, rgba(255,0,150,1) 0%, rgba(255,154,0,1) 100%)",
-                  //   borderRadius: "8px", // Optional: to match the rounded corners
-                  //   padding: "10px 20px", // Adjust padding as needed
-                  //   display: "inline-block", // Ensure the background fits the text
-                  // }}
-                >
-                  • Overall Follower Expansion •
+              {profileData !== undefined && (
+                <>
+                  <div className="flex items-center justify-center mt-16 mb-8">
+                    <div className=" text-2xl z-[1] font-semibold  p-4 relative">
+                      • User-Generated Hashtag Usage •
+                      <Image
+                        src={"/Patch-1.png"}
+                        fill
+                        alt="text gradient"
+                        className="-z-10 rounded-lg "
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full flex my-8 sm:h-[550px] gap-4">
+                    <div className=" w-full  border bg-white p-4 rounded-md">
+                      <div className=" text-xl font-semibold">
+                        Hastag as per interaction
+                      </div>
+                      <WordCloudChart hashtags={profileData.hashtags} />
+                    </div>
+                    <div className="w-full ">
+                      <HashtagList hashtags={profileData.hashtags} />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            {/* Follower chart  */}
+            {followerData.history !== undefined && (
+              <>
+                <div className="my-8" />
+                <div className="w-full">
+                  <div className="flex items-center justify-center">
+                    <div className=" text-2xl z-[1] font-semibold  p-4 relative">
+                      • Overall Follower Expansion •
+                      <Image
+                        src={"/Patch-1.png"}
+                        fill
+                        alt="text gradient"
+                        className="-z-10 rounded-lg "
+                      />
+                    </div>
+                  </div>
+                  <div className="my-8" />
+                  <LineChart followingData={followerData} />
+                </div>
+              </>
+            )}
+
+            <div className="w-full">
+              <div className="flex items-center justify-center mt-16 mb-8">
+                <div className=" text-2xl z-[1] font-semibold  p-4 relative">
+                  • Comprehensive Analysis of Your Follower Trends •
                   <Image
                     src={"/Patch-1.png"}
                     fill
@@ -146,88 +187,75 @@ const ProfileAnalysis = () => {
                   />
                 </div>
               </div>
-              <div className="my-8" />
-              <LineChart followingData={followerData} />
-            </div>
-          </>
-        )}
-        <div className="w-full flex my-8 sm:h-[550px] gap-4">
-          <div className=" w-full  border bg-white p-4 rounded-md">
-            <div className=" text-xl font-semibold">
-              Hastag as per interaction
-            </div>
-            <WordCloudChart hashtags={profileData.hashtags} />
-          </div>
-          <div className="w-full ">
-            <HashtagList hashtags={profileData.hashtags} />
-          </div>
-        </div>
-
-        <div className="w-full grid grid-cols-6 gap-4 ">
-          <div className="col-span-4">
-            <FollowerGrowthGraph
-              followerHistory={followerData.history}
-              isFollowing={true}
-            />
-          </div>
-          <div className="col-span-2 ">
-            <FollowerGrowthOverview followerHistory={followerData.history} />
-          </div>
-        </div>
-        {profileData.media !== undefined && (
-          <>
-            <div className="my-8" />
-            <div className="w-full">
-              <div className="flex justify-center">
-                <div className="text-xl  p-4 relative">
-                  <div
-                    className=" text-2xl font-semibold  p-4 relative"
-                    // style={{
-                    //   background:
-                    //     "linear-gradient(90deg, rgba(255,0,150,1) 0%, rgba(255,154,0,1) 100%)",
-                    //   borderRadius: "8px", // Optional: to match the rounded corners
-                    //   padding: "10px 20px", // Adjust padding as needed
-                    //   display: "inline-block", // Ensure the background fits the text
-                    // }}
-                  >
-                    • Post Interactions Metrics •
-                    <Image
-                      src={"/Patch-1.png"}
-                      fill
-                      alt="text gradient"
-                      className="-z-10 rounded-lg "
-                    />
-                  </div>
+              <div className="w-full grid grid-cols-6 gap-4 ">
+                <div className="col-span-4">
+                  <FollowerGrowthGraph
+                    followerHistory={followerData.history}
+                    isFollowing={true}
+                  />
+                </div>
+                <div className="col-span-2 ">
+                  <FollowerGrowthOverview
+                    followerHistory={followerData.history}
+                  />
                 </div>
               </div>
-              {/* <BarChartWithImages /> */}
-              <BarChart mediaData={profileData.media} />
             </div>
-
-            <div className="w-full">
-              {/* <PostAnalysisTable data={profileData.media} />; */}
-              <PostAnalysis data={profileData.media} />
-            </div>
-
-            {/* <div>
-              <WordCloudChart />
-            </div> */}
             <div className="w-full">
               <ProfileDataHistory
                 data={followerData.history.slice(-30).reverse()}
               />
             </div>
-          </>
-        )}
-      </div>
-      <div className="fixed bottom-4 right-4">
-        <button
-          onClick={scrollToTop}
-          className="p-2 bg-white text-white rounded-full shadow-lg hover:bg-white/70 transition-colors duration-300"
-        >
-          <MoveUp color="#000" />
-        </button>
-      </div>
+
+            <>
+              <div className="my-8" />
+              <div className="w-full">
+                <div className="flex justify-center">
+                  <div className="text-xl  p-4 relative">
+                    <div
+                      className=" text-2xl z-[1] font-semibold  p-4 relative"
+                      // style={{
+                      //   background:
+                      //     "linear-gradient(90deg, rgba(255,0,150,1) 0%, rgba(255,154,0,1) 100%)",
+                      //   borderRadius: "8px", // Optional: to match the rounded corners
+                      //   padding: "10px 20px", // Adjust padding as needed
+                      //   display: "inline-block", // Ensure the background fits the text
+                      // }}
+                    >
+                      • Post Interactions Metrics •
+                      <Image
+                        src={"/Patch-1.png"}
+                        fill
+                        alt="text gradient"
+                        className="-z-10 rounded-lg "
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* <BarChartWithImages /> */}
+                <BarChart mediaData={profileData.media} />
+              </div>
+
+              <div className="w-full">
+                {/* <PostAnalysisTable data={profileData.media} />; */}
+                <PostAnalysis data={profileData.media} />
+              </div>
+
+              {/* <div>
+              <WordCloudChart />
+            </div> */}
+            </>
+          </div>
+          <div className="fixed bottom-4 right-4">
+            <button
+              onClick={scrollToTop}
+              className="p-2 bg-white text-white rounded-full shadow-lg hover:bg-white/70 transition-colors duration-300"
+            >
+              <MoveUp color="#000" />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
