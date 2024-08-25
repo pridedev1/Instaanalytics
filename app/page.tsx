@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
 import { isMobile } from "react-device-detect";
@@ -11,6 +10,7 @@ import MyModal from "./components/my-dialog";
 import { MEMBERID, PASSWORD } from "./utils/constants";
 import { errorToast } from "./utils/toast";
 import LoginPage from "./components/login_page";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -84,99 +84,108 @@ export default function Home() {
       </div>
     );
   return (
-    <main
-      className={`bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover ${
-        isOpen ? "blur-background" : ""
-      }`}
-    >
-      <MyModal
-        isOpen={isOpen}
-        open={open}
-        close={close}
-        handleLogin={handleLogin}
-      />
-      <div className="flex flex-col justify-center items-center h-[80%] relative">
-        <div className="flex items-center justify-center absolute top-4 left-0 right-0">
-          <Image
-            src={"/Logo Black.png"}
-            width={180}
-            height={60}
-            alt="Insta Analytice"
-            // className="absolute top-4 left-4"
-          />
-        </div>
-        <div className=" flex flex-col gap-4 items-center justify-center pt-20 sm:py-16">
-          <div className="flex gap-2">
-            <div className="font-black text-3xl  sm:text-5xl text-black text-center">
-              ANALYZE YOUR CURRENT INSTAGRAM{" "}
-              <TypeAnimation
-                sequence={[
-                  // Same substring at the start will only be typed out once, initially
-
-                  "COMMENTS",
-                  1000,
-                  "LIKES",
-                  1000,
-                  "FOLLOWERS",
-                  1000,
-                  "REELS",
-                  1000,
-                  "",
-                  1000,
-                ]}
-                wrapper="span"
-                speed={50}
-                // style={{ fontSize: "2em", display: "inline-block" }}
-                className="font-black text-3xl sm:text-5xl text-black text-cente"
-                repeat={Infinity}
-              />
-            </div>
-          </div>
-          <div className="text-black text-xl text-center">
-            {" "}
-            • Dive into the details and discover the insights in your latest
-            report •{" "}
-          </div>
-        </div>
-        <div className="flex flex-col gap-2 justify-center items-center w-full pt-16">
-          <div className=" bg-white/50 p-3  rounded-full flex items-center justify-center sm:w-[60%] h-min min-w-[320px] backdrop-blur-lg">
-            <Image
-              src={"/instagram-icon.png"}
-              width={40}
-              height={40}
-              alt="input icon"
-              className="mr-3"
-            />
-            <input
-              placeholder="Enter username"
-              value={username}
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              className="focus:outline-none w-full bg-transparent placeholder-black/60 text-xl font-medium"
-            />
-
-            {loading ? (
-              <Loader2 className="mr-2 w-10 h-10 animate-spin" />
-            ) : (
-              <div className="hidden sm:block">
-                <AnalysisButton
-                  getProfileDetail={getProfileDetail}
-                  loading={loading}
-                />
-              </div>
-            )}
-          </div>
-          <div className="block sm:hidden">
-            <AnalysisButton
-              getProfileDetail={getProfileDetail}
-              loading={loading}
-              isFullWith={true}
-            />
-          </div>
-        </div>
+    <main className="gap-4 w-screen h-screen ">
+      <div className="font-bold text-xl my-4 text-center">Home Screen</div>
+      <div className="flex flex-col mt-32 gap-4 items-center justify-center">
+        <Button onClick={() => router.push("/engagementcheck")}>
+          Enagement Check
+        </Button>
+        <Button onClick={() => router.push("/gradecheck")}>Grade Check</Button>
       </div>
     </main>
+    // <main
+    //   className={`bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover ${
+    //     isOpen ? "blur-background" : ""
+    //   }`}
+    // >
+    //   <MyModal
+    //     isOpen={isOpen}
+    //     open={open}
+    //     close={close}
+    //     handleLogin={handleLogin}
+    //   />
+    //   <div className="flex flex-col justify-center items-center h-[80%] relative">
+    //     <div className="flex items-center justify-center absolute top-4 left-0 right-0">
+    //       <Image
+    //         src={"/Logo Black.png"}
+    //         width={180}
+    //         height={60}
+    //         alt="Insta Analytice"
+    //         // className="absolute top-4 left-4"
+    //       />
+    //     </div>
+    //     <div className=" flex flex-col gap-4 items-center justify-center pt-20 sm:py-16">
+    //       <div className="flex gap-2">
+    //         <div className="font-black text-3xl  sm:text-5xl text-black text-center">
+    //           ANALYZE YOUR CURRENT INSTAGRAM{" "}
+    //           <TypeAnimation
+    //             sequence={[
+    //               // Same substring at the start will only be typed out once, initially
+
+    //               "COMMENTS",
+    //               1000,
+    //               "LIKES",
+    //               1000,
+    //               "FOLLOWERS",
+    //               1000,
+    //               "REELS",
+    //               1000,
+    //               "",
+    //               1000,
+    //             ]}
+    //             wrapper="span"
+    //             speed={50}
+    //             // style={{ fontSize: "2em", display: "inline-block" }}
+    //             className="font-black text-3xl sm:text-5xl text-black text-cente"
+    //             repeat={Infinity}
+    //           />
+    //         </div>
+    //       </div>
+    //       <div className="text-black text-xl text-center">
+    //         {" "}
+    //         • Dive into the details and discover the insights in your latest
+    //         report •{" "}
+    //       </div>
+    //     </div>
+    //     <div className="flex flex-col gap-2 justify-center items-center w-full pt-16">
+    //       <div className=" bg-white/50 p-3  rounded-full flex items-center justify-center sm:w-[60%] h-min min-w-[320px] backdrop-blur-lg">
+    //         <Image
+    //           src={"/instagram-icon.png"}
+    //           width={40}
+    //           height={40}
+    //           alt="input icon"
+    //           className="mr-3"
+    //         />
+    //         <input
+    //           placeholder="Enter username"
+    //           value={username}
+    //           onChange={(e) => {
+    //             setUsername(e.target.value);
+    //           }}
+    //           className="focus:outline-none w-full bg-transparent placeholder-black/60 text-xl font-medium"
+    //         />
+
+    //         {loading ? (
+    //           <Loader2 className="mr-2 w-10 h-10 animate-spin" />
+    //         ) : (
+    //           <div className="hidden sm:block">
+    //             <AnalysisButton
+    //               getProfileDetail={getProfileDetail}
+    //               loading={loading}
+    //             />
+    //           </div>
+    //         )}
+    //       </div>
+    //       <div className="block sm:hidden">
+    //         <AnalysisButton
+    //           getProfileDetail={getProfileDetail}
+    //           loading={loading}
+    //           isFullWith={true}
+    //         />
+    //       </div>
+    //     </div>
+    //   </div>
+    // </main>
   );
 }
 
