@@ -47,7 +47,7 @@ export default function Home() {
         throw "No file attachment found, please upload it again";
       let res = await axios.post(
         process.env.NODE_ENV === "production"
-          ? "https://api2.instaanalyser.com//generate-follower-count-report"
+          ? "https://api2.instaanalyser.com/generate-follower-count-report"
           : `${process.env.NEXT_PUBLIC_FOLLOWER_COUNT_API}/generate-follower-count-report`,
         {
           docUrl: fileUrl,
