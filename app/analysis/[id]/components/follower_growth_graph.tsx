@@ -151,7 +151,7 @@ const FollowerGrowthGraph = ({ followerHistory, isFollowing }: any) => {
   }, []);
 
   return (
-    <div className="w-full bg-white p-2 rounded-md">
+    <div className="w-full bg-white p-2 rounded-md border">
       <div
         id="follower-growth-bar-chart"
         style={{ width: "100%", height: "500px" }}

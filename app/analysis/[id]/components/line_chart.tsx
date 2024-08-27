@@ -132,7 +132,7 @@ const LineChart = ({ followingData }: { followingData: any }) => {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative border rounded-md">
       <div className="absolute bottom-4 mx-2 sm:left-4 gradient-border-wrapper z-10 rounded-3xl">
         <div className="gradient-border">
           <div className=" flex flex-row gap-2 items-center">

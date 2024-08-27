@@ -53,7 +53,25 @@ const ProfileAnalysis = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const [currentMessage, setCurrentMessage] = useState(0);
+  const [fade, setFade] = useState(true);
+  const messages = [
+    "Analyzing your Instagram profile. Please be patient.",
+    "Examining your Instagram posts.",
+    "Analyzing your content for insights.",
+    "Creating a detailed report.",
+  ];
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentMessage((prevMessage) => (prevMessage + 1) % messages.length);
+        setFade(true);
+      }, 500); // Adjust the timeout to match the fade-out duration
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
   // const profileData = sampleResponse.profileData;
   // const followerData = sampleResponse.followingData;
   // console.log("following data :", followerData);
@@ -62,8 +80,12 @@ const ProfileAnalysis = () => {
     return (
       <div className="w-screen h-screen flex flex-col gap-2 items-center justify-center">
         <Loader2 className="animate-spin w-10 h-10" />
-        <div className="m-4 text-center">
-          InstaAnalyser is carefully analyzing your profile. Please be patient.
+        <div
+          className={`m-4 text-center transition-opacity duration-1000 ${
+            fade ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {messages[currentMessage]}
         </div>
       </div>
     );
@@ -73,7 +95,7 @@ const ProfileAnalysis = () => {
       ? profileData.media[0]
       : undefined;
   return (
-    <div className="flex flex-col bg_gradient items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
+    <div className="flex flex-col  items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
       {/* <div className="absolute top-8 right-4">
         <Image
           src={"/insta-logo.png"}
@@ -139,8 +161,8 @@ const ProfileAnalysis = () => {
                       />
                     </div>
                   </div>
-                  <div className="w-full flex my-8 sm:h-[550px] gap-4">
-                    <div className=" w-full  border bg-white p-4 rounded-md">
+                  <div className="w-full flex my-8 sm:h-[550px] gap-4 sm:flex-row flex-col">
+                    <div className=" w-full h-96 sm:h-full border bg-white p-4 rounded-md">
                       <div className=" text-xl font-semibold">
                         Hastag as per interaction
                       </div>
@@ -188,13 +210,13 @@ const ProfileAnalysis = () => {
                 </div>
               </div>
               <div className="w-full grid grid-cols-6 gap-4 ">
-                <div className="col-span-4">
+                <div className="col-span-6 sm:col-span-4">
                   <FollowerGrowthGraph
                     followerHistory={followerData.history}
                     isFollowing={true}
                   />
                 </div>
-                <div className="col-span-2 ">
+                <div className="col-span-6 sm:col-span-2 ">
                   <FollowerGrowthOverview
                     followerHistory={followerData.history}
                   />

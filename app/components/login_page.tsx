@@ -28,64 +28,75 @@ const LoginPage = ({ handleLogin }: any) => {
   return (
     <div>
       <div className="relative h-screen z-10 focus:outline-none flex gap-2 justify-center items-center">
-        <div className=" hidden md:flex items-center justify-center rounded-lg overflow-hidden">
-          <div className="relative h-[600px] w-[470px] bg-[url('/phone-mockup.png')] bg-no-repeat bg-[length:460px_625px]">
-            {/* <Image
+        <div className="flex">
+          <div className=" hidden md:flex items-center justify-center rounded-lg overflow-hidden">
+            <div className="relative h-[600px] w-[470px] bg-[url('/phone-mockup.png')] bg-no-repeat bg-[length:460px_625px]">
+              {/* <Image
               src={"/phone-mockup.png"}
               fill
               // width={360}
               // height={700}
               alt="phone mock"
             /> */}
-            {images.map((src, index) => (
-              <Image
-                key={index}
-                src={src}
-                alt={`carousel image ${index}`}
-                width={250}
-                height={500}
-                // layout="fill"
-                // objectFit="contain"
-                className={`absolute right-[68px] top-[24px] transition-opacity duration-1000 ${
-                  index === currentImageIndex ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full w-96 items-center justify-center p-4">
-            <div className="w-full border max-w-lg rounded-xl bg-white/70 p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
-              <div className="flex justify-center">
+              {images.map((src, index) => (
                 <Image
-                  src={"/insta-login.png"}
-                  width={200}
-                  height={50}
-                  alt="instagram analyzer"
+                  key={index}
+                  src={src}
+                  alt={`carousel image ${index}`}
+                  width={250}
+                  height={500}
+                  // layout="fill"
+                  // objectFit="contain"
+                  className={`absolute right-[68px] top-[24px] transition-opacity duration-1000 ${
+                    index === currentImageIndex ? "opacity-100" : "opacity-0"
+                  }`}
                 />
+              ))}
+            </div>
+          </div>
+          <div className="inset-0 z-10 overflow-y-auto">
+            <div className="flex w-96 items-center justify-center p-4">
+              <div className="w-full border max-w-lg rounded-xl bg-white/70 p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+                <div className="flex justify-center">
+                  <Image
+                    src={"/insta-login.png"}
+                    width={200}
+                    height={50}
+                    alt="instagram analyzer"
+                  />
+                </div>
+                <MyInput
+                  label={"Member ID"}
+                  value={memberId}
+                  placeholder="Phone number, username or email address"
+                  onchange={(value: string) => setMemberId(value)}
+                />
+                <div className="my-4" />
+                <MyInput
+                  label={"Security Pin"}
+                  value={password}
+                  type={"password"}
+                  placeholder="Password"
+                  onchange={(value: string) => setPassword(value)}
+                />
+                <div className="mt-8 flex gap-4 justify-center">
+                  <Button
+                    onClick={() => handleLogin(memberId, password)}
+                    className="flex justify-center mx-4 items-center gap-2 rounded-full w-full bg-[#0095F6] py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-[#0095F6]/70 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                  >
+                    log in
+                  </Button>
+                </div>
               </div>
-              <MyInput
-                label={"Member ID"}
-                value={memberId}
-                placeholder="Phone number, username or email address"
-                onchange={(value: string) => setMemberId(value)}
+            </div>
+            <div className="w-full flex gap-4 mt-8 flex-col items-center justify-center">
+              <div className="font-bold text-lg text-black/40">from</div>
+              <Image
+                src={"/images/meta logo.png"}
+                width={120}
+                height={50}
+                alt="from Meta"
               />
-              <div className="my-4" />
-              <MyInput
-                label={"Security Pin"}
-                value={password}
-                type={"password"}
-                placeholder="Password"
-                onchange={(value: string) => setPassword(value)}
-              />
-              <div className="mt-8 flex gap-4 justify-center">
-                <Button
-                  onClick={() => handleLogin(memberId, password)}
-                  className="flex justify-center mx-4 items-center gap-2 rounded-full w-full bg-[#0095F6] py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-[#0095F6]/70 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                >
-                  login
-                </Button>
-              </div>
             </div>
           </div>
         </div>

@@ -30,7 +30,7 @@ const ProfileDataHistory: React.FC<{ data: DataEntry[] }> = ({ data }) => {
           />
         </div>
       </h2>
-      <div className="bg-white p-2 rounded-md">
+      <div className="bg-white p-2 rounded-md overflow-auto">
         <table className="min-w-full border p-4 rounded-lg">
           <thead className="bg-gray-200">
             <tr>

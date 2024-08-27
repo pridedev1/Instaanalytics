@@ -154,7 +154,7 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
   };
 
   return (
-    <div className="h-full bg-white rounded-lg shadow-md">
+    <div className="h-full bg-white rounded-lg border">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold px-6 pt-6">Weekly Overview</h2>
         {/* <div>

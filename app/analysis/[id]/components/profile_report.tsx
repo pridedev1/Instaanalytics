@@ -16,7 +16,12 @@ const ProfileReport = ({ profileData }: any) => {
           alt="Insta Analytics logo"
         /> */}
 
-        <Image src={"/Logo Black.png"} width={150} height={50} alt="Logo" />
+        <Image
+          src={"/images/Logo Black.png"}
+          width={160}
+          height={60}
+          alt="Logo"
+        />
         <div className="flex flex-col gap-4 items-center justify-center">
           <Image
             src={profileData.profile_pic_url.replace(

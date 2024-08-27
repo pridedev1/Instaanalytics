@@ -11,6 +11,7 @@ import { MEMBERID, PASSWORD } from "./utils/constants";
 import { errorToast } from "./utils/toast";
 import LoginPage from "./components/login_page";
 import { useRouter } from "next/navigation";
+import MyInput from "./components/my-input";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -84,13 +85,36 @@ export default function Home() {
       </div>
     );
   return (
-    <main className="gap-4 w-screen h-screen ">
-      <div className="font-bold text-xl my-4 text-center">Home Screen</div>
-      <div className="flex flex-col mt-32 gap-4 items-center justify-center">
-        <Button onClick={() => router.push("/engagementcheck")}>
-          Enagement Check
-        </Button>
-        <Button onClick={() => router.push("/gradecheck")}>Grade Check</Button>
+    <main className="w-full flex items-center flex-col gap-8 my-10">
+      <div>
+        <Image
+          src={"/images/Logo Black.png"}
+          width={200}
+          height={50}
+          alt="Instagram analyzer logo"
+        />
+      </div>
+      <div className="my-auto" />
+      <div className="w-72">
+        <div className="border rounded-md p-4 flex flex-col gap-2">
+          <div className="mx-2 text-center font-medium">
+            Enter your Instagram username to analyze your profile
+          </div>
+          <MyInput
+            onchange={(value: string) => {
+              setUsername(value);
+            }}
+            placeholder="Enter username"
+            value={username}
+          />
+          <div className="my-2" />
+          <Button
+            onClick={getProfileDetail}
+            className="flex justify-center mx-4 items-center gap-2 rounded-full bg-[#0095F6] py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-[#0095F6]/70 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+          >
+            Analyse Now
+          </Button>
+        </div>
       </div>
     </main>
     // <main
