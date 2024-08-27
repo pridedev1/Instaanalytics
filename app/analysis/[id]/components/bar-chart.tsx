@@ -189,7 +189,7 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
   }, []);
 
   return (
-    <div className="relative border rounded-md">
+    <div className="relative border rounded-md p-2">
       <div className="absolute bottom-4 mx-2 sm:left-4 gradient-border-wrapper z-10 rounded-3xl">
         <div className="gradient-border">
           <div className=" flex flex-row gap-2 items-center">
@@ -204,7 +204,7 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
       <div
         id="chartdiv"
         className="bg-white rounded-lg mt-4 "
-        style={{ width: "100%", height: "500px" }}
+        style={{ width: "100%", height: "650px" }}
       ></div>
     </div>
   );
