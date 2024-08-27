@@ -105,7 +105,12 @@ const ProfileAnalysis = () => {
         />
       </div> */}
       <div className="absolute left-0 right-0 top-4 flex justify-center">
-        <Image src={"/Logo Black.png"} width={200} height={70} alt="Logo" />
+        <Image
+          src={"/images/Logo Black.png"}
+          width={200}
+          height={70}
+          alt="Logo"
+        />
       </div>
       <div className="absolute h-[650px] sm:left-4 left-0  sm:right-10 right-8 top-32 ">
         {lastPost !== undefined && lastPost !== "" && (

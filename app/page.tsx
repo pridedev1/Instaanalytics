@@ -116,6 +116,15 @@ export default function Home() {
           </Button>
         </div>
       </div>
+      <div className="w-full flex gap-4 mt-6 flex-col items-center justify-center">
+        <div className="font-bold text-lg text-black/40">from</div>
+        <Image
+          src={"/images/meta logo.png"}
+          width={120}
+          height={50}
+          alt="from Meta"
+        />
+      </div>
     </main>
     // <main
     //   className={`bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover ${

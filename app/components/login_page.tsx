@@ -84,7 +84,7 @@ const LoginPage = ({ handleLogin }: any) => {
                     onClick={() => handleLogin(memberId, password)}
                     className="flex justify-center mx-4 items-center gap-2 rounded-full w-full bg-[#0095F6] py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-[#0095F6]/70 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                   >
-                    log in
+                    Log in
                   </Button>
                 </div>
               </div>
