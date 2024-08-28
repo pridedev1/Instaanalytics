@@ -68,7 +68,7 @@ const LoginPage = ({ handleLogin }: any) => {
                 <MyInput
                   label={"Member ID"}
                   value={memberId}
-                  placeholder="Phone number, username or email address"
+                  placeholder="Member id"
                   onchange={(value: string) => setMemberId(value)}
                 />
                 <div className="my-4" />
