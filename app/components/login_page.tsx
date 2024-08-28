@@ -55,7 +55,7 @@ const LoginPage = ({ handleLogin }: any) => {
             </div>
           </div>
           <div className="inset-0 z-10 overflow-y-auto">
-            <div className="flex w-96 items-center justify-center p-4">
+            <div className="flex w-96 items-center justify-center p-4 py-14">
               <div className="w-full border max-w-lg rounded-xl bg-white/70 p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                 <div className="flex justify-center">
                   <Image
@@ -88,15 +88,6 @@ const LoginPage = ({ handleLogin }: any) => {
                   </Button>
                 </div>
               </div>
-            </div>
-            <div className="w-full flex gap-4 mt-8 flex-col items-center justify-center">
-              <div className="font-bold text-lg text-black/40">from</div>
-              <Image
-                src={"/images/meta logo.png"}
-                width={120}
-                height={50}
-                alt="from Meta"
-              />
             </div>
           </div>
         </div>

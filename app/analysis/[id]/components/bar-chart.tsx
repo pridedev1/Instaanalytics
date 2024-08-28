@@ -162,6 +162,7 @@ const BarChart = ({ mediaData }: { mediaData: any }) => {
           locationY: 0,
           sprite: am5.Label.new(root, {
             text: "{valueY}",
+
             fill: root.interfaceColors.get("alternativeText"),
             centerY: 0,
             centerX: am5.p50,

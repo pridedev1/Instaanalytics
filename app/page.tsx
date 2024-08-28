@@ -89,13 +89,13 @@ export default function Home() {
       <div>
         <Image
           src={"/images/Logo Black.png"}
-          width={200}
+          width={250}
           height={50}
           alt="Instagram analyzer logo"
         />
       </div>
       <div className="my-auto" />
-      <div className="w-72">
+      <div className="w-72 scale-125">
         <div className="border rounded-md p-4 flex flex-col gap-2">
           <div className="mx-2 text-center font-medium">
             Enter your Instagram username to analyze your profile
@@ -104,7 +104,7 @@ export default function Home() {
             onchange={(value: string) => {
               setUsername(value);
             }}
-            placeholder="Enter username"
+            placeholder="Enter the username"
             value={username}
           />
           <div className="my-2" />
@@ -116,7 +116,7 @@ export default function Home() {
           </Button>
         </div>
       </div>
-      <div className="w-full flex gap-4 mt-6 flex-col items-center justify-center">
+      {/* <div className="w-full flex gap-4 mt-6 flex-col items-center justify-center">
         <div className="font-bold text-lg text-black/40">from</div>
         <Image
           src={"/images/meta logo.png"}
@@ -124,7 +124,7 @@ export default function Home() {
           height={50}
           alt="from Meta"
         />
-      </div>
+      </div> */}
     </main>
     // <main
     //   className={`bg-[url('/bg_image/cover_page_bg.jpg')] w-screen h-screen bg-no-repeat bg-fixed bg-cover ${
