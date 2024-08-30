@@ -7,10 +7,12 @@ import { useState } from "react";
 import { storage } from "../utils/firebase";
 import axios from "axios";
 import { errorToast, successToast } from "../utils/toast";
+import { Loader2 } from "lucide-react";
 
 export default function Home() {
   const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
   console.log("env :", process.env.NODE_ENV);
 
@@ -45,6 +47,7 @@ export default function Home() {
     try {
       if (fileUrl === undefined)
         throw "No file attachment found, please upload it again";
+      setLoading(true);
       let res = await axios.post(
         process.env.NODE_ENV === "production"
           ? "https://api2.instaanalyser.com/generate-follower-count-report"
@@ -63,6 +66,8 @@ export default function Home() {
     } catch (error) {
       console.log("error starting the porcess: ", error);
       errorToast("Fail to start please try again");
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -73,14 +78,20 @@ export default function Home() {
         <InputFile accept=".xlsx" onChange={handleFileUpload} />
         <div className="my-4" />
         <Button
-          disabled={!started && fileUrl && !uploading ? false : true}
+          disabled={
+            !loading && !started && fileUrl && !uploading ? false : true
+          }
           onClick={handleStartReport}
         >
-          {started
-            ? "Report will be aviable in few minutes"
-            : uploading
-            ? "Uploading..."
-            : "Start Report Generation"}
+          {loading ? (
+            <Loader2 className="animate-spin" />
+          ) : started ? (
+            "Report will be aviable in few minutes"
+          ) : uploading ? (
+            "Uploading..."
+          ) : (
+            "Start Report Generation"
+          )}
         </Button>
       </div>
     </main>
