@@ -98,7 +98,7 @@ const ProfileReport = ({ profileData }: any) => {
             <div className="text-sm font-medium">Status</div>
           </div>
         </div>
-        <div className="flex gap-2 mb-2 px-4 text-sm">
+        <div className="flex gap-2 mb-2 px-4 text-sm text-center">
           {parseInt(profileData.media_info.er_info.er_diff_avg) > 0 ? (
             <TrendingUp />
           ) : (
@@ -107,7 +107,14 @@ const ProfileReport = ({ profileData }: any) => {
           <b className="whitespace-nowrap w-min h-min">
             {profileData.media_info.er_info.er_diff_avg} %
           </b>{" "}
-          higher than the average of similar profiles
+          {profileData.media_info.er_info.er_type === "good" ? (
+            "higher than the average of similar profiles"
+          ) : (
+            <p>
+              Engagement rate of your profile is currently lower than <br /> the
+              average for profiles in your niche.
+            </p>
+          )}
         </div>
       </div>
     </div>

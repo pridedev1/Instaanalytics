@@ -7,6 +7,7 @@ import {
   parseISO,
   differenceInDays,
 } from "date-fns";
+import { AnyAaaaRecord } from "dns";
 
 const sampleResponse = {
   followingData: {
@@ -75,7 +76,8 @@ const sampleResponse = {
 };
 
 const FollowerGrowthOverview = ({ followerHistory }: any) => {
-  const data = sampleResponse.followingData.history;
+  // const data = sampleResponse.followingData.history;
+  let data = followerHistory;
 
   let thisWeekData = followerHistory.slice(0, 6);
   console.log("this week :", thisWeekData);
@@ -85,26 +87,20 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
 
   // Calculate the current week range
   const currentDate = parseISO(data[0].date);
-  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 }); // Week starts on Monday
-  const weekEnd = endOfWeek(currentDate, { weekStartsOn: 1 });
+  const weekStart = new Date(thisWeekData.at(-1).date); // Week starts on Monday
+  const weekEnd = new Date(thisWeekData[0].date);
 
   // Calculate the previous week range
-  const previousWeekStart = startOfWeek(
-    new Date(weekStart.getTime() - 7 * 24 * 60 * 60 * 1000),
-    { weekStartsOn: 1 }
-  );
-  const previousWeekEnd = endOfWeek(
-    new Date(weekEnd.getTime() - 7 * 24 * 60 * 60 * 1000),
-    { weekStartsOn: 1 }
-  );
+  const previousWeekStart = new Date(previousWeekData2.at(-1).date);
+  const previousWeekEnd = new Date(previousWeekData2[0].date);
 
   // Filter data for the current and previous week
-  const currentWeekData = data.filter((d) => {
+  const currentWeekData = data.filter((d: any) => {
     const date = parseISO(d.date);
     return date >= weekStart && date <= weekEnd;
   });
 
-  const previousWeekData = data.filter((d) => {
+  const previousWeekData = data.filter((d: any) => {
     const date = parseISO(d.date);
     return date >= previousWeekStart && date <= previousWeekEnd;
   });

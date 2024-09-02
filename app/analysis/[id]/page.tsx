@@ -230,7 +230,7 @@ const ProfileAnalysis = () => {
             </div>
             <div className="w-full">
               <ProfileDataHistory
-                data={followerData.history.slice(-30).reverse()}
+                data={followerData.history.slice(0, 30).reverse()}
               />
             </div>
 
