@@ -24,10 +24,14 @@ const ProfileReport = ({ profileData }: any) => {
         />
         <div className="flex flex-col gap-4 items-center justify-center">
           <Image
-            src={profileData.profile_pic_url.replace(
-              "https://cdn-image.notjustanalytics.com/",
-              ""
-            )}
+            src={`${
+              process.env.NEXT_PUBLIC_API_URL
+            }/proxy-image/${encodeURIComponent(
+              profileData.profile_pic_url.replace(
+                "https://cdn-image.notjustanalytics.com/",
+                ""
+              )
+            )}`}
             // src={"https://scontent-lhr8-1.cdninstagram.com/v/t51.2885-19/147254230_112165057532944_7401589615602879255_n.jpg?stp=dst-jpg_s150x150&_nc_ht=scontent-lhr8-1.cdninstagram.com&_nc_cat=1&_nc_ohc=cFiCzejQZoUQ7kNvgE6I-cW&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AYA7znosEKzaCwX_IDQYM3iONCG6t3pNFzM3UkcoS07Qsw&oe=66C5EC63&_nc_sid=8b3546"}
             width={150}
             height={150}
