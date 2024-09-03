@@ -114,14 +114,17 @@ const ProfileAnalysis = () => {
       </div>
       <div className="absolute h-[650px] sm:left-4 left-0  sm:right-10 right-8 top-32 ">
         {lastPost !== undefined && lastPost !== "" && (
-          <Image
-            src={lastPost.url.replace(
-              "https://cdn-image.notjustanalytics.com/",
-              ""
-            )}
+          <img
+            src={`${
+              process.env.NEXT_PUBLIC_API_URL
+            }/proxy-image/${encodeURIComponent(
+              lastPost.url.replace(
+                "https://cdn-image.notjustanalytics.com/",
+                ""
+              )
+            )}`}
             alt="last post"
-            fill
-            className="object-cover rounded-lg m-4 w-[90%]"
+            className="object-cover  rounded-lg m-4 w-[90%]"
           />
         )}
       </div>

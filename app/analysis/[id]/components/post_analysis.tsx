@@ -37,10 +37,14 @@ const PostAnalysisGrid = ({ data }: any) => {
                 className="rounded-md"
               /> */}
               <Image
-                src={post.url.replace(
-                  "https://cdn-image.notjustanalytics.com/",
-                  ""
-                )}
+                src={`${
+                  process.env.NEXT_PUBLIC_API_URL
+                }/proxy-image/${encodeURIComponent(
+                  post.url.replace(
+                    "https://cdn-image.notjustanalytics.com/",
+                    ""
+                  )
+                )}`}
                 alt={post.caption}
                 layout="responsive"
                 objectFit="fill"
@@ -196,10 +200,14 @@ const PostAnalysisTable = ({ data }: any) => {
                 </td>
                 <td className="border p-2">
                   <Image
-                    src={post.url.replace(
-                      "https://cdn-image.notjustanalytics.com/",
-                      ""
-                    )}
+                    src={`${
+                      process.env.NEXT_PUBLIC_API_URL
+                    }/proxy-image/${encodeURIComponent(
+                      post.url.replace(
+                        "https://cdn-image.notjustanalytics.com/",
+                        ""
+                      )
+                    )}`}
                     alt={post.caption}
                     width={60}
                     height={60}
