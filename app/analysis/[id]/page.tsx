@@ -124,7 +124,7 @@ const ProfileAnalysis = () => {
               )
             )}`}
             alt="last post"
-            className="object-cover  rounded-lg m-4 w-[90%]"
+            className="object-cover rounded-lg m-4 w-full h-full "
           />
         )}
       </div>

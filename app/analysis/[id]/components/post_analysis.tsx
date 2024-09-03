@@ -36,7 +36,7 @@ const PostAnalysisGrid = ({ data }: any) => {
                 objectFit="cover"
                 className="rounded-md"
               /> */}
-              <Image
+              <img
                 src={`${
                   process.env.NEXT_PUBLIC_API_URL
                 }/proxy-image/${encodeURIComponent(
@@ -46,10 +46,10 @@ const PostAnalysisGrid = ({ data }: any) => {
                   )
                 )}`}
                 alt={post.caption}
-                layout="responsive"
-                objectFit="fill"
-                width={120}
-                height={120}
+                // layout="responsive"
+                // objectFit="fill"
+                // width={120}
+                // height={120}
                 className="rounded-md aspect-square object-cover"
               />
               <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-lg  p-1 rounded-full">
@@ -199,7 +199,7 @@ const PostAnalysisTable = ({ data }: any) => {
                   </div>
                 </td>
                 <td className="border p-2">
-                  <Image
+                  <img
                     src={`${
                       process.env.NEXT_PUBLIC_API_URL
                     }/proxy-image/${encodeURIComponent(
@@ -211,7 +211,7 @@ const PostAnalysisTable = ({ data }: any) => {
                     alt={post.caption}
                     width={60}
                     height={60}
-                    className="rounded-md"
+                    className="rounded-md w-[60px] h-[60px]"
                   />
                 </td>
                 <td className="border p-2">
