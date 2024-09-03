@@ -23,7 +23,7 @@ const ProfileReport = ({ profileData }: any) => {
           alt="Logo"
         />
         <div className="flex flex-col gap-4 items-center justify-center">
-          <Image
+          <img
             src={`${
               process.env.NEXT_PUBLIC_API_URL
             }/proxy-image/${encodeURIComponent(
@@ -35,7 +35,7 @@ const ProfileReport = ({ profileData }: any) => {
             // src={"https://scontent-lhr8-1.cdninstagram.com/v/t51.2885-19/147254230_112165057532944_7401589615602879255_n.jpg?stp=dst-jpg_s150x150&_nc_ht=scontent-lhr8-1.cdninstagram.com&_nc_cat=1&_nc_ohc=cFiCzejQZoUQ7kNvgE6I-cW&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AYA7znosEKzaCwX_IDQYM3iONCG6t3pNFzM3UkcoS07Qsw&oe=66C5EC63&_nc_sid=8b3546"}
             width={150}
             height={150}
-            className="rounded-full shadow-md"
+            className="rounded-full shadow-md w-[150px] h-[150px]"
             alt={`${profileData.username}`}
           />
           <div className="font-bold">@{profileData.username}</div>
