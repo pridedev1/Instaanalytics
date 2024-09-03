@@ -1,5 +1,5 @@
-export const MEMBERID = "Administration";
-export const PASSWORD = "Administration";
+export const MEMBERID = "userid2014";
+export const PASSWORD = "allthebest";
 
 export const sampleResponse = {
   followingData: {
