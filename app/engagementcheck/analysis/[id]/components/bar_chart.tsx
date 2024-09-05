@@ -3,8 +3,8 @@ import React, { useLayoutEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import { sampleResponse } from "@/app/utils/constants";
 import { formatNumber } from "@/utils/helper";
+import { sampleResponse } from "@/utils/constants";
 
 const BarChartWithImages = () => {
   const mediaData = sampleResponse.profileData.media;
@@ -28,7 +28,6 @@ const BarChartWithImages = () => {
         },
       };
     });
-    console.log("data2 :", data2);
 
     let chart = root.container.children.push(
       am5xy.XYChart.new(root, {

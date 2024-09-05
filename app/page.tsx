@@ -31,7 +31,6 @@ export default function Home() {
   const handleLogin = (memberId: string, password: string) => {
     // Assuming you have a login function
     // loginUser();
-    console.log("mer :", memberId);
 
     if (memberId !== MEMBERID) {
       errorToast("MemberId Don't match");
@@ -68,7 +67,6 @@ export default function Home() {
       const isAuth = JSON.parse(
         sessionStorage.getItem("isAuthenticate") ?? "false"
       );
-      console.log("isAuthenticate :", isAuth);
       setIsAuthenticate(isAuth);
 
       // if (!isAuthenticate) {

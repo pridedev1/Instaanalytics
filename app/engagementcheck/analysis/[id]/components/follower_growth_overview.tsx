@@ -78,10 +78,8 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
   const data = sampleResponse.followingData.history;
 
   let thisWeekData = followerHistory.slice(0, 6);
-  console.log("this week :", thisWeekData);
 
   let previousWeekData2 = followerHistory.slice(6, 14);
-  console.log("previous week data :", previousWeekData2);
 
   // Calculate the current week range
   const currentDate = parseISO(data[0].date);

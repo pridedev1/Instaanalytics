@@ -125,7 +125,6 @@ const FollowerGrowthGraph = ({ followerHistory, isFollowing }: any) => {
     let data = generateDatas(30);
     let data2 = followerHistory.slice(0, 30).map((d: any) => {
       let [year, month, day] = d.date.split("-");
-      console.log(year, month, day);
 
       let date = new Date(
         parseInt(year),

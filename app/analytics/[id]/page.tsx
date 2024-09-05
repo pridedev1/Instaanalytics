@@ -34,14 +34,14 @@ const Analytics = () => {
     ((avgLikes + avgComments) /
       convertInstagramNumber(data["follower_count"])) *
     100;
-  console.log(
-    "data :",
-    data,
-    avgComments,
-    avgLikes,
-    convertInstagramNumber(data["follower_count"]),
-    enageRate
-  );
+  // console.log(
+  //   "data :",
+  //   data,
+  //   avgComments,
+  //   avgLikes,
+  //   convertInstagramNumber(data["follower_count"]),
+  //   enageRate
+  // );
   useEffect(() => {}, [searchParams]);
 
   return (

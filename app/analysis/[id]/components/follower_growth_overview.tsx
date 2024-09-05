@@ -80,10 +80,8 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
   let data = followerHistory;
 
   let thisWeekData = followerHistory.slice(0, 6);
-  console.log("this week :", thisWeekData);
 
   let previousWeekData2 = followerHistory.slice(6, 14);
-  console.log("previous week data :", previousWeekData2);
 
   // Calculate the current week range
   const currentDate = parseISO(data[0].date);
@@ -138,8 +136,6 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
   const averageFollowersPerDay = totalNewFollowersCurrentWeek / 6;
 
   const bgColore = (value: any) => {
-    console.log("following :", value, typeof value);
-
     if (value === 0) {
       return "";
     } else if (value > 0) {
