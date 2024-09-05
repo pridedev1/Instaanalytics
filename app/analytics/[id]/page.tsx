@@ -1,10 +1,10 @@
 "use client";
-import convertInstagramNumber from "@/app/utils/convertInstgramNumber";
-import formatNumber from "@/app/utils/formateNumber";
+import convertInstagramNumber from "@/utils/convertInstgramNumber";
+import formatNumber from "@/utils/formateNumber";
 import Image from "next/image";
 import { useParams, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import GradientImage from "../../../public/Patch-1.png"
+import GradientImage from "../../../public/Patch-1.png";
 
 const Analytics = () => {
   let { id } = useParams();
@@ -103,40 +103,36 @@ const Analytics = () => {
               <div className="font-bold">
                 {formatNumber(Number(avgComments.toFixed(0)))}
               </div>
-              <div className="sm:text-xs text-[8px] font-medium">Avg Comments</div>
+              <div className="sm:text-xs text-[8px] font-medium">
+                Avg Comments
+              </div>
             </div>
           </div>
 
           {/* <div className="font-bold text-2xl text-center">
           Instagram Report for {id}
         </div> */}
-
-       
         </div>
 
         <div className="flex flex-row relative items-center justify-around mb-2 w-[calc(100%-16px)] h-28 mx-2">
-        <img src={GradientImage.src} className="absolute top-0 bottom-0 -z-10"/>
-        <div className="flex flex-col items-center">
-          <div className="text-3xl font-black">
-          {Number(enageRate.toFixed(1))}% 
+          <img
+            src={GradientImage.src}
+            className="absolute top-0 bottom-0 -z-10"
+          />
+          <div className="flex flex-col items-center">
+            <div className="text-3xl font-black">
+              {Number(enageRate.toFixed(1))}%
+            </div>
+            <div className="text-sm font-medium">Engagement Rate</div>
           </div>
-          <div className="text-sm font-medium">
-            Engagement Rate
+          <div className="flex flex-col items-center">
+            <div className="text-3xl font-black">{"Low"}</div>
+            <div className="text-sm font-medium">Status</div>
           </div>
-        </div>
-        <div className="flex flex-col items-center">
-          <div className="text-3xl font-black">
-          {"Low"}
-          </div>
-          <div className="text-sm font-medium">
-            Status
-          </div>
-        </div>
-        
         </div>
 
         {/* <div className="flex flex-col sm:flex-row gap-8 py-4 ">≥ */}
-            {/* <div>
+        {/* <div>
               
               
               <div className="border-b-[1px] border-b-black mb-4" />
@@ -155,7 +151,7 @@ const Analytics = () => {
                 </div>
               </div>
             </div> */}
-          {/* </div> */}
+        {/* </div> */}
       </div>
       <div className="my-auto" />
     </div>

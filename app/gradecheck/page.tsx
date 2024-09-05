@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MEMBERID, PASSWORD } from "../utils/constants";
-import { errorToast } from "../utils/toast";
+import { MEMBERID, PASSWORD } from "../../utils/constants";
+import { errorToast } from "../../utils/toast";
 import LoginPage from "../components/login_page";
 import MyModal from "../components/my-dialog";
 import Image from "next/image";

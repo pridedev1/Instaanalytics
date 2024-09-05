@@ -1,6 +1,6 @@
 "use client";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../utils/firebase";
+import { db } from "../../utils/firebase";
 import { useState } from "react";
 
 const TestPage = () => {

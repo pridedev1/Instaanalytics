@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Image from "next/image";
 import { useState } from "react";
-import { storage } from "../utils/firebase";
+import { storage } from "../../utils/firebase";
 import axios from "axios";
-import { errorToast, successToast } from "../utils/toast";
+import { errorToast, successToast } from "../../utils/toast";
 import { Loader2 } from "lucide-react";
 
 export default function Home() {

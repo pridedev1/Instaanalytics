@@ -1,9 +1,9 @@
 "use client";
-import formatNumber from "@/app/utils/formateNumber";
+import formatNumber from "@/utils/formateNumber";
 import Image from "next/image";
 import GradientImage from "../../../../../public/Patch-1.png";
 import { TrendingDown, TrendingUp } from "lucide-react";
-import { capitalizeFirstLetterOfEachWord } from "@/app/utils/helper";
+import { capitalizeFirstLetterOfEachWord } from "@/utils/helper";
 
 const ProfileReport = ({ profileData }: any) => {
   return (

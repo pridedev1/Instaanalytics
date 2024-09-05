@@ -6,7 +6,7 @@ import ProfileReport from "./components/profile_report";
 import BarChart from "./components/bar-chart";
 import { useEffect, useState } from "react";
 import { Loader2, MoveUp } from "lucide-react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
 import PostAnalysis from "./components/post_analysis";
 import ProfileDataHistory from "./components/porfile_data_history";
@@ -20,13 +20,28 @@ const ProfileAnalysis = () => {
   const [followerData, setFollowerData] = useState<any>();
   const [loading, setLoading] = useState(false);
   let { id } = useParams();
+  let searchParams = useSearchParams();
 
   const fetchData = async (id: string) => {
     try {
       setLoading(true);
-      let res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`
-      );
+      let via = searchParams.get("via");
+      let backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
+      if (via === "ja") {
+        backednUrl = `http://146.190.32.67/profile-report?username=${id}`;
+      } else if (via === "vs") {
+        console.log("yes");
+      } else if (via === "ab") {
+        console.log("yes");
+      } else if (via === "im") {
+        console.log("yes");
+      } else if (via === "ss") {
+        console.log("yes");
+      } else if (via === "ad") {
+        console.log("yes");
+      }
+
+      let res = await axios.get(backednUrl);
       let data = res.data;
       console.log("data ;", data);
 

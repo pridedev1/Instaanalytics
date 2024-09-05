@@ -1,4 +1,5 @@
 export const MEMBERID = "userid2014";
+export const TEMP_MEMBER = "userid2008";
 export const PASSWORD = "allthebest";
 
 export const sampleResponse = {

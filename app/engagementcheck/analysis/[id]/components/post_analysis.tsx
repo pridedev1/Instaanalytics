@@ -6,7 +6,7 @@ import Image from "next/image";
 import { format } from "light-date";
 import { Eye, Heart, MessageCircle } from "lucide-react";
 import { isMobile } from "react-device-detect";
-import { formatNumber } from "@/app/utils/helper";
+import { formatNumber } from "@/utils/helper";
 
 const PostAnalysisGrid = ({ data }: any) => {
   return (
