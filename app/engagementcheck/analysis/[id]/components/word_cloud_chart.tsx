@@ -4,7 +4,6 @@ import React, { useLayoutEffect } from "react";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5wc from "@amcharts/amcharts5/wc";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
-import { sampleResponse } from "@/app/utils/constants";
 
 const WordCloudChart = ({ hashtags }: any) => {
   const color1 = am5.color(0xf5004f);
