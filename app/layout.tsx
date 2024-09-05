@@ -47,12 +47,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <meta
           http-equiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
         />
-      </Head>
+      </head>
       <body className={satoshi.className}>
         {children}
 
