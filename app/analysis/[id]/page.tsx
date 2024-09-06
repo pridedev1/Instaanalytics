@@ -28,17 +28,41 @@ const ProfileAnalysis = () => {
       let via = searchParams.get("via");
       let backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
       if (via === "ja") {
-        backednUrl = `http://146.190.32.67/profile-report?username=${id}`;
+        backednUrl = `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api-proxy?serId=${encodeURIComponent(
+          `http://146.190.32.67/profile-report?username=${id}`
+        )}`;
       } else if (via === "vs") {
-        console.log("yes");
+        backednUrl = `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api-proxy?serId=${encodeURIComponent(
+          `http://137.184.230.17/profile-report?username=${id}`
+        )}`;
       } else if (via === "ab") {
-        console.log("yes");
+        backednUrl = `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api-proxy?serId=${encodeURIComponent(
+          `http://146.190.160.210/profile-report?username=${id}`
+        )}`;
       } else if (via === "im") {
-        console.log("yes");
+        backednUrl = `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api-proxy?serId=${encodeURIComponent(
+          `http://164.90.152.48/profile-report?username=${id}`
+        )}`;
       } else if (via === "ss") {
-        console.log("yes");
+        backednUrl = `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api-proxy?serId=${encodeURIComponent(
+          `http://143.110.154.55/profile-report?username=${id}`
+        )}`;
       } else if (via === "ad") {
-        console.log("yes");
+        backednUrl = `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api-proxy?serId=${encodeURIComponent(
+          `http://143.198.138.39/profile-report?username=${id}`
+        )}`;
       }
 
       let res = await axios.get(backednUrl);
