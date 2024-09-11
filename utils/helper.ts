@@ -27,6 +27,7 @@ export function formatNumber(str: string) {
 }
 
 export function capitalizeFirstLetterOfEachWord(str: string) {
+  if (str === undefined) return "";
   return str.replace(/\b\w/g, function (char) {
     return char.toUpperCase();
   });

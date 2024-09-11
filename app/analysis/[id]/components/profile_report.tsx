@@ -6,6 +6,8 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 import { capitalizeFirstLetterOfEachWord } from "@/utils/helper";
 
 const ProfileReport = ({ profileData, updatedDetails }: any) => {
+  console.log("updateDetails", updatedDetails);
+
   return (
     <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 ">
       <div className="flex flex-col items-center justify-center  py-4 px-8 mx-4">
@@ -39,10 +41,13 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
             alt={`${profileData.username}`}
           />
           <div className="font-bold">@{profileData.username}</div>
-
-          <div className="bg-[#F5F6FA]/40 px-4 py-2 rounded-full font-medium my-4">
-            {profileData.category_name}
-          </div>
+          {profileData.category_name !== "" &&
+            profileData.category_name !== undefined &&
+            profileData.category_name !== null && (
+              <div className="bg-[#F5F6FA]/40 px-4 py-2 rounded-full font-medium my-4">
+                {profileData.category_name}
+              </div>
+            )}
         </div>
         <div className="flex gap-4 justify-between my-4">
           <div className="flex flex-col items-center sm:w-24 w-16">
@@ -90,7 +95,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
           <div className="flex flex-col items-center">
             <div className="text-3xl font-black">
               {updatedDetails !== undefined &&
-              updatedDetails["enagementRate"] !== null &&
+              updatedDetails["enagementRate"] !== undefined &&
               updatedDetails["enagementRate"] !== ""
                 ? updatedDetails["enagementRate"]
                 : profileData.media_info.er_info.er}
@@ -102,7 +107,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
             <div className="text-3xl font-black">
               {capitalizeFirstLetterOfEachWord(
                 updatedDetails !== undefined &&
-                  updatedDetails["status"] !== null &&
+                  updatedDetails["status"] !== undefined &&
                   updatedDetails["status"] !== ""
                   ? updatedDetails["status"]
                   : profileData.media_info.er_info.er_type
