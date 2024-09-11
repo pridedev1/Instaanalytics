@@ -2,6 +2,9 @@ export const MEMBERID = "userid2014";
 export const TEMP_MEMBER = "userid2008";
 export const PASSWORD = "allthebest";
 
+export const ADMIN_USER = "11";
+export const ADMIN_PASS = "11";
+
 export const sampleResponse = {
   followingData: {
     history: [

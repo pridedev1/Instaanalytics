@@ -5,7 +5,7 @@ import GradientImage from "../../../../public/Patch-1.png";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { capitalizeFirstLetterOfEachWord } from "@/utils/helper";
 
-const ProfileReport = ({ profileData }: any) => {
+const ProfileReport = ({ profileData, updatedDetails }: any) => {
   return (
     <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 ">
       <div className="flex flex-col items-center justify-center  py-4 px-8 mx-4">
@@ -89,14 +89,23 @@ const ProfileReport = ({ profileData }: any) => {
         <div className="flex flex-row items-center justify-around  w-[calc(100%-16px)] h-28">
           <div className="flex flex-col items-center">
             <div className="text-3xl font-black">
-              {profileData.media_info.er_info.er}%
+              {updatedDetails !== undefined &&
+              updatedDetails["enagementRate"] !== null &&
+              updatedDetails["enagementRate"] !== ""
+                ? updatedDetails["enagementRate"]
+                : profileData.media_info.er_info.er}
+              %
             </div>
             <div className="text-sm font-medium">Engagement Rate</div>
           </div>
           <div className="flex flex-col items-center">
             <div className="text-3xl font-black">
               {capitalizeFirstLetterOfEachWord(
-                profileData.media_info.er_info.er_type
+                updatedDetails !== undefined &&
+                  updatedDetails["status"] !== null &&
+                  updatedDetails["status"] !== ""
+                  ? updatedDetails["status"]
+                  : profileData.media_info.er_info.er_type
               )}
             </div>
             <div className="text-sm font-medium">Status</div>
@@ -109,9 +118,18 @@ const ProfileReport = ({ profileData }: any) => {
             <TrendingDown />
           )}
           <b className="whitespace-nowrap w-min h-min">
-            {profileData.media_info.er_info.er_diff_avg} %
+            {updatedDetails !== undefined &&
+            updatedDetails["enageChange"] !== undefined &&
+            updatedDetails["enageChange"] !== undefined
+              ? updatedDetails["enageChange"]
+              : profileData.media_info.er_info.er_diff_avg}
+            %
           </b>{" "}
-          {profileData.media_info.er_info.er_type === "good" ? (
+          {updatedDetails !== undefined &&
+          updatedDetails["oneLinear"] !== undefined &&
+          updatedDetails["oneLinear"] !== "" ? (
+            updatedDetails["oneLinear"]
+          ) : profileData.media_info.er_info.er_type === "good" ? (
             "higher than the average of similar profiles"
           ) : (
             <p>

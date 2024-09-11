@@ -14,16 +14,30 @@ import WordCloudChart from "./components/word_cloud_chart";
 import FollowerGrowthGraph from "./components/follower_growth_graph";
 import FollowerGrowthOverview from "./components/follower_growth_overview";
 import HashtagList from "./components/hash_tag_list";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 
 const ProfileAnalysis = () => {
   const [profileData, setProfileData] = useState<any>();
   const [followerData, setFollowerData] = useState<any>();
   const [loading, setLoading] = useState(false);
   let { id } = useParams();
+  const [updatedDetails, setUpdatedDetials] = useState({});
   let searchParams = useSearchParams();
 
   const fetchData = async (id: string) => {
     try {
+      // check if it exist in our database
+
+      const accountRef = doc(db, `/accounts/${id}`);
+
+      let d = await getDoc(accountRef);
+
+      if (d.exists()) {
+        console.log("data :", d.data());
+
+        setUpdatedDetials(d.data());
+      }
       setLoading(true);
       let via = searchParams.get("via");
       let backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
@@ -174,7 +188,10 @@ const ProfileAnalysis = () => {
         </div>
         <div className="sm:my-16 my-10" />
         {profileData.profile_pic_url !== undefined ? (
-          <ProfileReport profileData={profileData} />
+          <ProfileReport
+            profileData={profileData}
+            updatedDetails={updatedDetails}
+          />
         ) : (
           <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl text-2xl font-bold p-6 ">
             {" "}
