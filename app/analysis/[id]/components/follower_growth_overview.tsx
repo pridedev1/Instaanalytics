@@ -89,8 +89,14 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
   const weekEnd = new Date(thisWeekData[0].date);
 
   // Calculate the previous week range
-  const previousWeekStart = new Date(previousWeekData2.at(-1).date);
-  const previousWeekEnd = new Date(previousWeekData2[0].date);
+  const previousWeekStart =
+    previousWeekData2.at(-1) !== undefined
+      ? new Date(previousWeekData2.at(-1).date)
+      : undefined;
+  const previousWeekEnd =
+    previousWeekData2[0] !== undefined
+      ? new Date(previousWeekData2[0].date)
+      : undefined;
 
   // Filter data for the current and previous week
   const currentWeekData = data.filter((d: any) => {
@@ -98,10 +104,10 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
     return date >= weekStart && date <= weekEnd;
   });
 
-  const previousWeekData = data.filter((d: any) => {
-    const date = parseISO(d.date);
-    return date >= previousWeekStart && date <= previousWeekEnd;
-  });
+  // const previousWeekData = data.filter((d: any) => {
+  //   const date = parseISO(d.date);
+  //   return date >= previousWeekStart && date <= previousWeekEnd;
+  // });
 
   // Calculate totals
   const totalNewFollowersCurrentWeek = thisWeekData.reduce(
@@ -163,14 +169,16 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
       </div>
       <div className="space-y-4 px-6">
         <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-lg font-medium">Followers</h3>
-            <div className="text-xs text-gray-500 font-medium">
-              {totalNewFollowersCurrentWeek - totalNewFollowersPreviousWeek} vs{" "}
-              {format(previousWeekStart, "dd/MM")} -{" "}
-              {format(previousWeekEnd, "dd/MM")}
+          {previousWeekStart !== undefined && previousWeekEnd && (
+            <div>
+              <h3 className="text-lg font-medium">Followers</h3>
+              <div className="text-xs text-gray-500 font-medium">
+                {totalNewFollowersCurrentWeek - totalNewFollowersPreviousWeek}{" "}
+                vs {format(previousWeekStart, "dd/MM")} -{" "}
+                {format(previousWeekEnd, "dd/MM")}
+              </div>
             </div>
-          </div>
+          )}
           <div
             className={`${bgColore(
               totalNewFollowersCurrentWeek
@@ -184,14 +192,16 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
         </div>
         <div className="border my-2" />
         <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-lg font-medium">Following</h3>
-            <div className="text-xs text-gray-500 font-medium">
-              {totalNewFollowingCurrentWeek - totalNewFollowingPreviousWeek} vs{" "}
-              {format(previousWeekStart, "dd/MM")} -{" "}
-              {format(previousWeekEnd, "dd/MM")}
+          {previousWeekStart !== undefined && previousWeekEnd && (
+            <div>
+              <h3 className="text-lg font-medium">Following</h3>
+              <div className="text-xs text-gray-500 font-medium">
+                {totalNewFollowingCurrentWeek - totalNewFollowingPreviousWeek}{" "}
+                vs {format(previousWeekStart, "dd/MM")} -{" "}
+                {format(previousWeekEnd, "dd/MM")}
+              </div>
             </div>
-          </div>
+          )}
           <div
             className={`${bgColore(
               totalNewFollowingCurrentWeek
@@ -203,14 +213,16 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
         </div>
         <div className="border my-2" />
         <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-lg font-medium">Posts</h3>
-            <div className="text-xs text-gray-500 font-medium">
-              {totalNewPostsCurrentWeek - totalNewPostsPreviousWeek} vs{" "}
-              {format(previousWeekStart, "dd/MM")} -{" "}
-              {format(previousWeekEnd, "dd/MM")}
+          {previousWeekStart !== undefined && previousWeekEnd && (
+            <div>
+              <h3 className="text-lg font-medium">Posts</h3>
+              <div className="text-xs text-gray-500 font-medium">
+                {totalNewPostsCurrentWeek - totalNewPostsPreviousWeek} vs{" "}
+                {format(previousWeekStart, "dd/MM")} -{" "}
+                {format(previousWeekEnd, "dd/MM")}
+              </div>
             </div>
-          </div>
+          )}
           <div
             className={`${bgColore(
               totalNewPostsCurrentWeek
