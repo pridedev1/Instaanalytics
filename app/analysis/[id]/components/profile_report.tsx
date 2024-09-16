@@ -86,12 +86,12 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
         </div>
       </div>
 
-      <div className="flex flex-col relative items-center justify-around mb-2 w-[calc(100%-16px)] h-32 mx-2">
+      <div className="flex flex-col relative items-center justify-around mb-2 w-[calc(100%-16px)] h-[160px]  mx-2">
         <img
           src={GradientImage.src}
-          className="absolute top-0 bottom-0 -z-10 w-[calc(100%-16px)] h-32"
+          className="absolute top-0 bottom-0 -z-10 w-[calc(100%-16px)] h-[160px]"
         />
-        <div className="flex flex-row items-center justify-around  w-[calc(100%-16px)] h-28">
+        <div className="flex flex-row items-center justify-around py-2 w-[calc(100%-16px)] h-[160px]">
           <div className="flex flex-col items-center">
             <div className="text-3xl font-black">
               {updatedDetails !== undefined &&
@@ -116,7 +116,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
             <div className="text-sm font-medium">Status</div>
           </div>
         </div>
-        <div className="flex gap-2 mb-2 px-4 text-sm text-center">
+        <div className="flex wi gap-2 mb-2 px-4 text-sm text-center">
           {parseInt(profileData.media_info.er_info.er_diff_avg) > 0 ? (
             <TrendingUp />
           ) : (
