@@ -191,6 +191,7 @@ const FollowerGrowthOverview = ({ followerHistory }: any) => {
           </div>
         </div>
         <div className="border my-2" />
+
         <div className="flex justify-between items-center">
           {previousWeekStart !== undefined && previousWeekEnd && (
             <div>

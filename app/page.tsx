@@ -31,6 +31,7 @@ export default function Home() {
   const handleLogin = (memberId: string, password: string) => {
     // Assuming you have a login function
     // loginUser();
+    console.log("ids :", memberId, password, MEMBERID);
 
     if (memberId !== MEMBERID) {
       errorToast("MemberId Don't match");

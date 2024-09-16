@@ -1,4 +1,4 @@
-export const MEMBERID = "userid2014";
+export const MEMBERID = "Digigrowth";
 export const TEMP_MEMBER = "userid2008";
 export const PASSWORD = "allthebest";
 

@@ -4,17 +4,17 @@ import { db } from "../../utils/firebase";
 import { useState } from "react";
 
 const TestPage = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<any>(null);
 
-  // const getData = async () => {
-  //   let docRef = doc(db, "/users/list");
+  const getData = async () => {
+    let docRef = doc(db, "/users/list");
 
-  //   let d = (await getDoc(docRef)).data();
-  //   setData(d);
-  // };
+    let d = (await getDoc(docRef)).data();
+    setData(d);
+  };
   return (
     <div>
-      {/* <button onClick={getData}>get data</button> */}
+      <button onClick={getData}>get data</button>
       {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
     </div>
   );
