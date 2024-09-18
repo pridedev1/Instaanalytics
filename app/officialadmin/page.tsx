@@ -101,7 +101,7 @@ export default function Home() {
     return (
       <div className="relative h-screen z-10 focus:outline-none flex gap-2 justify-center items-center">
         <div className="w-96 border rounded-xl p-6">
-          <div className="font-bold text-center">ADMIN AUTHORIZE ONLY</div>
+          <div className="font-bold text-center">AUTHORIZED ADMIN ONLY</div>
           <MyInput
             label={"Member ID"}
             value={memberId}
