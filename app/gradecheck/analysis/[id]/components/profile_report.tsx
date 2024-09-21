@@ -6,6 +6,62 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 import { capitalizeFirstLetterOfEachWord } from "@/utils/helper";
 
 const ProfileReport = ({ profileData }: any) => {
+  const getGrade = (follower: number, eg: number) => {
+    let baseEgRate;
+    if (follower >= 100000) {
+      baseEgRate = 1.7;
+    } else if (follower < 100000 && follower >= 10000) {
+      baseEgRate = 2.4;
+    } else if (follower < 10000 && follower >= 5000) {
+      baseEgRate = 4;
+    } else if (follower < 5000 && follower >= 1000) {
+      baseEgRate = 5.7;
+    } else {
+      baseEgRate = 8;
+    }
+    let grade;
+
+    let factor;
+    if (follower >= 100000) {
+      factor = 0.5;
+    } else if (follower < 100000 && follower >= 10000) {
+      factor = 0.7;
+    } else if (follower < 10000 && follower >= 5000) {
+      factor = 0.8;
+    } else if (follower < 5000 && follower >= 1000) {
+      factor = 0.9;
+    } else {
+      factor = 1;
+    }
+    if (eg >= baseEgRate + 1 * factor) {
+      grade = "A+";
+    } else if (eg >= baseEgRate) {
+      grade = "A";
+    } else if (eg >= baseEgRate - 1 * factor) {
+      grade = "A-";
+    } else if (eg >= baseEgRate - 2 * factor) {
+      grade = "B-";
+    } else if (eg > baseEgRate - 3 * factor) {
+      grade = "C";
+    } else if (eg > baseEgRate - 4 * factor) {
+      grade = "C-";
+    } else if (eg > baseEgRate - 5 * factor) {
+      grade = "D";
+    } else {
+      grade = "E";
+    }
+
+    return grade;
+  };
+
+  console.log(
+    "Grade :",
+    getGrade(
+      profileData.followers,
+      parseInt(profileData["media_info"]["er_info"]["er"]) ?? 0
+    )
+  );
+
   return (
     <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 ">
       <div className="flex flex-col items-center justify-center  py-4 px-8 mx-4">
@@ -77,7 +133,19 @@ const ProfileReport = ({ profileData }: any) => {
           src={GradientImage.src}
           className="absolute top-0 bottom-0 -z-10 w-[calc(100%-16px)] h-32"
         />
-        <div className="flex flex-row items-center justify-around  w-[calc(100%-16px)] h-28">
+        <div className="flex items-center gap-4 sm:gap-8">
+          <div>
+            <div className="italic font-medium">YOUR GRADES ARE IN!</div>
+            <div className="font-bold text-2xl">HAVE A LOOK</div>
+          </div>
+          <div className="font-bold text-4xl sm:text-5xl backdrop-blur-md bg-white/50 p-3 rounded-lg">
+            {getGrade(
+              profileData.followers,
+              parseInt(profileData["media_info"]["er_info"]["er"]) ?? 0
+            )}
+          </div>
+        </div>
+        {/* <div className="flex flex-row items-center justify-around  w-[calc(100%-16px)] h-28">
           <div className="flex flex-col items-center">
             <div className="text-3xl font-black">
               {profileData.media_info.er_info.er}%
@@ -103,7 +171,7 @@ const ProfileReport = ({ profileData }: any) => {
             {profileData.media_info.er_info.er_diff_avg} %
           </b>{" "}
           higher than the average of similar profiles
-        </div>
+        </div> */}
       </div>
     </div>
   );
