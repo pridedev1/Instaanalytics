@@ -40,8 +40,16 @@ const ProfileAnalysis = () => {
       }
       setLoading(true);
       let via = searchParams.get("via");
-      let backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
-      if (via === "ja") {
+
+      let backednUrl = `${
+        process.env.NEXT_PUBLIC_API_URL
+      }/api-proxy?serId=${encodeURIComponent(
+        `http://137.184.183.57/profile-report?username=${id}`
+      )}`;
+
+      if (via === "ca") {
+        backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
+      } else if (via === "ja") {
         backednUrl = `${
           process.env.NEXT_PUBLIC_API_URL
         }/api-proxy?serId=${encodeURIComponent(
@@ -78,6 +86,8 @@ const ProfileAnalysis = () => {
           `http://143.198.138.39/profile-report?username=${id}`
         )}`;
       }
+
+      console.log("url :", backednUrl);
 
       let res = await axios.get(backednUrl);
       let data = res.data;

@@ -12,6 +12,7 @@ import { errorToast } from "../utils/toast";
 import LoginPage from "./components/login_page";
 import { useRouter } from "next/navigation";
 import MyInput from "./components/my-input";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -43,7 +44,7 @@ export default function Home() {
     }
     // Set isAuthenticate to true in sessionStorage
     if (typeof window !== "undefined") {
-      sessionStorage.setItem("isAuthenticate", "true");
+      Cookies.set("isAuthenticate", "true", { expires: 2 });
     }
     setIsAuthenticate(true);
     // if (username === "" || username === undefined) return;
@@ -52,9 +53,11 @@ export default function Home() {
   };
 
   const getProfileDetail = async () => {
+    console.log("user:", username, window);
+
     if (username === "" || username === undefined) return;
     if (typeof window !== "undefined") {
-      const isAuthenticate = sessionStorage.getItem("isAuthenticate");
+      const isAuthenticate = Cookies.get("isAuthenticate") === "true";
       if (isAuthenticate) {
         close();
         // router.push(`/analysis/${username}`);
@@ -65,11 +68,19 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isAuth = JSON.parse(
-        sessionStorage.getItem("isAuthenticate") ?? "false"
-      );
-      setIsAuthenticate(isAuth);
+      // const isAuth = JSON.parse(
+      //   sessionStorage.getItem("isAuthenticate") ?? "false"
+      // );
+      // setIsAuthenticate(isAuth);
 
+      const cookieAuth = Cookies.get("isAuthenticate") === "true";
+
+      if (!cookieAuth) {
+        sessionStorage.removeItem("isAuthenticate");
+        setIsAuthenticate(false);
+      } else {
+        setIsAuthenticate(true);
+      }
       // if (!isAuthenticate) {
       //   // Redirect to login page or prompt login
       //   router.push("/login");

@@ -20,6 +20,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "firebase": "^10.12.5",
+    "js-cookie": "^3.0.5",
     "light-date": "^1.2.0",
     "lucide-react": "^0.428.0",
     "next": "14.2.5",
@@ -35,6 +36,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
