@@ -29,7 +29,11 @@ export default function Home() {
     setIsOpen(false);
   }
 
-  const handleLogin = (memberId: string, password: string) => {
+  const handleLogin = (
+    memberId: string,
+    password: string,
+    rememberMe: boolean
+  ) => {
     // Assuming you have a login function
     // loginUser();
     console.log("ids :", memberId, password, MEMBERID);
@@ -44,7 +48,11 @@ export default function Home() {
     }
     // Set isAuthenticate to true in sessionStorage
     if (typeof window !== "undefined") {
-      Cookies.set("isAuthenticate", "true", { expires: 2 });
+      if (rememberMe) {
+        Cookies.set("isAuthenticate", "true");
+      } else {
+        Cookies.set("isAuthenticate", "true", { expires: 2 });
+      }
     }
     setIsAuthenticate(true);
     // if (username === "" || username === undefined) return;

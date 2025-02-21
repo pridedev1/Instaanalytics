@@ -16,6 +16,7 @@ const LoginPage = ({ handleLogin }: any) => {
   const [memberId, setMemberId] = useState("");
   const [password, setPassword] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [rememberMe, setRememberMe] = useState(true); // New state for "Remember Me"
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -79,9 +80,21 @@ const LoginPage = ({ handleLogin }: any) => {
                   placeholder="Password"
                   onchange={(value: string) => setPassword(value)}
                 />
+                <div className="mt-4 flex items-center px-4">
+                  <input
+                    type="checkbox"
+                    id="rememberMe"
+                    checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}
+                    className="mr-2"
+                  />
+                  <label htmlFor="rememberMe" className="text-sm">
+                    Remember Me
+                  </label>
+                </div>
                 <div className="mt-8 flex gap-4 justify-center">
                   <Button
-                    onClick={() => handleLogin(memberId, password)}
+                    onClick={() => handleLogin(memberId, password, rememberMe)}
                     className="flex justify-center mx-4 items-center gap-2 rounded-full w-full bg-[#0095F6] py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-[#0095F6]/70 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                   >
                     Log in
