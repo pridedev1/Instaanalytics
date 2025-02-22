@@ -30,15 +30,8 @@ const LoginPage = ({ handleLogin }: any) => {
     <div>
       <div className="relative h-screen z-10 focus:outline-none flex gap-2 justify-center items-center">
         <div className="flex">
-          <div className=" hidden md:flex items-center justify-center rounded-lg overflow-hidden">
+          {/* <div className=" hidden md:flex items-center justify-center rounded-lg overflow-hidden">
             <div className="relative h-[600px] w-[470px] bg-[url('/phone-mockup.png')] bg-no-repeat bg-[length:460px_625px]">
-              {/* <Image
-              src={"/phone-mockup.png"}
-              fill
-              // width={360}
-              // height={700}
-              alt="phone mock"
-            /> */}
               {images.map((src, index) => (
                 <Image
                   key={index}
@@ -54,7 +47,7 @@ const LoginPage = ({ handleLogin }: any) => {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
           <div className="inset-0 z-10 overflow-y-auto">
             <div className="flex w-96 items-center justify-center p-4 py-14">
               <div className="w-full border max-w-lg rounded-xl bg-white/70 p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
