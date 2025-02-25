@@ -51,7 +51,7 @@ const LoginPage = ({ handleLogin }: any) => {
           <div className="inset-0 z-10 overflow-y-auto">
             <div className="flex w-96 items-center justify-center p-4 py-14">
               <div className="w-full border max-w-lg rounded-xl bg-white/70 p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
-                <div className="flex justify-center">
+                <div className="flex justify-center ">
                   <Image
                     src={"/insta-login2.png"}
                     width={200}
