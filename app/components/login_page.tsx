@@ -53,9 +53,10 @@ const LoginPage = ({ handleLogin }: any) => {
               <div className="w-full border max-w-lg rounded-xl bg-white/70 p-6 duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                 <div className="flex justify-center">
                   <Image
-                    src={"/insta-login.png"}
+                    src={"/insta-login2.png"}
                     width={200}
                     height={50}
+                    className="my-4"
                     alt="instagram analyzer"
                   />
                 </div>
