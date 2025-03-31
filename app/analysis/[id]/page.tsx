@@ -122,7 +122,6 @@ const ProfileAnalysis = () => {
     "Analyzing your content for insights.",
     "Creating a detailed report.",
   ];
-
   useEffect(() => {
     const isAuthenticated = !!Cookies.get("userData");
 

@@ -20,7 +20,7 @@ export default function Home() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   let [isOpen, setIsOpen] = useState(false);
-  const { user, login } = useAuth();
+  const { user, login, logout } = useAuth();
 
   function open() {
     setIsOpen(true);
@@ -108,6 +108,17 @@ export default function Home() {
     );
   return (
     <main className="w-full flex items-center flex-col gap-8 my-10">
+      <div className="w-full flex justify-end px-8">
+        <Button
+          onClick={() => {
+            logout();
+            setIsAuthenticate(false);
+          }}
+          className="rounded-full py-1 px-6 text-sm font-semibold text-white hover:bg-red-600"
+        >
+          Logout
+        </Button>
+      </div>
       <div>
         <Image
           src={"/images/Logo Black.png"}

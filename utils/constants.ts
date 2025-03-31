@@ -2,8 +2,8 @@ export const MEMBERID = "digigrowth";
 export const TEMP_MEMBER = "userid2008";
 export const PASSWORD = "allthebest";
 
-export const ADMIN_USER = "11";
-export const ADMIN_PASS = "11";
+export const ADMIN_USER = "admin";
+export const ADMIN_PASS = "Pride@12#$34";
 
 export const sampleResponse = {
   followingData: {

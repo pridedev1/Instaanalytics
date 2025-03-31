@@ -43,7 +43,7 @@ export default function Home() {
   const [isAuthenticate, setIsAuthenticate] = useState(false);
   const [data, setData] = useState<any>(undefined);
 
-  const { user, login } = useAuth();
+  const { user, login, logout } = useAuth();
   const [memberId, setMemberId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -185,7 +185,7 @@ export default function Home() {
     return (
       <div className="relative h-screen z-10 focus:outline-none flex gap-2 justify-center items-center">
         <div className="w-96 border rounded-xl p-6">
-          <div className="font-bold text-center">AUTHORIZED ADMIN ONLY</div>
+          <div className="font-bold text-center">AUTHORIZED USER ONLY</div>
           <MyInput
             label={"Member ID"}
             value={memberId}
@@ -215,7 +215,19 @@ export default function Home() {
 
   return (
     <div className="m-4 flex flex-col gap-4">
-      <div className="font-bold text-xl">Admin Panel</div>
+      <div className="flex justify-between items-center">
+        <div className="font-bold text-xl">Admin Panel</div>
+        <Button
+          onClick={() => {
+            logout();
+            // login(null, "");
+            setIsAuthenticate(false);
+          }}
+          variant="outline"
+        >
+          Logout
+        </Button>
+      </div>
       {user && user.isAdmin && <AddAccount />}
       <div className="border rounded-md p-4">
         <div className="font-bold text-xl mb-4"> Update the Stats</div>
@@ -409,7 +421,7 @@ const AddAccount = () => {
           <div className="flex-1">
             <label className="block text-sm font-medium mb-1">Email</label>
             <input
-              type="email"
+              // type="email"
               value={addUserDetails.email}
               onChange={(e) =>
                 setAddUserDetails({
