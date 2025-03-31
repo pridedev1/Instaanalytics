@@ -133,8 +133,8 @@ const EnagementRatePage = () => {
           </div>
           <div className="text-black text-xl text-center">
             {" "}
-            • Dive into the details and discover the insights in your latest
-            report •{" "}
+            Dive into the details and discover the insights in your latest
+            report
           </div>
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full pt-16">

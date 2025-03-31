@@ -21,7 +21,7 @@ const ProfileDataHistory: React.FC<{ data: DataEntry[] }> = ({ data }) => {
     <div className="w-full p-4 rounded-lg ">
       <h2 className="flex justify-center mb-8 mt-8 ">
         <div className="text-2xl z-[1] p-4 w-max font-bold relative">
-          • Ups and Downs of Follower Growth •
+          Ups and Downs of Follower Growth
           <Image
             src={"/Patch-1.png"}
             fill

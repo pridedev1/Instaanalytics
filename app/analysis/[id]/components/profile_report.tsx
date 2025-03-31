@@ -110,7 +110,10 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
                   updatedDetails["status"] !== undefined &&
                   updatedDetails["status"] !== ""
                   ? updatedDetails["status"]
-                  : profileData.media_info.er_info.er_type
+                  : profileData.media_info.er_info.er_type.toLowerCase() ===
+                    "good"
+                  ? "B"
+                  : "D"
               )}
             </div>
             <div className="text-sm font-medium">Status</div>

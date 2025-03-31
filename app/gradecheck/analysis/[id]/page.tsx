@@ -113,7 +113,7 @@ const ProfileAnalysis = () => {
       <div className="my-14" />
       <div className="">
         <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-6 text-center">
-          • Instagram Analytics •
+          Instagram Analytics
         </div>
         <div className="sm:my-16 my-10" />
         {profileData.profile_pic_url !== undefined ? (
@@ -145,7 +145,7 @@ const ProfileAnalysis = () => {
                 <>
                   <div className="flex items-center justify-center mt-16 mb-8">
                     <div className=" text-2xl z-[1] font-semibold  p-4 relative">
-                      • User-Generated Hashtag Usage •
+                      User-Generated Hashtag Usage
                       <Image
                         src={"/Patch-1.png"}
                         fill
@@ -175,7 +175,7 @@ const ProfileAnalysis = () => {
                 <div className="w-full">
                   <div className="flex items-center justify-center">
                     <div className=" text-2xl z-[1] font-semibold  p-4 relative">
-                      • Overall Follower Expansion •
+                      Overall Follower Expansion
                       <Image
                         src={"/Patch-1.png"}
                         fill
@@ -193,7 +193,7 @@ const ProfileAnalysis = () => {
             <div className="w-full">
               <div className="flex items-center justify-center mt-16 mb-8">
                 <div className=" text-2xl z-[1] font-semibold  p-4 relative">
-                  • Comprehensive Analysis of Your Follower Trends •
+                  Comprehensive Analysis of Your Follower Trends
                   <Image
                     src={"/Patch-1.png"}
                     fill
@@ -237,7 +237,7 @@ const ProfileAnalysis = () => {
                       //   display: "inline-block", // Ensure the background fits the text
                       // }}
                     >
-                      • Post Interactions Metrics •
+                      Post Interactions Metrics
                       <Image
                         src={"/Patch-1.png"}
                         fill

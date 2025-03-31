@@ -3,16 +3,16 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
-import { TypeAnimation } from "react-type-animation";
-import { isMobile } from "react-device-detect";
-import MyModal from "./components/my-dialog";
-import { MEMBERID, PASSWORD } from "../utils/constants";
+
+import { ADMIN_USER, MEMBERID, PASSWORD, ADMIN_PASS } from "../utils/constants";
 import { errorToast } from "../utils/toast";
 import LoginPage from "./components/login_page";
 import { useRouter } from "next/navigation";
 import MyInput from "./components/my-input";
 import Cookies from "js-cookie";
+import { useAuth } from "@/utils/hooks/useAuth";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -20,6 +20,7 @@ export default function Home() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   let [isOpen, setIsOpen] = useState(false);
+  const { user, login } = useAuth();
 
   function open() {
     setIsOpen(true);
@@ -29,7 +30,7 @@ export default function Home() {
     setIsOpen(false);
   }
 
-  const handleLogin = (
+  const handleLogin = async (
     memberId: string,
     password: string,
     rememberMe: boolean
@@ -38,22 +39,35 @@ export default function Home() {
     // loginUser();
     console.log("ids :", memberId, password, MEMBERID);
 
-    if (memberId !== MEMBERID) {
-      errorToast("MemberId Don't match");
+    // if (memberId !== MEMBERID) {
+    //   errorToast("MemberId Don't match");
+    //   return;
+    // }
+    // if (password !== PASSWORD) {
+    //   errorToast("Password was incorrecy");
+    //   return;
+    // }
+    // Check if user is admin
+    // Check if user exists in Firebase members collection
+    const memberRef = await getDocs(
+      query(collection(db, "members"), where("email", "==", memberId))
+    );
+
+    if (memberRef.empty) {
+      errorToast("Member not found");
       return;
     }
-    if (password !== PASSWORD) {
-      errorToast("Password was incorrecy");
+
+    const memberDoc = memberRef.docs[0];
+    const memberData = memberDoc.data();
+
+    // Verify password matches
+    if (memberData.password !== password) {
+      errorToast("Invalid password");
       return;
     }
-    // Set isAuthenticate to true in sessionStorage
-    if (typeof window !== "undefined") {
-      if (rememberMe) {
-        Cookies.set("isAuthenticate", "true");
-      } else {
-        Cookies.set("isAuthenticate", "true", { expires: 2 });
-      }
-    }
+
+    login({ email: memberData.email, id: memberData.id }, memberData.password);
     setIsAuthenticate(true);
     // if (username === "" || username === undefined) return;
     // close();
@@ -65,7 +79,7 @@ export default function Home() {
 
     if (username === "" || username === undefined) return;
     if (typeof window !== "undefined") {
-      const isAuthenticate = Cookies.get("isAuthenticate") === "true";
+      const isAuthenticate = user != null;
       if (isAuthenticate) {
         close();
         // router.push(`/analysis/${username}`);
@@ -76,25 +90,15 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // const isAuth = JSON.parse(
-      //   sessionStorage.getItem("isAuthenticate") ?? "false"
-      // );
-      // setIsAuthenticate(isAuth);
-
-      const cookieAuth = Cookies.get("isAuthenticate") === "true";
-
-      if (!cookieAuth) {
-        sessionStorage.removeItem("isAuthenticate");
+      const isAuth = !!Cookies.get("userData");
+      if (!isAuth) {
         setIsAuthenticate(false);
       } else {
         setIsAuthenticate(true);
       }
-      // if (!isAuthenticate) {
-      //   // Redirect to login page or prompt login
-      //   router.push("/login");
-      // }
     }
   }, []);
+  console.log("cookies :");
 
   if (!isAuthenticate)
     return (
@@ -120,7 +124,14 @@ export default function Home() {
           </div>
           <MyInput
             onchange={(value: string) => {
-              setUsername(value);
+              // Parse username from Instagram URL or use direct username
+              const username = value.includes("instagram.com/")
+                ? value.split("instagram.com/")[1].split("/")[0].split("?")[0]
+                : value.startsWith("@")
+                ? value.substring(1)
+                : value;
+
+              setUsername(username);
             }}
             placeholder="Enter the username"
             value={username}

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Loader2, MoveUp } from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
+import Cookies from "js-cookie";
 import PostAnalysis from "./components/post_analysis";
 import ProfileDataHistory from "./components/porfile_data_history";
 import WordCloudChart from "./components/word_cloud_chart";
@@ -16,11 +17,13 @@ import FollowerGrowthOverview from "./components/follower_growth_overview";
 import HashtagList from "./components/hash_tag_list";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { useAuth } from "@/utils/hooks/useAuth";
 
 const ProfileAnalysis = () => {
   const [profileData, setProfileData] = useState<any>();
   const [followerData, setFollowerData] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
   let { id } = useParams();
   const [updatedDetails, setUpdatedDetials] = useState({});
   let searchParams = useSearchParams();
@@ -108,11 +111,6 @@ const ProfileAnalysis = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData(id as string);
-    console.log("loafing data");
-  }, []);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -126,6 +124,14 @@ const ProfileAnalysis = () => {
   ];
 
   useEffect(() => {
+    const isAuthenticated = !!Cookies.get("userData");
+
+    if (!isAuthenticated) {
+      window.location.href = "/";
+    }
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setFade(false);
       setTimeout(() => {
@@ -135,9 +141,18 @@ const ProfileAnalysis = () => {
     }, 3000);
     return () => clearInterval(timer);
   }, []);
+  useEffect(() => {
+    fetchData(id as string);
+    console.log("loafing data");
+  }, []);
+
   // const profileData = sampleResponse.profileData;
   // const followerData = sampleResponse.followingData;
   // console.log("following data :", followerData);
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   if (profileData === undefined || followerData === undefined)
     return (
@@ -157,8 +172,33 @@ const ProfileAnalysis = () => {
     profileData.media != undefined && profileData.media.length != 0
       ? profileData.media[0]
       : undefined;
+
   return (
-    <div className="flex flex-col  items-center justify-center relative   bg-no-repeat bg-fixed bg-cover">
+    <div className="flex flex-col items-center justify-center relative bg-no-repeat bg-fixed bg-cover">
+      {/* Add print button */}
+      <div className="fixed top-4 right-4 print:hidden z-50">
+        <button
+          onClick={handlePrint}
+          className="px-4 py-2 bg-white text-black rounded-md shadow-lg hover:bg-gray-100 transition-colors duration-300 flex items-center gap-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          Print
+        </button>
+      </div>
       {/* <div className="absolute top-8 right-4">
         <Image
           src={"/insta-logo.png"}
@@ -194,7 +234,7 @@ const ProfileAnalysis = () => {
       <div className="my-14" />
       <div className="">
         <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-6 text-center">
-          • Instagram Analytics •
+          Instagram Analytics
         </div>
         <div className="sm:my-16 my-10" />
         {profileData.profile_pic_url !== undefined ? (
@@ -226,7 +266,7 @@ const ProfileAnalysis = () => {
                 <>
                   <div className="flex items-center justify-center mt-16 mb-8">
                     <div className=" text-2xl z-[1] font-semibold  p-4 relative">
-                      • User-Generated Hashtag Usage •
+                      User-Generated Hashtag Usage
                       <Image
                         src={"/Patch-1.png"}
                         fill
@@ -235,8 +275,8 @@ const ProfileAnalysis = () => {
                       />
                     </div>
                   </div>
-                  <div className="w-full flex my-8 sm:h-[550px] gap-4 sm:flex-row flex-col">
-                    <div className=" w-full h-96 sm:h-full border bg-white p-4 rounded-md">
+                  <div className="w-full flex print:flex-col my-8 print:h-full sm:h-[550px] gap-4 sm:flex-row flex-col">
+                    <div className=" w-full  h-[550px]  border bg-white p-4 rounded-md">
                       <div className=" text-xl font-semibold">
                         Hastag as per interaction
                       </div>
@@ -256,7 +296,7 @@ const ProfileAnalysis = () => {
                 <div className="w-full">
                   <div className="flex items-center justify-center">
                     <div className=" text-2xl z-[1] font-semibold  p-4 relative">
-                      • Overall Follower Expansion •
+                      Overall Follower Expansion
                       <Image
                         src={"/Patch-1.png"}
                         fill
@@ -274,7 +314,7 @@ const ProfileAnalysis = () => {
             <div className="w-full">
               <div className="flex items-center justify-center mt-16 mb-8">
                 <div className=" text-2xl z-[1] font-semibold  p-4 relative">
-                  • Comprehensive Analysis of Your Follower Trends •
+                  Comprehensive Analysis of Your Follower Trends
                   <Image
                     src={"/Patch-1.png"}
                     fill
@@ -284,13 +324,13 @@ const ProfileAnalysis = () => {
                 </div>
               </div>
               <div className="w-full grid grid-cols-6 gap-4 ">
-                <div className="col-span-6 sm:col-span-4">
+                <div className="col-span-6 print:col-span-6 sm:col-span-4">
                   <FollowerGrowthGraph
                     followerHistory={followerData.history}
                     isFollowing={true}
                   />
                 </div>
-                <div className="col-span-6 sm:col-span-2 ">
+                <div className="col-span-6 print:col-span-6 sm:col-span-2 ">
                   <FollowerGrowthOverview
                     followerHistory={followerData.history}
                   />
@@ -298,9 +338,7 @@ const ProfileAnalysis = () => {
               </div>
             </div>
             <div className="w-full">
-              <ProfileDataHistory
-                data={followerData.history.slice(0, 30).reverse()}
-              />
+              <ProfileDataHistory data={followerData.history} />
             </div>
 
             <>
@@ -318,7 +356,7 @@ const ProfileAnalysis = () => {
                       //   display: "inline-block", // Ensure the background fits the text
                       // }}
                     >
-                      • Post Interactions Metrics •
+                      Post Interactions Metrics
                       <Image
                         src={"/Patch-1.png"}
                         fill

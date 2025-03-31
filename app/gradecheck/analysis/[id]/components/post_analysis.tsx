@@ -13,7 +13,7 @@ const PostAnalysisGrid = ({ data }: any) => {
     <div className="w-full mx-auto my-16">
       <h2 className="flex justify-center mb-8 ">
         <div className="text-2xl z-[1] p-4 w-max font-bold relative">
-          • Recent 12 Post Activity •
+          Recent 12 Post Activity
           <Image
             src={"/Patch-1.png"}
             fill
@@ -118,7 +118,7 @@ const PostAnalysisTable = ({ data }: any) => {
     <div className="w-full mx-auto my-16 ">
       <h2 className="flex justify-center mb-8">
         <div className="text-2xl z-[1] font-bold p-4 w-max relative">
-          • Detailed Post Evaluation •
+          Detailed Post Evaluation
           <Image
             src={"/Patch-1.png"}
             fill

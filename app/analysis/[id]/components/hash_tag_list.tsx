@@ -14,7 +14,7 @@ const HashtagList: React.FC<HashtagListProps> = ({ hashtags }) => {
   return (
     <div className="max-w-2xl mx-auto p-4 border border-gray-300 rounded-lg bg-white">
       <h2 className="text-center text-2xl font-semibold mb-4">Hashtags list</h2>
-      <div className="max-h-[470px] overflow-auto">
+      <div className="max-h-[470px] print:h-full  overflow-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

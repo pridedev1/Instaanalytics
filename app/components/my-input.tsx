@@ -7,6 +7,7 @@ export default function MyInput({
   label,
   placeholder,
   type = "text",
+  name = "",
 }: any) {
   return (
     <div className="w-full max-w-md px-4">
@@ -16,6 +17,8 @@ export default function MyInput({
           value={value}
           onChange={(e) => onchange(e.target.value)}
           type={type}
+          autoComplete={name}
+          name={name}
           placeholder={placeholder}
           className={clsx(
             "mt-3 block w-full rounded-sm  border border-gray-300 bg-[#FAFAFA] py-1.5 px-3 text-sm/6 text-black",

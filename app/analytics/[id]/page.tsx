@@ -47,7 +47,7 @@ const Analytics = () => {
   return (
     <div className="flex flex-col  items-center justify-center bg-[url('/bg_image/business-desktop.jpeg')]  h-screen bg-no-repeat bg-fixed bg-cover">
       <div className="backdrop-blur-lg bg-white/60 shadow-lg text-xl sm:text-2xl font-bold rounded-b-xl p-6 pt-10">
-        • INSTAGRAM REPORT •
+        INSTAGRAM REPORT
       </div>
       <div className="my-auto" />
       <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl ">

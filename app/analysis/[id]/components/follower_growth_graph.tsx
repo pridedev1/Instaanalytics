@@ -5,6 +5,7 @@ import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import am5themes_Responsive from "@amcharts/amcharts5/themes/Responsive";
 import { formatNumber } from "@/utils/helper";
+import { isMobile } from "react-device-detect";
 
 const FollowerGrowthGraph = ({ followerHistory, isFollowing }: any) => {
   const color = am5.color(0x408ef2);
@@ -32,6 +33,26 @@ const FollowerGrowthGraph = ({ followerHistory, isFollowing }: any) => {
         paddingLeft: 0,
       })
     );
+    chart.zoomOutButton.set(
+      "background",
+      am5.RoundedRectangle.new(root, {
+        fill: am5.color(0xf5014f),
+        fillOpacity: 0.8,
+        strokeOpacity: 1,
+        strokeWidth: 2,
+        cornerRadiusTL: 50,
+        cornerRadiusTR: 50,
+        cornerRadiusBL: 50,
+        cornerRadiusBR: 50,
+      })
+    );
+
+    // Position zoom button 10px from top
+    chart.zoomOutButton.set("y", 10);
+    // Center the icon in the circular background
+    chart.zoomOutButton.set("centerX", am5.p50);
+    chart.zoomOutButton.set("centerY", am5.p50);
+    chart.zoomOutButton.set("dy", 1);
 
     let cursor = chart.set(
       "cursor",
@@ -159,7 +180,10 @@ const FollowerGrowthGraph = ({ followerHistory, isFollowing }: any) => {
     <div className="w-full bg-white p-2 rounded-md border">
       <div
         id="follower-growth-bar-chart"
-        style={{ width: "100%", height: "500px" }}
+        style={{
+          width: "100%",
+          height: isMobile ? "300px" : "500px",
+        }}
       ></div>
     </div>
   );

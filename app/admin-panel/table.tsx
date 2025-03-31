@@ -33,6 +33,7 @@ export function TableDemo({ data }: any) {
             <TableHead>Status</TableHead>
             <TableHead>One linear</TableHead>
             <TableHead>Eng Change (%)</TableHead>
+            <TableHead>User</TableHead>
             <TableHead>updated At</TableHead>
           </TableRow>
         </TableHeader>
@@ -51,6 +52,7 @@ export function TableDemo({ data }: any) {
                 <TableCell>
                   {d.enageChange === "" ? "-" : d.enageChange}
                 </TableCell>
+                <TableCell>{d.user ?? "-"}</TableCell>
                 <TableCell>{formatDate(d.updateAt)}</TableCell>
               </TableRow>
             );

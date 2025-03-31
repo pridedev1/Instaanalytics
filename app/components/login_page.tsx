@@ -3,6 +3,7 @@ import { Button } from "@headlessui/react";
 import MyInput from "./my-input";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useAuth } from "@/utils/hooks/useAuth";
 
 const images = [
   "/screenshot1.png",
@@ -16,6 +17,7 @@ const LoginPage = ({ handleLogin }: any) => {
   const [memberId, setMemberId] = useState("");
   const [password, setPassword] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const [rememberMe, setRememberMe] = useState(true); // New state for "Remember Me"
 
   useEffect(() => {
@@ -64,6 +66,7 @@ const LoginPage = ({ handleLogin }: any) => {
                   label={"Member ID"}
                   value={memberId}
                   placeholder="Member id"
+                  name={"memberId"}
                   onchange={(value: string) => setMemberId(value)}
                 />
                 <div className="my-4" />
@@ -72,6 +75,7 @@ const LoginPage = ({ handleLogin }: any) => {
                   value={password}
                   type={"password"}
                   placeholder="Password"
+                  name={"password"}
                   onchange={(value: string) => setPassword(value)}
                 />
                 <div className="mt-4 flex items-center px-4">
