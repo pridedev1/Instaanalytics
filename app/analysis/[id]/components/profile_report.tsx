@@ -107,8 +107,12 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
             <div className="text-3xl font-black">
               {capitalizeFirstLetterOfEachWord(
                 updatedDetails !== undefined &&
-                  updatedDetails["status"] !== undefined &&
-                  updatedDetails["status"] !== ""
+                  updatedDetails["grade"] !== undefined &&
+                  updatedDetails["grade"] !== ""
+                  ? updatedDetails["grade"]
+                  : updatedDetails !== undefined &&
+                    updatedDetails["status"] !== undefined &&
+                    updatedDetails["status"] !== ""
                   ? updatedDetails["status"]
                   : profileData.media_info.er_info.er_type.toLowerCase() ===
                     "good"

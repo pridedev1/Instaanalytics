@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export function TableDemo({ data }: any) {
+export function TableDemo({ data, onEdit, onDelete }: any) {
   const formatDate = (timestamp: number) => {
     const date = new Date(timestamp);
     return date.toLocaleDateString("en-US", {
@@ -35,6 +35,7 @@ export function TableDemo({ data }: any) {
             <TableHead>Eng Change (%)</TableHead>
             <TableHead>User</TableHead>
             <TableHead>updated At</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -54,6 +55,22 @@ export function TableDemo({ data }: any) {
                 </TableCell>
                 <TableCell>{d.user ?? "-"}</TableCell>
                 <TableCell>{formatDate(d.updateAt)}</TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => onEdit(d)}
+                      className="px-3 py-1 text-sm text-blue-600 hover:bg-blue-100 rounded"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onDelete(d)}
+                      className="px-3 py-1 text-sm text-red-600 hover:bg-red-100 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </TableCell>
               </TableRow>
             );
           })}

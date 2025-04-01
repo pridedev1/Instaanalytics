@@ -31,14 +31,25 @@ import {
 } from "@/components/ui/table";
 import { Loader2, Pencil, Trash2 } from "lucide-react";
 import { useAuth } from "@/utils/hooks/useAuth";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Home() {
-  const [username, setUsername] = useState("");
-  const [grade, setGrade] = useState("");
-  const [enagementRate, setEnagementRate] = useState("");
-  const [status, setStatus] = useState("");
-  const [oneLinear, setOneLinear] = useState("");
-  const [enageChange, setEnageChange] = useState("");
+  const [userData, setUserData] = useState({
+    username: "",
+    grade: "",
+    enagementRate: "",
+    status: "",
+    oneLinear: "",
+    enageChange: "",
+  });
   const [loading, setLoading] = useState(false);
   const [isAuthenticate, setIsAuthenticate] = useState(false);
   const [data, setData] = useState<any>(undefined);
@@ -112,22 +123,17 @@ export default function Home() {
     }
   };
   const saveUserInfo = async () => {
-    if (username === "" || username === undefined) {
+    if (userData.username === "" || userData.username === undefined) {
       errorToast("Enter the username first");
       return;
     }
     setLoading(true);
     try {
-      const userRef = doc(db, `/accounts/${username}`);
+      const userRef = doc(db, `/accounts/${userData.username}`);
       await setDoc(
         userRef,
         {
-          username,
-          grade,
-          enagementRate,
-          status,
-          oneLinear,
-          enageChange,
+          ...userData,
           user: user?.email,
           updateAt: Date.now(),
         },
@@ -135,14 +141,9 @@ export default function Home() {
       );
       successToast("Data saved successfully");
       const newData = data.map((item: any) =>
-        item.username === username
+        item.username === userData.username
           ? {
-              username,
-              grade,
-              enagementRate,
-              status,
-              oneLinear,
-              enageChange,
+              ...userData,
               user: user?.email,
               updateAt: Date.now(),
             }
@@ -150,17 +151,12 @@ export default function Home() {
       );
 
       const usernameExists = data.some(
-        (item: any) => item.username === username
+        (item: any) => item.username === userData.username
       );
 
       if (!usernameExists) {
         newData.push({
-          username,
-          grade,
-          enagementRate,
-          status,
-          oneLinear,
-          enageChange,
+          ...userData,
           user: user?.email,
           updateAt: Date.now(),
         });
@@ -234,43 +230,75 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-2">
           <Input
             type="text"
-            onChange={(e) => setUsername(e.target.value)}
-            value={username}
+            onChange={(e) =>
+              setUserData({ ...userData, username: e.target.value })
+            }
+            value={userData.username}
             placeholder="Username (Required*)"
           />
 
+          <Select
+            value={userData.grade}
+            onValueChange={(value) =>
+              setUserData({ ...userData, grade: value })
+            }
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Grade" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Grades</SelectLabel>
+                <SelectItem value="TBD">TBD</SelectItem>
+                <SelectItem value="D-">D-</SelectItem>
+                <SelectItem value="D">D</SelectItem>
+                <SelectItem value="D+">D+</SelectItem>
+                <SelectItem value="C-">C-</SelectItem>
+                <SelectItem value="C">C</SelectItem>
+                <SelectItem value="C+">C+</SelectItem>
+                <SelectItem value="B-">B-</SelectItem>
+                <SelectItem value="B">B</SelectItem>
+                <SelectItem value="B+">B+</SelectItem>
+                <SelectItem value="A-">A-</SelectItem>
+                <SelectItem value="A">A</SelectItem>
+                <SelectItem value="A+">A+</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
           <Input
             type="text"
-            onChange={(e) => setGrade(e.target.value)}
-            value={grade}
-            placeholder="Grade ( A, B+, C- )"
-          />
-          <Input
-            type="text"
-            onChange={(e) => setEnagementRate(e.target.value)}
-            value={enagementRate}
+            onChange={(e) =>
+              setUserData({ ...userData, enagementRate: e.target.value })
+            }
+            value={userData.enagementRate}
             placeholder="enagement Rate (9.4, 5.4 )"
           />
           <Input
             type="text"
-            onChange={(e) => setStatus(e.target.value)}
-            value={status}
+            onChange={(e) =>
+              setUserData({ ...userData, status: e.target.value })
+            }
+            value={userData.status}
             placeholder="status ( good, bad )"
           />
           <Input
             type="text"
-            onChange={(e) => setEnageChange(e.target.value)}
-            value={enageChange}
+            onChange={(e) =>
+              setUserData({ ...userData, enageChange: e.target.value })
+            }
+            value={userData.enageChange}
             placeholder="Eng Change ( -0.4, 0.78 )"
           />
           <Input
             type="text"
-            onChange={(e) => setOneLinear(e.target.value)}
-            value={oneLinear}
+            onChange={(e) =>
+              setUserData({ ...userData, oneLinear: e.target.value })
+            }
+            value={userData.oneLinear}
             placeholder="one linear ( good , bad )"
           />
         </div>
-        <Button onClick={() => saveUserInfo()} className="mt-4">
+        <Button onClick={saveUserInfo} className="mt-4">
           {loading ? "loading...." : "Save"}{" "}
         </Button>
       </div>
@@ -279,7 +307,29 @@ export default function Home() {
       {data === undefined ? (
         <div> fetching Details.....</div>
       ) : (
-        <TableDemo data={data} />
+        <TableDemo
+          data={data}
+          onEdit={(d: any) => {
+            console.log("data :", d);
+
+            setUserData({
+              username: d.username || "",
+              grade: d.grade || "",
+              enagementRate: d.enagementRate || "",
+              status: d.status || "",
+              oneLinear: d.oneLinear || "",
+              enageChange: d.enageChange || "",
+            });
+          }}
+          onDelete={(d: any) => {
+            console.log("data :", d);
+            deleteDoc(doc(db, "/accounts", d.username));
+            const newData = data.filter(
+              (item: any) => item.username !== d.username
+            );
+            setData(newData);
+          }}
+        />
       )}
     </div>
   );

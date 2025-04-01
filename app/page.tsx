@@ -13,6 +13,12 @@ import Cookies from "js-cookie";
 import { useAuth } from "@/utils/hooks/useAuth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -20,8 +26,30 @@ export default function Home() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   let [isOpen, setIsOpen] = useState(false);
+  const [userDetails, setUserDetails] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const { user, login, logout } = useAuth();
 
+  const getDetails = async () => {
+    if (!user && !user!.email) {
+      errorToast("User not found");
+      return;
+    }
+    setShowPassword(!showPassword);
+    const memberRef = await getDocs(
+      query(collection(db, "members"), where("email", "==", user?.email))
+    );
+
+    if (!memberRef.empty) {
+      const memberDoc = memberRef.docs[0];
+      const memberData = memberDoc.data();
+
+      setUserDetails({
+        email: memberData.email,
+        password: memberData.password,
+      });
+    }
+  };
   function open() {
     setIsOpen(true);
   }
@@ -75,8 +103,6 @@ export default function Home() {
   };
 
   const getProfileDetail = async () => {
-    console.log("user:", username, window);
-
     if (username === "" || username === undefined) return;
     if (typeof window !== "undefined") {
       const isAuthenticate = user != null;
@@ -108,7 +134,7 @@ export default function Home() {
     );
   return (
     <main className="w-full flex items-center flex-col gap-8 my-10">
-      <div className="w-full flex justify-end px-8">
+      <div className="w-full flex justify-end px-8 gap-2">
         <Button
           onClick={() => {
             logout();
@@ -118,6 +144,48 @@ export default function Home() {
         >
           Logout
         </Button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="rounded-full">
+              Profile
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-80">
+            <div className="flex flex-col gap-4">
+              <div className="space-y-2">
+                <h4 className="font-medium leading-none">Profile Details</h4>
+              </div>
+              <div className="flex flex-col gap-2">
+                <div>
+                  <label className="text-sm font-medium">Email</label>
+                  <div className="mt-1 text-sm">{user?.email}</div>
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Password</label>
+                  <div className="mt-1 flex items-center">
+                    <input
+                      value={showPassword ? userDetails.password : "********"}
+                      readOnly
+                      className="text-sm bg-transparent"
+                    />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                      onClick={() => getDetails()}
+                    >
+                      {showPassword ? (
+                        <EyeOffIcon className="h-4 w-4" />
+                      ) : (
+                        <EyeIcon className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
       </div>
       <div>
         <Image
