@@ -3,7 +3,17 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ADMIN_USER, MEMBERID, PASSWORD, ADMIN_PASS } from "../utils/constants";
 import { errorToast } from "../utils/toast";
 import LoginPage from "./components/login_page";
@@ -11,20 +21,38 @@ import { useRouter } from "next/navigation";
 import MyInput from "./components/my-input";
 import Cookies from "js-cookie";
 import { useAuth } from "@/utils/hooks/useAuth";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import dayjs from "dayjs";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import useWindowDimensions from "@/utils/hooks/useWindownSize";
 
 export default function Home() {
   const [username, setUsername] = useState("");
   const [isAuthenticate, setIsAuthenticate] = useState(false);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [profileLogs, setProfileLogs] = useState<any>([]);
   let [isOpen, setIsOpen] = useState(false);
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
@@ -50,13 +78,6 @@ export default function Home() {
       });
     }
   };
-  function open() {
-    setIsOpen(true);
-  }
-
-  function close() {
-    setIsOpen(false);
-  }
 
   const handleLogin = async (
     memberId: string,
@@ -105,12 +126,27 @@ export default function Home() {
   const getProfileDetail = async () => {
     if (username === "" || username === undefined) return;
     if (typeof window !== "undefined") {
-      const isAuthenticate = user != null;
-      if (isAuthenticate) {
-        close();
-        // router.push(`/analysis/${username}`);
-        window.open(`/analysis/${username}`, "_blank");
-      } else open();
+      // Check if username exists in accounts collection
+      try {
+        setLoading(true);
+        const accountRef = doc(db, "accounts", username);
+        const accountSnap = await getDoc(accountRef);
+
+        if (accountSnap.exists()) {
+          setIsOpen(true);
+          const data = accountSnap.data();
+
+          setProfileLogs([{ ...data }]);
+        } else {
+          // window.open(`/analysis/${username}`, "_blank");
+          errorToast("account not ofund");
+        }
+      } catch (error) {
+        errorToast(`${error}`);
+      } finally {
+        setLoading(false);
+      }
+      // router.push(`/analysis/${username}`);
     }
   };
 
@@ -134,6 +170,12 @@ export default function Home() {
     );
   return (
     <main className="w-full flex items-center flex-col gap-8 my-10">
+      <AccountLogs
+        username={username}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        data={profileLogs}
+      />
       <div className="w-full flex justify-end px-8 gap-2">
         <Button
           onClick={() => {
@@ -220,7 +262,7 @@ export default function Home() {
             onClick={getProfileDetail}
             className="flex justify-center mx-4 items-center gap-2 rounded-full bg-[#0095F6] py-1.5 px-6 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-[#0095F6]/70 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
           >
-            Analyse Now
+            {loading ? <Loader2 className="animate-spin" /> : "Analyse Now"}
           </Button>
         </div>
       </div>
@@ -330,6 +372,101 @@ export default function Home() {
   );
 }
 
+function AccountLogs({
+  open,
+  onClose,
+  data,
+  username,
+}: {
+  open: any;
+  username: any;
+  onClose: any;
+  data: any[];
+}) {
+  const { width } = useWindowDimensions();
+  return (
+    <AlertDialog open={open}>
+      <AlertDialogTrigger asChild></AlertDialogTrigger>
+      <AlertDialogContent className="max-w-4xl ">
+        <div>
+          <div className="font-bold text-xl mb-2">Account Activity Logs</div>
+
+          <div className="w-full -mx-4 sm:mx-0">
+            <div
+              className="min-w-full px-4 sm:px-0"
+              style={{
+                width: width !== undefined && width < 768 ? width : undefined,
+              }}
+            >
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="whitespace-nowrap">Member</TableHead>
+                    <TableHead className="whitespace-nowrap">Grade</TableHead>
+                    <TableHead className="whitespace-nowrap">
+                      Engagement Rate (%)
+                    </TableHead>
+                    <TableHead className="whitespace-nowrap">Status</TableHead>
+                    <TableHead className="whitespace-nowrap">
+                      One Linear
+                    </TableHead>
+                    <TableHead className="whitespace-nowrap">
+                      Eng Change (%)
+                    </TableHead>
+                    <TableHead className="whitespace-nowrap">
+                      Last Updated
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {data.map((item) => {
+                    return (
+                      <TableRow key={item.id}>
+                        <TableCell className="whitespace-nowrap">
+                          {item.user}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap">
+                          {item.grade}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap">
+                          {item.engagementRate == "" ? "-" : item.enagementRate}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap">
+                          {item.status == "" ? "-" : item.status}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap">
+                          {item.oneLinear == "" ? "-" : item.oneLinear}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap">
+                          {item.engChange == "" ? "-" : item.engChange}
+                        </TableCell>
+                        <TableCell className="whitespace-nowrap">
+                          {dayjs(item.lastUpdated).format("MMM D, YYYY h:mm A")}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-2 items-center justify-end">
+          <Button
+            onClick={() => {
+              window.open(`/analysis/${username}`, "_blank");
+            }}
+          >
+            Process
+          </Button>
+          <Button variant={"outline"} onClick={onClose}>
+            Close
+          </Button>
+        </div>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
 const AnalysisButton = ({
   getProfileDetail,
   loading,
