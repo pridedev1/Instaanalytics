@@ -138,8 +138,8 @@ export default function Home() {
 
           setProfileLogs([{ ...data }]);
         } else {
-          // window.open(`/analysis/${username}`, "_blank");
-          errorToast("account not ofund");
+          window.open(`/analysis/${username}`, "_blank");
+          // errorToast("account not ofund");
         }
       } catch (error) {
         errorToast(`${error}`);
