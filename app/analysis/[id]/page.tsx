@@ -47,40 +47,46 @@ const ProfileAnalysis = () => {
       let backednUrl = `${
         process.env.NEXT_PUBLIC_API_URL
       }/api-proxy?serId=${encodeURIComponent(
-        `http://137.184.183.57/profile-report?username=${id}`
+        `/profile-report2?username=${id}`
       )}`;
 
-      if (via === "ca") {
+      if (via === "test") {
+        backednUrl = `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/api-proxy?serId=${encodeURIComponent(
+          `http://128.199.118.38/profile-report2?username=${id}`
+        )}`;
+      } else if (via === "ca") {
         backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
       } else if (via === "ja") {
         backednUrl = `${
           process.env.NEXT_PUBLIC_API_URL
         }/api-proxy?serId=${encodeURIComponent(
-          `http://146.190.32.67/profile-report?username=${id}`
+          `http://146.190.32.67/profile-report2?username=${id}`
         )}`;
       } else if (via === "vs") {
         backednUrl = `${
           process.env.NEXT_PUBLIC_API_URL
         }/api-proxy?serId=${encodeURIComponent(
-          `http://137.184.230.17/profile-report?username=${id}`
+          `http://137.184.230.17/profile-report2?username=${id}`
         )}`;
       } else if (via === "ab") {
         backednUrl = `${
           process.env.NEXT_PUBLIC_API_URL
         }/api-proxy?serId=${encodeURIComponent(
-          `http://146.190.160.210/profile-report?username=${id}`
+          `http://146.190.160.210/profile-report2?username=${id}`
         )}`;
       } else if (via === "im") {
         backednUrl = `${
           process.env.NEXT_PUBLIC_API_URL
         }/api-proxy?serId=${encodeURIComponent(
-          `http://164.90.152.48/profile-report?username=${id}`
+          `http://164.90.152.48/profile-report2?username=${id}`
         )}`;
       } else if (via === "ss") {
         backednUrl = `${
           process.env.NEXT_PUBLIC_API_URL
         }/api-proxy?serId=${encodeURIComponent(
-          `http://143.110.154.55/profile-report?username=${id}`
+          `http://143.110.154.55/profile-report2?username=${id}`
         )}`;
       } else if (via === "ad") {
         backednUrl = `${
@@ -97,8 +103,7 @@ const ProfileAnalysis = () => {
       console.log("data ;", data);
 
       if (!data["success"]) throw "Unable to get the report";
-      // setFollowerData({});
-      // setProfileData({});
+
       setFollowerData(data["followingData"]);
       setProfileData(data["profileData"]);
     } catch (error) {
@@ -109,6 +114,7 @@ const ProfileAnalysis = () => {
     } finally {
       setLoading(false);
     }
+    console.log("loading :", loading);
   };
 
   const scrollToTop = () => {
@@ -261,32 +267,33 @@ const ProfileAnalysis = () => {
           <div className=" w-full flex flex-col items-center justify-center p-2 sm:p-8">
             {/* word cloud hastag  */}
             <div className="w-full">
-              {profileData !== undefined && (
-                <>
-                  <div className="flex items-center justify-center mt-16 mb-8">
-                    <div className=" text-2xl z-[1] font-semibold  p-4 relative">
-                      User-Generated Hashtag Usage
-                      <Image
-                        src={"/Patch-1.png"}
-                        fill
-                        alt="text gradient"
-                        className="-z-10 rounded-lg "
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full flex print:flex-col my-8 print:h-full sm:h-[550px] gap-4 sm:flex-row flex-col">
-                    <div className=" w-full  h-[550px]  border bg-white p-4 rounded-md">
-                      <div className=" text-xl font-semibold">
-                        Hastag as per interaction
+              {profileData !== undefined &&
+                profileData.hashtags !== undefined && (
+                  <>
+                    <div className="flex items-center justify-center mt-16 mb-8">
+                      <div className=" text-2xl z-[1] font-semibold  p-4 relative">
+                        User-Generated Hashtag Usage
+                        <Image
+                          src={"/Patch-1.png"}
+                          fill
+                          alt="text gradient"
+                          className="-z-10 rounded-lg "
+                        />
                       </div>
-                      <WordCloudChart hashtags={profileData.hashtags} />
                     </div>
-                    <div className="w-full ">
-                      <HashtagList hashtags={profileData.hashtags} />
+                    <div className="w-full flex print:flex-col my-8 print:h-full sm:h-[550px] gap-4 sm:flex-row flex-col">
+                      <div className=" w-full  h-[550px]  border bg-white p-4 rounded-md">
+                        <div className=" text-xl font-semibold">
+                          Hastag as per interaction
+                        </div>
+                        <WordCloudChart hashtags={profileData.hashtags} />
+                      </div>
+                      <div className="w-full ">
+                        <HashtagList hashtags={profileData.hashtags} />
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
             </div>
             {/* Follower chart  */}
             {followerData.history !== undefined && (
@@ -322,23 +329,27 @@ const ProfileAnalysis = () => {
                   />
                 </div>
               </div>
-              <div className="w-full grid grid-cols-6 gap-4 ">
-                <div className="col-span-6 print:col-span-6 sm:col-span-4">
-                  <FollowerGrowthGraph
-                    followerHistory={followerData.history}
-                    isFollowing={true}
-                  />
+              {followerData.history !== undefined && (
+                <div className="w-full grid grid-cols-6 gap-4 ">
+                  <div className="col-span-6 print:col-span-6 sm:col-span-4">
+                    <FollowerGrowthGraph
+                      followerHistory={followerData.history}
+                      isFollowing={true}
+                    />
+                  </div>
+                  <div className="col-span-6 print:col-span-6 sm:col-span-2 ">
+                    <FollowerGrowthOverview
+                      followerHistory={followerData.history}
+                    />
+                  </div>
                 </div>
-                <div className="col-span-6 print:col-span-6 sm:col-span-2 ">
-                  <FollowerGrowthOverview
-                    followerHistory={followerData.history}
-                  />
-                </div>
+              )}
+            </div>
+            {followerData.history !== undefined && (
+              <div className="w-full">
+                <ProfileDataHistory data={followerData.history} />
               </div>
-            </div>
-            <div className="w-full">
-              <ProfileDataHistory data={followerData.history} />
-            </div>
+            )}
 
             <>
               <div className="my-8" />
@@ -366,12 +377,16 @@ const ProfileAnalysis = () => {
                   </div>
                 </div>
                 {/* <BarChartWithImages /> */}
-                <BarChart mediaData={profileData.media} />
+                {profileData.media !== undefined && (
+                  <BarChart mediaData={profileData.media} />
+                )}
               </div>
 
               <div className="w-full">
                 {/* <PostAnalysisTable data={profileData.media} />; */}
-                <PostAnalysis data={profileData.media} />
+                {profileData.media !== undefined && (
+                  <PostAnalysis data={profileData.media} />
+                )}
               </div>
 
               {/* <div>
