@@ -53,6 +53,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [isAuthenticate, setIsAuthenticate] = useState(false);
   const [data, setData] = useState<any>(undefined);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchData, setSearchData] = useState<any>();
+  const [searching, setSearching] = useState(false);
 
   const { user, login, logout } = useAuth();
   const [memberId, setMemberId] = useState("");
@@ -106,8 +109,14 @@ export default function Home() {
 
   const fetchData = async () => {
     try {
-      let userCol = collection(db, "/accounts");
-
+      if (user === undefined) {
+        errorToast("User not logged in");
+        return;
+      }
+      let userCol = query(
+        collection(db, "/accounts"),
+        where("user", "==", user?.email)
+      );
       let accounts = await getDocs(userCol);
 
       let temp = accounts.docs.map((a) => {
@@ -173,9 +182,10 @@ export default function Home() {
     if (!user) return;
     setIsAuthenticate(true);
   }, [user]);
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (data === undefined) fetchData();
+  }, [user]);
 
   if (!isAuthenticate)
     return (
@@ -303,7 +313,89 @@ export default function Home() {
         </Button>
       </div>
 
-      <div className="font-bold">Table</div>
+      <div className="border rounded-md p-4 mb-4">
+        <div className="font-bold text-xl mb-4">Search Accounts</div>
+        <div className="flex gap-2 mb-4">
+          <Input
+            type="text"
+            placeholder="Search by username..."
+            value={searchTerm}
+            onChange={async (e) => {
+              const st = e.target.value;
+              setSearchTerm(st);
+              if (!st) {
+                setSearchData(undefined);
+                return;
+              }
+
+              // Debounce search with 200ms delay
+              const timeoutId = setTimeout(async () => {
+                try {
+                  const accountsRef = collection(db, "accounts");
+                  const q = query(
+                    accountsRef,
+                    where("username", ">=", searchTerm),
+                    where("username", "<=", searchTerm + "\uf8ff")
+                  );
+
+                  const querySnapshot = await getDocs(q);
+                  const searchResults = querySnapshot.docs.map((doc) =>
+                    doc.data()
+                  );
+                  console.log("Search results:", searchResults);
+
+                  setSearchData(searchResults);
+                } catch (error) {
+                  console.error("Search error:", error);
+                  errorToast("Error searching accounts");
+                }
+              }, 200);
+
+              // Cleanup timeout on next search
+              return () => clearTimeout(timeoutId);
+            }}
+          />
+        </div>
+
+        {searchData && searchData.length === 0 && (
+          <div className="text-center text-gray-500">No accounts found</div>
+        )}
+
+        {searchData && searchData.length > 0 && (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Username</TableHead>
+                <TableHead>Grade</TableHead>
+                <TableHead>Engagement Rate</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>One Liner</TableHead>
+                <TableHead>Engagement Change</TableHead>
+                <TableHead>Last Updated</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {searchData.map((account: any, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>{account.username}</TableCell>
+                  <TableCell>{account.grade}</TableCell>
+                  <TableCell>{account.enagementRate}</TableCell>
+                  <TableCell>{account.status}</TableCell>
+                  <TableCell>{account.oneLinear}</TableCell>
+                  <TableCell>{account.enageChange}</TableCell>
+                  <TableCell>
+                    {account.updateAt
+                      ? dayjs(account.updateAt).format("MM/DD/YYYY")
+                      : "N/A"}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </div>
+
+      <div className="font-bold">User Table updated by you</div>
       {data === undefined ? (
         <div> fetching Details.....</div>
       ) : (
