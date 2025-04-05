@@ -47,6 +47,7 @@ const ProfileAnalytics = ({
   const [followerData, setFollowerData] = useState<any>(followingD);
   const [loading, setLoading] = useState(false);
   const [showShareLink, setShowShareLink] = useState(false);
+  const [sharing, setSharing] = useState(false);
   const { user } = useAuth();
   let { id } = useParams();
 
@@ -72,11 +73,15 @@ const ProfileAnalytics = ({
       let backednUrl = process.env.NEXT_PUBLIC_API_URL?.includes(
         "http://localhost:3001"
       )
-        ? `http://localhost:3001/profile-report?username=${id}`
+        ? `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://localhost:3001/profile-report2?username=${id}`
+          )}`
         : `${
             process.env.NEXT_PUBLIC_API_URL
           }/api-proxy?serId=${encodeURIComponent(
-            `http://137.184.183.57/profile-report?username=${id}`
+            `http://128.199.118.38/profile-report2?username=${id}`
           )}`;
 
       if (via === "test") {
@@ -151,7 +156,7 @@ const ProfileAnalytics = ({
       errorToast("Please login to share");
       return;
     }
-
+    setSharing(true);
     try {
       const userRef = doc(db, `/share/${id}`);
 
@@ -172,6 +177,8 @@ const ProfileAnalytics = ({
     } catch (error) {
       errorToast("Unable to share");
       console.log("error in sharing :", error);
+    } finally {
+      setSharing(false);
     }
   };
   const scrollToTop = () => {
@@ -244,8 +251,14 @@ const ProfileAnalytics = ({
       {!preview && (
         <div className="fixed top-4 right-4 print:hidden z-50">
           <Button variant={"outline"} onClick={shareAbleLink}>
-            <Share2 />
-            Share
+            {sharing ? (
+              <Loader2 className="animate-spin w-4 h-4" />
+            ) : (
+              <>
+                <Share2 />
+                Share
+              </>
+            )}
           </Button>
         </div>
       )}
@@ -479,7 +492,7 @@ const ShareLinkDialog = ({
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `${process.env.NEXT_PUBLIC_URL}/share/${username}`
+                    `${process.env.NEXT_PUBLIC_URL}/report/${username}`
                   );
                 }}
               >
