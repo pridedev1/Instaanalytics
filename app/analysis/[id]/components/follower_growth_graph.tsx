@@ -147,11 +147,11 @@ const FollowerGrowthGraph = ({ followerHistory, isFollowing }: any) => {
 
     let processData = followerHistory.slice(0, 30).reverse();
 
-    console.log("process data ", processData);
+    // console.log("process data ", processData);
 
     let data2 = processData.map((d: any) => {
       let [year, month, day] = d.date.split("-");
-      console.log("ddaatee", year, month, day);
+      // console.log("ddaatee", year, month, day);
 
       let date = new Date(
         parseInt(year),
@@ -164,7 +164,7 @@ const FollowerGrowthGraph = ({ followerHistory, isFollowing }: any) => {
         d: d.date,
       };
     });
-    console.log("process data2 :", data);
+    // console.log("process data2 :", data);
     data[4].value = -100;
     series.data.setAll(data2);
 

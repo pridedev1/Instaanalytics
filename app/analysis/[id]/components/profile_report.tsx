@@ -132,7 +132,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
           <b className="whitespace-nowrap w-min h-min">
             {updatedDetails !== undefined &&
             updatedDetails["enageChange"] !== undefined &&
-            updatedDetails["enageChange"] !== undefined
+            updatedDetails["enageChange"] !== ""
               ? updatedDetails["enageChange"]
               : profileData.media_info.er_info.er_diff_avg}
             %
