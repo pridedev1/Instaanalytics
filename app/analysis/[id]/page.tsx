@@ -47,7 +47,7 @@ const ProfileAnalysis = () => {
       let backednUrl = `${
         process.env.NEXT_PUBLIC_API_URL
       }/api-proxy?serId=${encodeURIComponent(
-        `/profile-report2?username=${id}`
+        `http://137.184.183.57/profile-report?username=${id}`
       )}`;
 
       if (via === "test") {
