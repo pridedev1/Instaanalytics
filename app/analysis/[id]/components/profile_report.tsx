@@ -9,7 +9,10 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
   console.log("updateDetails", updatedDetails);
 
   return (
-    <div className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 ">
+    <div
+      id="profile-card"
+      className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 "
+    >
       <div className="flex flex-col items-center justify-center  py-4 px-8 mx-4">
         {/* <Image
           src={"/Logo 1.png"}

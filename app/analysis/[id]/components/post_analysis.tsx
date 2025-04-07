@@ -253,9 +253,13 @@ const PostAnalysis = ({ data }: any) => {
   // if (isMobile)
   return (
     <div>
-      <PostAnalysisGrid data={data} />
+      <div className="profile-item">
+        <PostAnalysisGrid data={data} />
+      </div>
 
-      <PostAnalysisTable data={data} />
+      <div className="profile-item">
+        <PostAnalysisTable data={data} />
+      </div>
     </div>
   );
 };
