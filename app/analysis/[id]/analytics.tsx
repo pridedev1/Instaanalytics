@@ -75,24 +75,27 @@ const ProfileAnalytics = ({
       setLoading(true);
       let via = searchParams.get("via");
 
-      let backednUrl = process.env.NEXT_PUBLIC_API_URL?.includes(
+      let backednUrl = process.env.NEXT_PUBLIC_API_URL2?.includes(
         "http://localhost:3001"
       )
-        ? `http://localhost:3001/profile-report2?username=${id}`
+        ? `${process.env.NEXT_PUBLIC_API_URL2}/profile-report2?username=${id}`
         : // `${
           //     process.env.NEXT_PUBLIC_API_URL
           //   }/api-proxy?serId=${encodeURIComponent(
           //     `http://64.227.99.157/profile-report2?username=${id}`
-          //   )}`
-          `${
-            process.env.NEXT_PUBLIC_API_URL
-          }/api-proxy?serId=${encodeURIComponent(
-            `http://128.199.118.38/profile-report2?username=${id}`
-          )}`;
+          //   )}`'
+
+          `${process.env.NEXT_PUBLIC_API_URL2}/profile-report2?username=${id}`;
+
+      // `${
+      //   process.env.NEXT_PUBLIC_API_URL2
+      // }/api-proxy?serId=${encodeURIComponent(
+      //   `http://128.199.118.38/profile-report2?username=${id}`
+      // )}`;
 
       if (via === "test") {
         backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL
+          process.env.NEXT_PUBLIC_API_URL2
         }/api-proxy?serId=${encodeURIComponent(
           `http://128.199.118.38/profile-report2?username=${id}`
         )}`;
@@ -221,7 +224,7 @@ const ProfileAnalytics = ({
 
       // Download PDF from API
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/pdf?username=${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL2}/pdf?username=${id}`,
         {
           responseType: "blob",
         }
@@ -260,7 +263,7 @@ const ProfileAnalytics = ({
       await cacheAccount();
 
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/report-images?username=${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL2}/report-images?username=${id}`,
         {
           responseType: "blob",
         }
@@ -391,8 +394,8 @@ const ProfileAnalytics = ({
                 Images
               </>
             )}
-          </Button>
-          <Button variant={"outline"} onClick={downloadVideo}>
+          </Button> */}
+          {/* <Button variant={"outline"} onClick={downloadVideo}>
             {generatingVideo ? (
               <Loader2 className="animate-spin w-4 h-4" />
             ) : (
@@ -401,8 +404,8 @@ const ProfileAnalytics = ({
                 Video
               </>
             )}
-          </Button>
-          <Button variant={"outline"} onClick={downloadPdf}>
+          </Button> */}
+          {/* <Button variant={"outline"} onClick={downloadPdf}>
             {generatingPdf ? (
               <Loader2 className="animate-spin w-4 h-4" />
             ) : (

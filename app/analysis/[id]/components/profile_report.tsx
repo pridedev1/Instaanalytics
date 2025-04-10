@@ -30,7 +30,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
         <div className="flex flex-col gap-4 items-center justify-center">
           <img
             src={`${
-              process.env.NEXT_PUBLIC_API_URL
+              process.env.NEXT_PUBLIC_API_URL2
             }/proxy-image/${encodeURIComponent(
               profileData.profile_pic_url.replace(
                 "https://cdn-image.notjustanalytics.com/",

@@ -25,7 +25,7 @@ const ProfileAnalysis = () => {
     try {
       setLoading(true);
       let backednUrl = `${
-        process.env.NEXT_PUBLIC_API_URL
+        process.env.NEXT_PUBLIC_API_URL2
       }/api-proxy?serId=${encodeURIComponent(
         `http://137.184.183.57/profile-report?username=${id}`
       )}`;
@@ -98,7 +98,7 @@ const ProfileAnalysis = () => {
         {lastPost !== undefined && lastPost !== "" && (
           <img
             src={`${
-              process.env.NEXT_PUBLIC_API_URL
+              process.env.NEXT_PUBLIC_API_URL2
             }/proxy-image/${encodeURIComponent(
               lastPost.url.replace(
                 "https://cdn-image.notjustanalytics.com/",

@@ -38,7 +38,7 @@ const PostAnalysisGrid = ({ data }: any) => {
               /> */}
               <img
                 src={`${
-                  process.env.NEXT_PUBLIC_API_URL
+                  process.env.NEXT_PUBLIC_API_URL2
                 }/proxy-image/${encodeURIComponent(
                   post.url.replace(
                     "https://cdn-image.notjustanalytics.com/",
@@ -201,7 +201,7 @@ const PostAnalysisTable = ({ data }: any) => {
                 <td className="border p-2">
                   <img
                     src={`${
-                      process.env.NEXT_PUBLIC_API_URL
+                      process.env.NEXT_PUBLIC_API_URL2
                     }/proxy-image/${encodeURIComponent(
                       post.url.replace(
                         "https://cdn-image.notjustanalytics.com/",
