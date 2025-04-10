@@ -57,10 +57,6 @@ const ProfileAnalysis = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // const profileData = sampleResponse.profileData;
-  // const followerData = sampleResponse.followingData;
-  // console.log("following data :", followerData);
-
   if (profileData === undefined || followerData === undefined)
     return (
       <div className="w-screen h-screen flex flex-col gap-2 items-center justify-center">
