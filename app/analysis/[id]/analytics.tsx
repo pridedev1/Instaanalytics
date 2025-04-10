@@ -68,7 +68,7 @@ const ProfileAnalytics = ({
       let d = await getDoc(accountRef);
 
       if (d.exists()) {
-        console.log("data :", d.data());
+        // console.log("data :", d.data());
 
         setUpdatedDetials(d.data());
       }
@@ -139,11 +139,11 @@ const ProfileAnalytics = ({
         )}`;
       }
 
-      console.log("url :", backednUrl);
+      // console.log("url :", backednUrl);
 
       let res = await axios.get(backednUrl);
       let data = res.data;
-      console.log("data ;", data);
+      // console.log("data ;", data);
 
       if (!data["success"]) throw "Unable to get the report";
 
@@ -157,7 +157,6 @@ const ProfileAnalytics = ({
     } finally {
       setLoading(false);
     }
-    console.log("loading :", loading);
   };
 
   const shareAbleLink = async () => {
@@ -351,10 +350,10 @@ const ProfileAnalytics = ({
   }, []);
   useEffect(() => {
     if (!preview) fetchData(id as string);
-    console.log("loafing data");
+    // console.log("loafing data");
   }, []);
-  console.log("profile data :", profileData);
-  console.log("follower data :", followerData);
+  // console.log("profile data :", profileData);
+  // console.log("follower data :", followerData);
 
   if (profileData === undefined || followerData === undefined)
     return (
