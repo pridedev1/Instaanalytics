@@ -25,7 +25,7 @@ const ProfileAnalysis = () => {
     try {
       setLoading(true);
       let res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`
+        `${process.env.NEXT_PUBLIC_API_UR2}/profile-report2?username=${id}`
       );
       let data = res.data;
       console.log("data ;", data);

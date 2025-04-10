@@ -21,7 +21,7 @@ const BarChartWithImages = () => {
         comments: d.total_comments,
         pictureSettings: {
           src: `${
-            process.env.NEXT_PUBLIC_API_URL
+            process.env.NEXT_PUBLIC_API_URL2
           }/proxy-image/${encodeURIComponent(
             d.url.replace("https://cdn-image.notjustanalytics.com/", "")
           )}`,
