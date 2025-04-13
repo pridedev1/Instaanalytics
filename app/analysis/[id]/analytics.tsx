@@ -19,7 +19,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { useAuth } from "@/utils/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { errorToast } from "@/utils/toast";
+import { errorToast, successToast } from "@/utils/toast";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -665,6 +665,7 @@ const ShareLinkDialog = ({
                   navigator.clipboard.writeText(
                     `${process.env.NEXT_PUBLIC_URL}/report/${username}`
                   );
+                  successToast("link copied");
                 }}
               >
                 Copy
