@@ -231,7 +231,7 @@ export default function Home() {
       </div>
       <div>
         <Image
-          src={"/images/Logo Black.png"}
+          src={"/insta-login2.png"}
           width={250}
           height={50}
           alt="Instagram analyzer logo"
