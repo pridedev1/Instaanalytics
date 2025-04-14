@@ -5,7 +5,15 @@ import Image from "next/image";
 import ProfileReport from "./components/profile_report";
 import BarChart from "./components/bar-chart";
 import { useEffect, useState } from "react";
-import { File, Images, Loader2, MoveUp, Share2, Video } from "lucide-react";
+import {
+  File,
+  FileImage,
+  Images,
+  Loader2,
+  MoveUp,
+  Share2,
+  Video,
+} from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -53,6 +61,7 @@ const ProfileAnalytics = ({
   const [generatingPdf, setGeneratingPdf] = useState(false);
   const [generatingImage, setGeneratingImage] = useState(false);
   const [generatingVideo, generatingVideoSet] = useState(false);
+
   const { user } = useAuth();
   let { id } = useParams();
 
@@ -167,19 +176,17 @@ const ProfileAnalytics = ({
     setSharing(true);
     try {
       const userRef = doc(db, `/share/${id}`);
+      let d = {
+        username: id,
+        userId: user!.id,
+        userEmail: user!.email,
+        createdAt: new Date(),
+        profileData: profileData,
+        followingData: followerData,
+      };
+      console.log("data :", d, id);
 
-      await setDoc(
-        userRef,
-        {
-          username: id,
-          userId: user!.id,
-          userEmail: user!.email,
-          createdAt: new Date(),
-          profileData: profileData,
-          followingData: followerData,
-        },
-        { merge: true }
-      );
+      await setDoc(userRef, d, { merge: true });
 
       setShowShareLink(true);
     } catch (error) {
@@ -315,6 +322,36 @@ const ProfileAnalytics = ({
       generatingVideoSet(false);
     }
   };
+
+  const downloadLongImage = async () => {
+    if (user === undefined) {
+      errorToast("Please login to share");
+      return;
+    }
+    try {
+      await cacheAccount();
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL2}/long-screenshot?username=${id}`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      // Create blob from response and download as zip
+      const blob = new Blob([response.data], { type: "image/jpeg" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${id}_report_long_image.jpeg`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.log("error in downloading :", error);
+    }
+  };
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -375,7 +412,10 @@ const ProfileAnalytics = ({
       : undefined;
 
   return (
-    <div className="flex flex-col items-center justify-center relative bg-no-repeat bg-fixed bg-cover">
+    <div
+      id="analytic-report"
+      className="flex flex-col items-center justify-center relative bg-no-repeat bg-fixed bg-cover"
+    >
       {/* Add print button */}
       <ShareLinkDialog
         open={showShareLink}
@@ -384,7 +424,7 @@ const ProfileAnalytics = ({
       />{" "}
       {!preview && (
         <div className="fixed flex gap-2 top-4 right-4 print:hidden z-50">
-          {/* <Button variant={"outline"} onClick={downloadImage}>
+          <Button variant={"outline"} onClick={downloadImage}>
             {generatingImage ? (
               <Loader2 className="animate-spin w-4 h-4" />
             ) : (
@@ -393,8 +433,8 @@ const ProfileAnalytics = ({
                 Images
               </>
             )}
-          </Button> */}
-          {/* <Button variant={"outline"} onClick={downloadVideo}>
+          </Button>
+          <Button variant={"outline"} onClick={downloadVideo}>
             {generatingVideo ? (
               <Loader2 className="animate-spin w-4 h-4" />
             ) : (
@@ -403,7 +443,17 @@ const ProfileAnalytics = ({
                 Video
               </>
             )}
-          </Button> */}
+          </Button>
+          <Button variant={"outline"} onClick={downloadLongImage}>
+            {generatingVideo ? (
+              <Loader2 className="animate-spin w-4 h-4" />
+            ) : (
+              <>
+                <FileImage />
+                Long Image
+              </>
+            )}
+          </Button>
           {/* <Button variant={"outline"} onClick={downloadPdf}>
             {generatingPdf ? (
               <Loader2 className="animate-spin w-4 h-4" />
