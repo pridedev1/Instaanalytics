@@ -61,6 +61,7 @@ const ProfileAnalytics = ({
   const [generatingPdf, setGeneratingPdf] = useState(false);
   const [generatingImage, setGeneratingImage] = useState(false);
   const [generatingVideo, generatingVideoSet] = useState(false);
+  const [generatingLongImage, setGeneratingLongImage] = useState(false);
 
   const { user } = useAuth();
   let { id } = useParams();
@@ -329,6 +330,7 @@ const ProfileAnalytics = ({
       return;
     }
     try {
+      setGeneratingLongImage(true);
       await cacheAccount();
 
       const response = await axios.get(
@@ -350,6 +352,8 @@ const ProfileAnalytics = ({
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.log("error in downloading :", error);
+    } finally {
+      setGeneratingLongImage(false);
     }
   };
   const scrollToTop = () => {
@@ -445,7 +449,7 @@ const ProfileAnalytics = ({
             )}
           </Button>
           <Button variant={"outline"} onClick={downloadLongImage}>
-            {generatingVideo ? (
+            {generatingLongImage ? (
               <Loader2 className="animate-spin w-4 h-4" />
             ) : (
               <>
