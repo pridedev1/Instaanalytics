@@ -283,14 +283,14 @@ export default function Home() {
             value={userData.enagementRate}
             placeholder="enagement Rate (9.4, 5.4 )"
           />
-          <Input
+          {/* <Input
             type="text"
             onChange={(e) =>
               setUserData({ ...userData, status: e.target.value })
             }
             value={userData.status}
             placeholder="status ( good, bad )"
-          />
+          /> */}
           <Input
             type="text"
             onChange={(e) =>
@@ -299,14 +299,14 @@ export default function Home() {
             value={userData.enageChange}
             placeholder="Eng Change ( -0.4, 0.78 )"
           />
-          <Input
+          {/* <Input
             type="text"
             onChange={(e) =>
               setUserData({ ...userData, oneLinear: e.target.value })
             }
             value={userData.oneLinear}
             placeholder="one linear ( good , bad )"
-          />
+          /> */}
         </div>
         <Button onClick={saveUserInfo} className="mt-4">
           {loading ? "loading...." : "Save"}{" "}
