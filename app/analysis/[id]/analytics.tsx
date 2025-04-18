@@ -448,7 +448,7 @@ const ProfileAnalytics = ({
               </>
             )}
           </Button>
-          <Button variant={"outline"} onClick={downloadLongImage}>
+          {/* <Button variant={"outline"} onClick={downloadLongImage}>
             {generatingLongImage ? (
               <Loader2 className="animate-spin w-4 h-4" />
             ) : (
@@ -457,7 +457,7 @@ const ProfileAnalytics = ({
                 Long Image
               </>
             )}
-          </Button>
+          </Button> */}
           {/* <Button variant={"outline"} onClick={downloadPdf}>
             {generatingPdf ? (
               <Loader2 className="animate-spin w-4 h-4" />
