@@ -39,6 +39,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import UserNameMark from "./components/user_name_mark";
 
 const ProfileAnalytics = ({
   preview = false,
@@ -70,103 +71,133 @@ const ProfileAnalytics = ({
   let searchParams = useSearchParams();
 
   const fetchData = async (id: string) => {
-    try {
-      // check if it exist in our database
+    setLoading(true);
+    const maxRetries = 2; // Maximum number of retries
+    let attempt = 0;
+    let success = false;
 
-      const accountRef = doc(db, `/accounts/${id}`);
+    // Helper function to check if data is valid (not empty objects)
+    const isValidData = (profile: any, follower: any): boolean => {
+      const profileValid = profile && Object.keys(profile).length > 0;
+      const followerValid = follower && Object.keys(follower).length > 0;
+      // Add more specific checks if needed, e.g., follower.history
+      // const followerHistoryValid = followerValid && follower.history && follower.history.length > 0;
+      return profileValid && followerValid; // && followerHistoryValid;
+    };
 
-      let d = await getDoc(accountRef);
+    while (attempt <= maxRetries && !success) {
+      try {
+        // Check if it exists in our database (moved outside the retry loop, assuming this part doesn't need retrying)
+        if (attempt === 0) {
+          // Only fetch from DB on the first attempt
+          const accountRef = doc(db, `/accounts/${id}`);
+          let d = await getDoc(accountRef);
+          if (d.exists()) {
+            setUpdatedDetials(d.data());
+          }
+        }
 
-      if (d.exists()) {
-        // console.log("data :", d.data());
+        let via = searchParams.get("via");
+        let backednUrl = process.env.NEXT_PUBLIC_API_URL2?.includes(
+          "http://localhost:3001"
+        )
+          ? `${process.env.NEXT_PUBLIC_API_URL2}/profile-report2?username=${id}`
+          : `${process.env.NEXT_PUBLIC_API_URL2}/profile-report2?username=${id}`;
 
-        setUpdatedDetials(d.data());
+        // ... existing URL construction logic based on 'via' ...
+        if (via === "test") {
+          backednUrl = `${
+            process.env.NEXT_PUBLIC_API_URL2
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://128.199.118.38/profile-report2?username=${id}`
+          )}`;
+        } else if (via === "ca") {
+          backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
+        } else if (via === "ja") {
+          backednUrl = `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://146.190.32.67/profile-report2?username=${id}`
+          )}`;
+        } else if (via === "vs") {
+          backednUrl = `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://137.184.230.17/profile-report2?username=${id}`
+          )}`;
+        } else if (via === "ab") {
+          backednUrl = `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://146.190.160.210/profile-report2?username=${id}`
+          )}`;
+        } else if (via === "im") {
+          backednUrl = `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://164.90.152.48/profile-report2?username=${id}`
+          )}`;
+        } else if (via === "ss") {
+          backednUrl = `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://143.110.154.55/profile-report2?username=${id}`
+          )}`;
+        } else if (via === "ad") {
+          backednUrl = `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api-proxy?serId=${encodeURIComponent(
+            `http://143.198.138.39/profile-report?username=${id}`
+          )}`;
+        }
+        // ... end of existing URL construction logic ...
+
+        console.log(`Attempt ${attempt + 1}: Fetching data from ${backednUrl}`);
+        let res = await axios.get(backednUrl);
+        let data = res.data;
+
+        if (!data["success"]) {
+          throw new Error("API indicated failure: Unable to get the report");
+        }
+
+        const profile = data["profileData"];
+        const follower = data["followingData"];
+
+        if (isValidData(profile, follower)) {
+          setFollowerData(follower);
+          setProfileData(profile);
+          success = true; // Mark as success to exit the loop
+          console.log(`Attempt ${attempt + 1}: Success`);
+        } else {
+          throw new Error(
+            "API returned success, but data is invalid or empty."
+          );
+        }
+      } catch (error) {
+        console.log(`Attempt ${attempt + 1} failed:`, error);
+        attempt++; // Increment attempt counter
+        if (attempt > maxRetries) {
+          // errorToast("Failed to fetch profile report after multiple attempts.");
+          console.log(
+            "error in getting profile report after multiple attempts:",
+            error
+          );
+          if (attempt > maxRetries) {
+            setFollowerData({});
+            setProfileData({});
+          } else {
+            setFollowerData(undefined);
+            setProfileData(undefined);
+          }
+        } else {
+          // Optional: Add a delay before retrying
+          console.log(`Waiting before retry attempt ${attempt + 1}...`);
+          await new Promise((resolve) => setTimeout(resolve, 1000 * attempt)); // Exponential backoff (1s, 2s)
+        }
       }
-      setLoading(true);
-      let via = searchParams.get("via");
+    } // end while loop
 
-      let backednUrl = process.env.NEXT_PUBLIC_API_URL2?.includes(
-        "http://localhost:3001"
-      )
-        ? `${process.env.NEXT_PUBLIC_API_URL2}/profile-report2?username=${id}`
-        : // `${
-          //     process.env.NEXT_PUBLIC_API_URL
-          //   }/api-proxy?serId=${encodeURIComponent(
-          //     `http://64.227.99.157/profile-report2?username=${id}`
-          //   )}`'
-
-          `${process.env.NEXT_PUBLIC_API_URL2}/profile-report2?username=${id}`;
-
-      // `${
-      //   process.env.NEXT_PUBLIC_API_URL2
-      // }/api-proxy?serId=${encodeURIComponent(
-      //   `http://128.199.118.38/profile-report2?username=${id}`
-      // )}`;
-
-      if (via === "test") {
-        backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL2
-        }/api-proxy?serId=${encodeURIComponent(
-          `http://128.199.118.38/profile-report2?username=${id}`
-        )}`;
-      } else if (via === "ca") {
-        backednUrl = `${process.env.NEXT_PUBLIC_API_URL}/profile-report?username=${id}`;
-      } else if (via === "ja") {
-        backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api-proxy?serId=${encodeURIComponent(
-          `http://146.190.32.67/profile-report2?username=${id}`
-        )}`;
-      } else if (via === "vs") {
-        backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api-proxy?serId=${encodeURIComponent(
-          `http://137.184.230.17/profile-report2?username=${id}`
-        )}`;
-      } else if (via === "ab") {
-        backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api-proxy?serId=${encodeURIComponent(
-          `http://146.190.160.210/profile-report2?username=${id}`
-        )}`;
-      } else if (via === "im") {
-        backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api-proxy?serId=${encodeURIComponent(
-          `http://164.90.152.48/profile-report2?username=${id}`
-        )}`;
-      } else if (via === "ss") {
-        backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api-proxy?serId=${encodeURIComponent(
-          `http://143.110.154.55/profile-report2?username=${id}`
-        )}`;
-      } else if (via === "ad") {
-        backednUrl = `${
-          process.env.NEXT_PUBLIC_API_URL
-        }/api-proxy?serId=${encodeURIComponent(
-          `http://143.198.138.39/profile-report?username=${id}`
-        )}`;
-      }
-
-      // console.log("url :", backednUrl);
-
-      let res = await axios.get(backednUrl);
-      let data = res.data;
-      // console.log("data ;", data);
-
-      if (!data["success"]) throw "Unable to get the report";
-
-      setFollowerData(data["followingData"]);
-      setProfileData(data["profileData"]);
-    } catch (error) {
-      // errorToast(error.toString());
-      console.log("error in getting profile report :", error);
-      setFollowerData({});
-      setProfileData({});
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false); // Set loading to false after all attempts or success
   };
 
   const shareAbleLink = async () => {
@@ -515,6 +546,7 @@ const ProfileAnalytics = ({
             />
           )}
         </div>
+        {print && <UserNameMark profileData={profileData} />}
         <div className="">
           <div className="backdrop-blur-lg bg-white/60 shadow-lg sm:mx-0 mx-8 text-xl sm:text-2xl font-bold rounded-xl p-6 pt-6 text-center">
             Instagram Analytics
@@ -548,7 +580,8 @@ const ProfileAnalytics = ({
             <div className="w-full">
               {profileData !== undefined &&
                 profileData.hashtags !== undefined && (
-                  <div className="profile-item">
+                  <div className="profile-item relative">
+                    {print && <UserNameMark profileData={profileData} />}
                     <div className="flex items-center justify-center mt-16 mb-8">
                       <div className=" text-2xl z-[1] font-semibold  p-4 relative">
                         User-Generated Hashtag Usage
@@ -578,7 +611,8 @@ const ProfileAnalytics = ({
             {followerData.history !== undefined && (
               <>
                 <div className="my-8" />
-                <div className="profile-item w-full">
+                <div className="profile-item relative w-full">
+                  {print && <UserNameMark profileData={profileData} />}
                   <div className="flex items-center justify-center">
                     <div className=" text-2xl z-[1] font-semibold  p-4 relative">
                       Overall Follower Expansion
@@ -597,7 +631,8 @@ const ProfileAnalytics = ({
               </>
             )}
 
-            <div className="profile-item w-full">
+            <div className="profile-item relative w-full">
+              {print && <UserNameMark profileData={profileData} />}
               <div className="flex items-center justify-center mt-16 mb-8">
                 <div className=" text-2xl z-[1] font-semibold  p-4 relative">
                   Comprehensive Analysis of Your Follower Trends
@@ -626,14 +661,16 @@ const ProfileAnalytics = ({
               )}
             </div>
             {followerData.history !== undefined && (
-              <div className="profile-item w-full">
+              <div className="profile-item relative w-full">
+                {print && <UserNameMark profileData={profileData} />}
                 <ProfileDataHistory data={followerData.history} />
               </div>
             )}
 
             <>
               <div className="my-8" />
-              <div className="w-full">
+              <div className="profile-item relative w-full">
+                {print && <UserNameMark profileData={profileData} />}
                 <div className="flex justify-center">
                   <div className="text-xl  p-4 relative">
                     <div
@@ -658,7 +695,7 @@ const ProfileAnalytics = ({
                 </div>
                 {/* <BarChartWithImages /> */}
                 {profileData.media !== undefined && (
-                  <div className="profile-item">
+                  <div className=" ">
                     <BarChart mediaData={profileData.media} />
                   </div>
                 )}
@@ -667,7 +704,11 @@ const ProfileAnalytics = ({
               <div className="w-full">
                 {/* <PostAnalysisTable data={profileData.media} />; */}
                 {profileData.media !== undefined && (
-                  <PostAnalysis data={profileData.media} />
+                  <PostAnalysis
+                    data={profileData.media}
+                    profileData={profileData}
+                    print={print}
+                  />
                 )}
               </div>
 

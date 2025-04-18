@@ -7,6 +7,7 @@ import { format } from "light-date";
 import { Eye, Heart, MessageCircle } from "lucide-react";
 import { isMobile } from "react-device-detect";
 import { formatNumber } from "@/utils/helper";
+import UserNameMark from "./user_name_mark";
 
 const PostAnalysisGrid = ({ data }: any) => {
   return (
@@ -249,15 +250,25 @@ const PostAnalysisTable = ({ data }: any) => {
   );
 };
 
-const PostAnalysis = ({ data }: any) => {
+const PostAnalysis = ({ data, profileData, print }: any) => {
   // if (isMobile)
   return (
     <div>
-      <div className="profile-item">
+      <div className="profile-item ">
+        {print && (
+          <div className="relative ">
+            <UserNameMark profileData={profileData} />
+          </div>
+        )}
         <PostAnalysisGrid data={data} />
       </div>
 
       <div className="profile-item">
+        {print && (
+          <div className="relative mb-4">
+            <UserNameMark profileData={profileData} />
+          </div>
+        )}
         <PostAnalysisTable data={data} />
       </div>
     </div>
