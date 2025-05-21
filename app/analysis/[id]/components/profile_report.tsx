@@ -23,7 +23,9 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
         );
 
   const isGradeA =
-    gradeOrStatusValue && gradeOrStatusValue.toString().toLowerCase() === "a";
+    gradeOrStatusValue &&
+    (gradeOrStatusValue.toString().toLowerCase() === "a" ||
+      gradeOrStatusValue.toString().toLowerCase() === "a+");
 
   const gradeTextColorClass = isGradeA ? "text-green-500" : "";
   return (
@@ -112,19 +114,68 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
           src={GradientImage.src}
           className="absolute top-0 bottom-0 -z-10 w-[calc(100%-16px)] h-[160px]"
         />
-        <div className="flex flex-row items-center justify-around py-2 w-[calc(100%-16px)] h-[160px]">
-          <div className="flex flex-col items-center">
-            <div className="text-3xl font-black">
-              {updatedDetails !== undefined &&
-              updatedDetails["enagementRate"] !== undefined &&
-              updatedDetails["enagementRate"] !== ""
-                ? updatedDetails["enagementRate"]
-                : profileData.media_info.er_info.er}
-              %
+        <div className="flex flex-row items-center justify-around  py-2 w-[calc(100%-16px)] h-[160px]">
+          <div className="flex flex-col items-center justify-start gap-4">
+            <div className="flex flex-col gap-1 items-start">
+              <div className="text-3xl font-black">
+                {updatedDetails !== undefined &&
+                updatedDetails["enagementRate"] !== undefined &&
+                updatedDetails["enagementRate"] !== ""
+                  ? updatedDetails["enagementRate"]
+                  : profileData.media_info.er_info.er}{" "}
+                %
+              </div>
+              <div className="text-sm font-medium">Engagement Rate</div>
             </div>
-            <div className="text-sm font-medium">Engagement Rate</div>
+            <div className="flex gap-2 mb-2 px-4 text-sm text-start">
+              {parseInt(profileData.media_info.er_info.er_diff_avg) > 0 ? (
+                <TrendingUp />
+              ) : (
+                <TrendingDown />
+              )}
+              {/* <b className="whitespace-nowrap w-min h-min">
+                {updatedDetails !== undefined &&
+                updatedDetails["enageChange"] !== undefined &&
+                updatedDetails["enageChange"] !== ""
+                  ? updatedDetails["enageChange"]
+                  : profileData.media_info.er_info.er_diff_avg}
+                %
+              </b>{" "} */}
+              {updatedDetails !== undefined &&
+              updatedDetails["oneLinear"] !== undefined &&
+              updatedDetails["oneLinear"] !== "" ? (
+                updatedDetails["oneLinear"]
+              ) : profileData.media_info.er_info.er_type === "good" ? (
+                "higher than the average of similar profiles"
+              ) : (
+                <p>
+                  Engagement rate of your profile is currently lower than <br />{" "}
+                  the average for profiles in your niche.
+                </p>
+              )}
+            </div>
           </div>
           <div
+            className={`flex w-28 h-28 flex-col mr-4 justify-center items-center ${
+              isGradeA
+                ? "  bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-lg p-2"
+                : "bg-gradient-to-tr from-[#F4A214] via-[#D63362]  to-[#7815AF] rounded-lg p-2"
+            }`}
+          >
+            <div
+              className={`text-[48px] text-white font-black ${gradeTextColorClass}`}
+            >
+              {capitalizeFirstLetterOfEachWord(gradeOrStatusValue)}
+            </div>
+            <div className="text-sm text-white font-medium">Grade</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+{
+  /* <div
             className={`flex w-20 h-20 flex-col items-center ${
               isGradeA
                 ? "border-2 border-transparent bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-lg p-2"
@@ -136,39 +187,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
             >
               {capitalizeFirstLetterOfEachWord(gradeOrStatusValue)}
             </div>
-            <div className="text-sm text-white font-medium">Status</div>
-          </div>
-        </div>
-        <div className="flex wi gap-2 mb-2 px-4 text-sm text-center">
-          {parseInt(profileData.media_info.er_info.er_diff_avg) > 0 ? (
-            <TrendingUp />
-          ) : (
-            <TrendingDown />
-          )}
-          <b className="whitespace-nowrap w-min h-min">
-            {updatedDetails !== undefined &&
-            updatedDetails["enageChange"] !== undefined &&
-            updatedDetails["enageChange"] !== ""
-              ? updatedDetails["enageChange"]
-              : profileData.media_info.er_info.er_diff_avg}
-            %
-          </b>{" "}
-          {updatedDetails !== undefined &&
-          updatedDetails["oneLinear"] !== undefined &&
-          updatedDetails["oneLinear"] !== "" ? (
-            updatedDetails["oneLinear"]
-          ) : profileData.media_info.er_info.er_type === "good" ? (
-            "higher than the average of similar profiles"
-          ) : (
-            <p>
-              Engagement rate of your profile is currently lower than <br /> the
-              average for profiles in your niche.
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
-
+            <div className="text-sm text-white font-medium">Grade</div>
+          </div> */
+}
 export default ProfileReport;
