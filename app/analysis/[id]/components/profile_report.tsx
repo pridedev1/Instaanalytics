@@ -4,10 +4,28 @@ import Image from "next/image";
 import GradientImage from "../../../../public/Patch-1.png";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { capitalizeFirstLetterOfEachWord } from "@/utils/helper";
+import getGrade from "@/utils/get_grade";
 
 const ProfileReport = ({ profileData, updatedDetails }: any) => {
   console.log("updateDetails", updatedDetails);
+  const gradeOrStatusValue =
+    updatedDetails !== undefined &&
+    updatedDetails["grade"] !== undefined &&
+    updatedDetails["grade"] !== ""
+      ? updatedDetails["grade"]
+      : updatedDetails !== undefined &&
+        updatedDetails["status"] !== undefined &&
+        updatedDetails["status"] !== ""
+      ? updatedDetails["status"]
+      : getGrade(
+          profileData.followers,
+          parseInt(profileData["media_info"]["er_info"]["er"]) ?? 0
+        );
 
+  const isGradeA =
+    gradeOrStatusValue && gradeOrStatusValue.toString().toLowerCase() === "a";
+
+  const gradeTextColorClass = isGradeA ? "text-green-500" : "";
   return (
     <div
       id="profile-card"
@@ -106,24 +124,19 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
             </div>
             <div className="text-sm font-medium">Engagement Rate</div>
           </div>
-          <div className="flex flex-col items-center">
-            <div className="text-3xl font-black">
-              {capitalizeFirstLetterOfEachWord(
-                updatedDetails !== undefined &&
-                  updatedDetails["grade"] !== undefined &&
-                  updatedDetails["grade"] !== ""
-                  ? updatedDetails["grade"]
-                  : updatedDetails !== undefined &&
-                    updatedDetails["status"] !== undefined &&
-                    updatedDetails["status"] !== ""
-                  ? updatedDetails["status"]
-                  : profileData.media_info.er_info.er_type.toLowerCase() ===
-                    "good"
-                  ? "B"
-                  : "D"
-              )}
+          <div
+            className={`flex w-20 h-20 flex-col items-center ${
+              isGradeA
+                ? "border-2 border-transparent bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-lg p-2"
+                : "border-2 border-transparent bg-gradient-to-r from-red-500 via-red-400 to-red-500 rounded-lg p-2"
+            }`}
+          >
+            <div
+              className={`text-4xl text-white font-black ${gradeTextColorClass}`}
+            >
+              {capitalizeFirstLetterOfEachWord(gradeOrStatusValue)}
             </div>
-            <div className="text-sm font-medium">Status</div>
+            <div className="text-sm text-white font-medium">Status</div>
           </div>
         </div>
         <div className="flex wi gap-2 mb-2 px-4 text-sm text-center">
