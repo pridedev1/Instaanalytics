@@ -31,7 +31,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
   return (
     <div
       id="profile-card"
-      className="border backdrop-blur-lg bg-white/60 shadow-xl rounded-xl smx-0 mx-8 "
+      className="border backdrop-blur-lg bg-white/60 shadow-xl max-w-xl rounded-xl smx-0 mx-8 "
     >
       <div className="flex flex-col items-center justify-center  py-4 px-8 mx-4">
         {/* <Image
@@ -149,8 +149,8 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
                 "higher than the average of similar profiles"
               ) : (
                 <p>
-                  Engagement rate of your profile is currently lower than <br />{" "}
-                  the average for profiles in your niche.
+                  Engagement rate of your profile is currently lower than the
+                  average for profiles in your niche.
                 </p>
               )}
             </div>
@@ -158,7 +158,7 @@ const ProfileReport = ({ profileData, updatedDetails }: any) => {
           <div
             className={`flex w-28 h-28 flex-col mr-4 justify-center items-center ${
               isGradeA
-                ? "  bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-lg p-2"
+                ? "bg-gradient-to-r from-green-500 via-green-400 to-green-500 rounded-lg p-2"
                 : "bg-gradient-to-tr from-[#F4A214] via-[#D63362]  to-[#7815AF] rounded-lg p-2"
             }`}
           >
