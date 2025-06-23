@@ -64,6 +64,7 @@ const ProfileAnalytics = ({
   const [generatingVideo, generatingVideoSet] = useState(false);
   const [generatingLongImage, setGeneratingLongImage] = useState(false);
 
+  const [success, setSuccess] = useState(false);
   const { user } = useAuth();
   let { id } = useParams();
 
@@ -74,12 +75,17 @@ const ProfileAnalytics = ({
     setLoading(true);
     const maxRetries = 2; // Maximum number of retries
     let attempt = 0;
-    let success = false;
 
     // Helper function to check if data is valid (not empty objects)
     const isValidData = (profile: any, follower: any): boolean => {
-      const profileValid = profile && Object.keys(profile).length > 0;
-      const followerValid = follower && Object.keys(follower).length > 0;
+      const profileValid =
+        profile &&
+        typeof profile === "object" &&
+        Object.keys(profile).length > 0;
+      const followerValid =
+        follower &&
+        typeof follower === "object" &&
+        Object.keys(follower).length > 0;
       // Add more specific checks if needed, e.g., follower.history
       // const followerHistoryValid = followerValid && follower.history && follower.history.length > 0;
       return profileValid && followerValid; // && followerHistoryValid;
@@ -166,7 +172,7 @@ const ProfileAnalytics = ({
         if (isValidData(profile, follower)) {
           setFollowerData(follower);
           setProfileData(profile);
-          success = true; // Mark as success to exit the loop
+          setSuccess(true); // Mark as success to exit the loop
           console.log(`Attempt ${attempt + 1}: Success`);
         } else {
           throw new Error(
