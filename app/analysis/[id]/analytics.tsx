@@ -91,18 +91,15 @@ const ProfileAnalytics = ({
       return profileValid && followerValid; // && followerHistoryValid;
     };
 
-    while (attempt <= maxRetries && !success) {
-      try {
-        // Check if it exists in our database (moved outside the retry loop, assuming this part doesn't need retrying)
-        if (attempt === 0) {
-          // Only fetch from DB on the first attempt
-          const accountRef = doc(db, `/accounts/${id}`);
-          let d = await getDoc(accountRef);
-          if (d.exists()) {
-            setUpdatedDetials(d.data());
-          }
-        }
+    // Check if it exists in our database (only once)
+    const accountRef = doc(db, `/accounts/${id}`);
+    let d = await getDoc(accountRef);
+    if (d.exists()) {
+      setUpdatedDetials(d.data());
+    }
 
+    while (attempt <= maxRetries) {
+      try {
         let via = searchParams.get("via");
         let backednUrl = process.env.NEXT_PUBLIC_API_URL2?.includes(
           "http://localhost:3001"
@@ -174,6 +171,7 @@ const ProfileAnalytics = ({
           setProfileData(profile);
           setSuccess(true); // Mark as success to exit the loop
           console.log(`Attempt ${attempt + 1}: Success`);
+          break; // Exit the loop immediately on success
         } else {
           throw new Error(
             "API returned success, but data is invalid or empty."
@@ -182,19 +180,16 @@ const ProfileAnalytics = ({
       } catch (error) {
         console.log(`Attempt ${attempt + 1} failed:`, error);
         attempt++; // Increment attempt counter
+
         if (attempt > maxRetries) {
           // errorToast("Failed to fetch profile report after multiple attempts.");
           console.log(
             "error in getting profile report after multiple attempts:",
             error
           );
-          if (attempt > maxRetries) {
-            setFollowerData({});
-            setProfileData({});
-          } else {
-            setFollowerData(undefined);
-            setProfileData(undefined);
-          }
+          setFollowerData({});
+          setProfileData({});
+          break; // Exit the loop when max retries reached
         } else {
           // Optional: Add a delay before retrying
           console.log(`Waiting before retry attempt ${attempt + 1}...`);
