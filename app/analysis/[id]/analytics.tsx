@@ -64,6 +64,7 @@ const ProfileAnalytics = ({
   const [generatingVideo, generatingVideoSet] = useState(false);
   const [generatingLongImage, setGeneratingLongImage] = useState(false);
 
+  const [success, setSuccess] = useState(false);
   const { user } = useAuth();
   let { id } = useParams();
 
@@ -74,29 +75,31 @@ const ProfileAnalytics = ({
     setLoading(true);
     const maxRetries = 2; // Maximum number of retries
     let attempt = 0;
-    let success = false;
 
     // Helper function to check if data is valid (not empty objects)
     const isValidData = (profile: any, follower: any): boolean => {
-      const profileValid = profile && Object.keys(profile).length > 0;
-      const followerValid = follower && Object.keys(follower).length > 0;
+      const profileValid =
+        profile &&
+        typeof profile === "object" &&
+        Object.keys(profile).length > 0;
+      const followerValid =
+        follower &&
+        typeof follower === "object" &&
+        Object.keys(follower).length > 0;
       // Add more specific checks if needed, e.g., follower.history
       // const followerHistoryValid = followerValid && follower.history && follower.history.length > 0;
       return profileValid && followerValid; // && followerHistoryValid;
     };
 
-    while (attempt <= maxRetries && !success) {
-      try {
-        // Check if it exists in our database (moved outside the retry loop, assuming this part doesn't need retrying)
-        if (attempt === 0) {
-          // Only fetch from DB on the first attempt
-          const accountRef = doc(db, `/accounts/${id}`);
-          let d = await getDoc(accountRef);
-          if (d.exists()) {
-            setUpdatedDetials(d.data());
-          }
-        }
+    // Check if it exists in our database (only once)
+    const accountRef = doc(db, `/accounts/${id}`);
+    let d = await getDoc(accountRef);
+    if (d.exists()) {
+      setUpdatedDetials(d.data());
+    }
 
+    while (attempt <= maxRetries) {
+      try {
         let via = searchParams.get("via");
         let backednUrl = process.env.NEXT_PUBLIC_API_URL2?.includes(
           "http://localhost:3001"
@@ -166,8 +169,9 @@ const ProfileAnalytics = ({
         if (isValidData(profile, follower)) {
           setFollowerData(follower);
           setProfileData(profile);
-          success = true; // Mark as success to exit the loop
+          setSuccess(true); // Mark as success to exit the loop
           console.log(`Attempt ${attempt + 1}: Success`);
+          break; // Exit the loop immediately on success
         } else {
           throw new Error(
             "API returned success, but data is invalid or empty."
@@ -176,19 +180,16 @@ const ProfileAnalytics = ({
       } catch (error) {
         console.log(`Attempt ${attempt + 1} failed:`, error);
         attempt++; // Increment attempt counter
+
         if (attempt > maxRetries) {
           // errorToast("Failed to fetch profile report after multiple attempts.");
           console.log(
             "error in getting profile report after multiple attempts:",
             error
           );
-          if (attempt > maxRetries) {
-            setFollowerData({});
-            setProfileData({});
-          } else {
-            setFollowerData(undefined);
-            setProfileData(undefined);
-          }
+          setFollowerData({});
+          setProfileData({});
+          break; // Exit the loop when max retries reached
         } else {
           // Optional: Add a delay before retrying
           console.log(`Waiting before retry attempt ${attempt + 1}...`);
