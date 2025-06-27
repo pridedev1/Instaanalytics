@@ -13,6 +13,8 @@ import {
   MoveUp,
   Share2,
   Video,
+  Menu,
+  X,
 } from "lucide-react";
 import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
@@ -39,7 +41,13 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import UserNameMark from "./components/user_name_mark";
+import useWindowDimensions from "@/utils/hooks/useWindownSize";
 
 const ProfileAnalytics = ({
   preview = false,
@@ -70,6 +78,11 @@ const ProfileAnalytics = ({
 
   const [updatedDetails, setUpdatedDetials] = useState<any>(updatedD);
   let searchParams = useSearchParams();
+
+  // Mobile popup state
+  const [mobilePopupOpen, setMobilePopupOpen] = useState(false);
+  const { width } = useWindowDimensions();
+  const isMobile = width < 768; // 768px is typical mobile breakpoint
 
   const fetchData = async (id: string) => {
     setLoading(true);
@@ -459,58 +472,122 @@ const ProfileAnalytics = ({
         onClose={() => setShowShareLink(false)}
       />{" "}
       {!preview && (
-        <div className="fixed flex gap-2 top-4 right-4 print:hidden z-50">
-          <Button variant={"outline"} onClick={downloadImage}>
-            {generatingImage ? (
-              <Loader2 className="animate-spin w-4 h-4" />
-            ) : (
-              <>
-                <Images />
-                Images
-              </>
-            )}
-          </Button>
-          <Button variant={"outline"} onClick={downloadVideo}>
-            {generatingVideo ? (
-              <Loader2 className="animate-spin w-4 h-4" />
-            ) : (
-              <>
-                <Video />
-                Video
-              </>
-            )}
-          </Button>
-          {/* <Button variant={"outline"} onClick={downloadLongImage}>
-            {generatingLongImage ? (
-              <Loader2 className="animate-spin w-4 h-4" />
-            ) : (
-              <>
-                <FileImage />
-                Long Image
-              </>
-            )}
-          </Button> */}
-          {/* <Button variant={"outline"} onClick={downloadPdf}>
-            {generatingPdf ? (
-              <Loader2 className="animate-spin w-4 h-4" />
-            ) : (
-              <>
-                <File />
-                PDF
-              </>
-            )}
-          </Button> */}
-          <Button variant={"outline"} onClick={shareAbleLink}>
-            {sharing ? (
-              <Loader2 className="animate-spin w-4 h-4" />
-            ) : (
-              <>
-                <Share2 />
-                Share
-              </>
-            )}
-          </Button>
-        </div>
+        <>
+          {/* Desktop View - Keep as is */}
+          <div className="hidden md:flex fixed gap-2 top-4 right-4 print:hidden z-50">
+            <Button variant={"outline"} onClick={downloadImage}>
+              {generatingImage ? (
+                <Loader2 className="animate-spin w-4 h-4" />
+              ) : (
+                <>
+                  <Images />
+                  Images
+                </>
+              )}
+            </Button>
+            <Button variant={"outline"} onClick={downloadVideo}>
+              {generatingVideo ? (
+                <Loader2 className="animate-spin w-4 h-4" />
+              ) : (
+                <>
+                  <Video />
+                  Video
+                </>
+              )}
+            </Button>
+            <Button variant={"outline"} onClick={shareAbleLink}>
+              {sharing ? (
+                <Loader2 className="animate-spin w-4 h-4" />
+              ) : (
+                <>
+                  <Share2 />
+                  Share
+                </>
+              )}
+            </Button>
+          </div>
+
+          {/* Mobile View - Popup */}
+          <div className="md:hidden fixed top-4 right-4 print:hidden z-50">
+            <Popover open={mobilePopupOpen} onOpenChange={setMobilePopupOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-12 h-12 rounded-full shadow-lg bg-white/90 backdrop-blur-sm"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-64 p-4 space-y-3 bg-white/95 backdrop-blur-sm border-0 shadow-xl"
+                align="end"
+                side="bottom"
+                sideOffset={8}
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-sm">Actions</h3>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-6 w-6"
+                    onClick={() => setMobilePopupOpen(false)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2 h-12"
+                  onClick={() => {
+                    downloadImage();
+                    setMobilePopupOpen(false);
+                  }}
+                >
+                  {generatingImage ? (
+                    <Loader2 className="animate-spin w-4 h-4" />
+                  ) : (
+                    <Images className="w-4 h-4" />
+                  )}
+                  Download Images
+                </Button>
+
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2 h-12"
+                  onClick={() => {
+                    downloadVideo();
+                    setMobilePopupOpen(false);
+                  }}
+                >
+                  {generatingVideo ? (
+                    <Loader2 className="animate-spin w-4 h-4" />
+                  ) : (
+                    <Video className="w-4 h-4" />
+                  )}
+                  Download Video
+                </Button>
+
+                <Button
+                  variant="outline"
+                  className="w-full justify-start gap-2 h-12"
+                  onClick={() => {
+                    shareAbleLink();
+                    setMobilePopupOpen(false);
+                  }}
+                >
+                  {sharing ? (
+                    <Loader2 className="animate-spin w-4 h-4" />
+                  ) : (
+                    <Share2 className="w-4 h-4" />
+                  )}
+                  Share Report
+                </Button>
+              </PopoverContent>
+            </Popover>
+          </div>
+        </>
       )}
       {/* <div className="absolute top-8 right-4">
         <Image
